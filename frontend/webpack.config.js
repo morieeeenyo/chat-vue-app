@@ -7,7 +7,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'out'),
-    filename: 'index.js'
+    filename: 'build.js'
   },
   devtool: 'cheap-module-eval-source-map',
   target: 'node',
