@@ -11,5 +11,24 @@
   "version": "0.1.0",
   "devDependencies": {
     "webpack-dev-server": "^3.11.1"
-  }
+  },
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/togo-mori/chat-vue-app.git"
+  },
+  "author": "togo-mentor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/togo-mori/chat-vue-app/issues"
+  },
+  "homepage": "https://github.com/togo-mori/chat-vue-app#readme"
 }
