@@ -1,25 +1,20 @@
-const path = require('path')
-const webpack = require('webpack')
-
+const { VueLoaderPlugin } = require("vue-loader");
 module.exports = {
   entry: {
-    index: path.join(__dirname, 'src', 'main.js')
+    application: './src/main.js',
   },
   output: {
-    path: path.join(__dirname, 'out'),
-    filename: 'build.js'
+    path: `${__dirname}/../public/javascripts`,
+    filename: '[name].js'
   },
-  devtool: 'cheap-module-eval-source-map',
-  target: 'node',
   module: {
     rules: [
       {
-        test: /.js$/,
-        loader: 'babel-loader'
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        loader: 'vue-loader'
       }
     ]
   },
-  plugins: [
-    externalPlugins
-  ]
+  plugins: [new VueLoaderPlugin()]
 }

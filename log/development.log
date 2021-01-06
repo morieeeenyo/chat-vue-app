@@ -1,0 +1,208 @@
+Started GET "/" for ::1 at 2021-01-07 07:48:52 +0900
+  
+ActiveRecord::NoDatabaseError (Unknown database 'chat_vue_app_development'):
+  
+activerecord (6.0.3.4) lib/active_record/connection_adapters/mysql2_adapter.rb:28:in `rescue in mysql2_connection'
+activerecord (6.0.3.4) lib/active_record/connection_adapters/mysql2_adapter.rb:14:in `mysql2_connection'
+activerecord (6.0.3.4) lib/active_record/connection_adapters/abstract/connection_pool.rb:887:in `new_connection'
+activerecord (6.0.3.4) lib/active_record/connection_adapters/abstract/connection_pool.rb:931:in `checkout_new_connection'
+activerecord (6.0.3.4) lib/active_record/connection_adapters/abstract/connection_pool.rb:910:in `try_to_checkout_new_connection'
+activerecord (6.0.3.4) lib/active_record/connection_adapters/abstract/connection_pool.rb:871:in `acquire_connection'
+activerecord (6.0.3.4) lib/active_record/connection_adapters/abstract/connection_pool.rb:593:in `checkout'
+activerecord (6.0.3.4) lib/active_record/connection_adapters/abstract/connection_pool.rb:437:in `connection'
+activerecord (6.0.3.4) lib/active_record/connection_adapters/abstract/connection_pool.rb:1119:in `retrieve_connection'
+activerecord (6.0.3.4) lib/active_record/connection_handling.rb:221:in `retrieve_connection'
+activerecord (6.0.3.4) lib/active_record/connection_handling.rb:189:in `connection'
+activerecord (6.0.3.4) lib/active_record/migration.rb:562:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.3.4) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.1.0) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.1.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.1.0) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.1.0) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.3.4) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.3.4) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.3.4) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.3.4) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.3.4) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.3.4) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/method_override.rb:24:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.3.4) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.3.4) lib/action_dispatch/middleware/host_authorization.rb:82:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.6.5) lib/rack/proxy.rb:57:in `call'
+railties (6.0.3.4) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+  [1m[35m (2.4ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE DATABASE `chat_vue_app_development` DEFAULT CHARACTER SET `utf8mb4`[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE DATABASE `chat_vue_app_test` DEFAULT CHARACTER SET `utf8mb4`[0m
+Started GET "/" for ::1 at 2021-01-07 07:51:24 +0900
+  [1m[35m (6.2ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 404.9ms | Allocations: 73878)
+Completed 500 Internal Server Error in 439ms (ActiveRecord: 0.0ms | Allocations: 75723)
+
+
+  
+ActionView::Template::Error (undefined method `javvascript_include_tag' for #<#<Class:0x00007fa04e9e31d0>:0x00007fa04e9e18d0>
+Did you mean?  javascript_include_tag):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javvascript_include_tag 'main' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 07:51:38 +0900
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 292.1ms | Allocations: 287857)
+Completed 500 Internal Server Error in 304ms (ActiveRecord: 0.0ms | Allocations: 288958)
+
+
+  
+ActionView::Template::Error (The asset "main.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'main' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 07:52:23 +0900
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 14.3ms | Allocations: 5889)
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 0.0ms | Allocations: 6974)
+
+
+  
+ActionView::Template::Error (The asset "build.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'build' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 08:12:42 +0900
+  [1m[35m (1.0ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 295.9ms | Allocations: 288276)
+Completed 500 Internal Server Error in 346ms (ActiveRecord: 0.0ms | Allocations: 290119)
+
+
+  
+ActionView::Template::Error (The asset "build.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'build' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 08:15:23 +0900
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 21.4ms | Allocations: 5890)
+Completed 500 Internal Server Error in 32ms (ActiveRecord: 0.0ms | Allocations: 6988)
+
+
+  
+ActionView::Template::Error (The asset "main.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'main' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 08:16:16 +0900
+  [1m[35m (0.6ms)[0m  [1m[35mSET NAMES utf8mb4,  @@SESSION.sql_mode = CONCAT(CONCAT(@@sql_mode, ',STRICT_ALL_TABLES'), ',NO_AUTO_VALUE_ON_ZERO'),  @@SESSION.sql_auto_is_null = 0, @@SESSION.wait_timeout = 2147483[0m
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 327.9ms | Allocations: 288374)
+Completed 500 Internal Server Error in 352ms (ActiveRecord: 0.0ms | Allocations: 290218)
+
+
+  
+ActionView::Template::Error (The asset "main.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'main' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 08:16:49 +0900
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 21.9ms | Allocations: 5986)
+Completed 500 Internal Server Error in 33ms (ActiveRecord: 0.0ms | Allocations: 7084)
+
+
+  
+ActionView::Template::Error (The asset "main.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'main' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 08:18:38 +0900
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 27.7ms | Allocations: 5889)
+Completed 500 Internal Server Error in 29ms (ActiveRecord: 0.0ms | Allocations: 6239)
+
+
+  
+ActionView::Template::Error (The asset "main.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'main' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 08:19:24 +0900
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 21.1ms | Allocations: 5887)
+Completed 500 Internal Server Error in 24ms (ActiveRecord: 0.0ms | Allocations: 6234)
+
+
+  
+ActionView::Template::Error (The asset "main.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'main' %>
+  
+app/views/homes/index.html.erb:3
+Started GET "/" for ::1 at 2021-01-07 08:19:56 +0900
+Processing by HomesController#index as HTML
+  Rendering homes/index.html.erb within layouts/application
+  Rendered homes/index.html.erb within layouts/application (Duration: 13.9ms | Allocations: 5889)
+Completed 500 Internal Server Error in 16ms (ActiveRecord: 0.0ms | Allocations: 6238)
+
+
+  
+ActionView::Template::Error (The asset "main.js" is not present in the asset pipeline.
+):
+    1: <h1>Homes#index</h1>
+    2: <p>Find me in app/views/homes/index.html.erb</p>
+    3: <%= javascript_include_tag 'main' %>
+  
+app/views/homes/index.html.erb:3

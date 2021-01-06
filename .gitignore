@@ -1,1 +1,3 @@
 node_modules/
+!/app/assets/javascripts/.keep
+/app/assets/javascripts
