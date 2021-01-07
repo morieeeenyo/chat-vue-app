@@ -21,6 +21,11 @@ module.exports = {
     watchContentBase: true,
     publicPath: '/public/javascripts',
     openPage: 'index.html'
-	},
+  },
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
+    }
+  },
   plugins: [new VueLoaderPlugin()]
 }
