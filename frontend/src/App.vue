@@ -16,3 +16,12 @@ import ChatContainer from './components/ChatContainer.vue'
     }
   }
 </script>
+
+<style>
+.container {
+  display: flex;
+  margin: auto;
+  width: 70%;
+  height: 100vh;
+}
+</style>
