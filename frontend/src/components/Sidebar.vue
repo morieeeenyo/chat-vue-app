@@ -1,5 +1,5 @@
 <template>
-  <h1>Hello!</h1>
+  <div class="side_bar">SideBar</div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <sidebar></sidebar>
     <chat-container></chat-container>
   </div>
