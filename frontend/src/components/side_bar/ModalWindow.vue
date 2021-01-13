@@ -1,11 +1,23 @@
 <template>
-  <div id="overlay">
-    <div id="content">
+  <div id="overlay" @click="clickEvent">
+    <div id="content" @click="stopEvent">
       <p>これがモーダルウィンドウです。</p>
-      <p><button  @click="closeModal">close</button></p>
+      <p><button @click="clickEvent">close</button></p>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods :{
+    clickEvent: function(){
+      this.$emit('from-child')
+     },stopEvent: function(){
+      event.stopPropagation()
+    }
+  }
+}
+</script>
 
 <style>
 #overlay{

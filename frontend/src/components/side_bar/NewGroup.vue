@@ -1,7 +1,7 @@
 <template>
   <div class="side_bar_header">
-   <button href="#" class="btn-circle-flat" @click="openModal">+</button>
-   <ModalWindow></ModalWindow>
+   <button class="btn-circle-flat" @click="openModal">+</button>
+   <ModalWindow v-show="showContent" v-on:from-child="closeModal"></ModalWindow>
   </div>
 </template>
 
@@ -19,6 +19,8 @@ export default {
     methods:{
     openModal: function(){
       this.showContent = true
+    },closeModal: function(){
+      this.showContent = false
     }
    }
   }

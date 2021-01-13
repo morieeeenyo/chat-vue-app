@@ -224,7 +224,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Gro
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ModalWindow_vue_vue_type_template_id_9eb0bcee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalWindow.vue?vue&type=template&id=9eb0bcee& */ \"./src/components/side_bar/ModalWindow.vue?vue&type=template&id=9eb0bcee&\");\n/* harmony import */ var _ModalWindow_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalWindow.vue?vue&type=style&index=0&lang=css& */ \"./src/components/side_bar/ModalWindow.vue?vue&type=style&index=0&lang=css&\");\n/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ \"./node_modules/vue-loader/lib/runtime/componentNormalizer.js\");\n\nvar script = {}\n;\n\n\n/* normalize component */\n\nvar component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(\n  script,\n  _ModalWindow_vue_vue_type_template_id_9eb0bcee___WEBPACK_IMPORTED_MODULE_0__.render,\n  _ModalWindow_vue_vue_type_template_id_9eb0bcee___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,\n  false,\n  null,\n  null,\n  null\n  \n)\n\n/* hot reload */\nif (false) { var api; }\ncomponent.options.__file = \"src/components/side_bar/ModalWindow.vue\"\n/* harmony default export */ __webpack_exports__[\"default\"] = (component.exports);\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/ModalWindow.vue?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ModalWindow_vue_vue_type_template_id_9eb0bcee___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalWindow.vue?vue&type=template&id=9eb0bcee& */ \"./src/components/side_bar/ModalWindow.vue?vue&type=template&id=9eb0bcee&\");\n/* harmony import */ var _ModalWindow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalWindow.vue?vue&type=script&lang=js& */ \"./src/components/side_bar/ModalWindow.vue?vue&type=script&lang=js&\");\n/* harmony import */ var _ModalWindow_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ModalWindow.vue?vue&type=style&index=0&lang=css& */ \"./src/components/side_bar/ModalWindow.vue?vue&type=style&index=0&lang=css&\");\n/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ \"./node_modules/vue-loader/lib/runtime/componentNormalizer.js\");\n\n\n\n;\n\n\n/* normalize component */\n\nvar component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(\n  _ModalWindow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,\n  _ModalWindow_vue_vue_type_template_id_9eb0bcee___WEBPACK_IMPORTED_MODULE_0__.render,\n  _ModalWindow_vue_vue_type_template_id_9eb0bcee___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,\n  false,\n  null,\n  null,\n  null\n  \n)\n\n/* hot reload */\nif (false) { var api; }\ncomponent.options.__file = \"src/components/side_bar/ModalWindow.vue\"\n/* harmony default export */ __webpack_exports__[\"default\"] = (component.exports);\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/ModalWindow.vue?");
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/side_bar/ModalWindow.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/side_bar/ModalWindow.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n//\n//\n//\n//\n//\n//\n//\n//\n//\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  methods :{\n    clickEvent: function(){\n      this.$emit('from-child')\n     },stopEvent: function(){\n      event.stopPropagation()\n    }\n  }\n});\n\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/ModalWindow.vue?./node_modules/vue-loader/lib/index.js??vue-loader-options");
 
 /***/ }),
 
@@ -246,7 +257,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _New
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ModalWindow_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalWindow.vue */ \"./src/components/side_bar/ModalWindow.vue\");\n//\n//\n//\n//\n//\n//\n//\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    components:{\n      ModalWindow: _ModalWindow_vue__WEBPACK_IMPORTED_MODULE_0__.default\n    },\n    data: function (){\n      return {\n        showContent: false\n      }\n    },\n    methods:{\n    openModal: function(){\n      this.showContent = true\n    }\n   }\n  });\n\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/NewGroup.vue?./node_modules/vue-loader/lib/index.js??vue-loader-options");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ModalWindow_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalWindow.vue */ \"./src/components/side_bar/ModalWindow.vue\");\n//\n//\n//\n//\n//\n//\n//\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    components:{\n      ModalWindow: _ModalWindow_vue__WEBPACK_IMPORTED_MODULE_0__.default\n    },\n    data: function (){\n      return {\n        showContent: false\n      }\n    },\n    methods:{\n    openModal: function(){\n      this.showContent = true\n    },closeModal: function(){\n      this.showContent = false\n    }\n   }\n  });\n\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/NewGroup.vue?./node_modules/vue-loader/lib/index.js??vue-loader-options");
 
 /***/ }),
 
@@ -382,6 +393,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/components/side_bar/ModalWindow.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./src/components/side_bar/ModalWindow.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_vue_loader_lib_index_js_vue_loader_options_ModalWindow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalWindow.vue?vue&type=script&lang=js& */ \"./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/side_bar/ModalWindow.vue?vue&type=script&lang=js&\");\n /* harmony default export */ __webpack_exports__[\"default\"] = (_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalWindow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); \n\n//# sourceURL=webpack://frontend/./src/components/side_bar/ModalWindow.vue?");
+
+/***/ }),
+
 /***/ "./src/components/side_bar/ModalWindow.vue?vue&type=template&id=9eb0bcee&":
 /*!********************************************************************************!*\
   !*** ./src/components/side_bar/ModalWindow.vue?vue&type=template&id=9eb0bcee& ***!
@@ -466,7 +488,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": function() { return /* binding */ render; },\n/* harmony export */   \"staticRenderFns\": function() { return /* binding */ staticRenderFns; }\n/* harmony export */ });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\"div\", { attrs: { id: \"overlay\" } }, [\n    _c(\"div\", { attrs: { id: \"content\" } }, [\n      _c(\"p\", [_vm._v(\"これがモーダルウィンドウです。\")]),\n      _vm._v(\" \"),\n      _c(\"p\", [\n        _c(\"button\", { on: { click: _vm.closeModal } }, [_vm._v(\"close\")])\n      ])\n    ])\n  ])\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/ModalWindow.vue?./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": function() { return /* binding */ render; },\n/* harmony export */   \"staticRenderFns\": function() { return /* binding */ staticRenderFns; }\n/* harmony export */ });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"div\",\n    { attrs: { id: \"overlay\" }, on: { click: _vm.clickEvent } },\n    [\n      _c(\"div\", { attrs: { id: \"content\" }, on: { click: _vm.stopEvent } }, [\n        _c(\"p\", [_vm._v(\"これがモーダルウィンドウです。\")]),\n        _vm._v(\" \"),\n        _c(\"p\", [\n          _c(\"button\", { on: { click: _vm.clickEvent } }, [_vm._v(\"close\")])\n        ])\n      ])\n    ]\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/ModalWindow.vue?./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options");
 
 /***/ }),
 
@@ -477,7 +499,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": function() { return /* binding */ render; },\n/* harmony export */   \"staticRenderFns\": function() { return /* binding */ staticRenderFns; }\n/* harmony export */ });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"div\",\n    { staticClass: \"side_bar_header\" },\n    [\n      _c(\n        \"button\",\n        {\n          staticClass: \"btn-circle-flat\",\n          attrs: { href: \"#\" },\n          on: { click: _vm.openModal }\n        },\n        [_vm._v(\"+\")]\n      ),\n      _vm._v(\" \"),\n      _c(\"ModalWindow\")\n    ],\n    1\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/NewGroup.vue?./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": function() { return /* binding */ render; },\n/* harmony export */   \"staticRenderFns\": function() { return /* binding */ staticRenderFns; }\n/* harmony export */ });\nvar render = function() {\n  var _vm = this\n  var _h = _vm.$createElement\n  var _c = _vm._self._c || _h\n  return _c(\n    \"div\",\n    { staticClass: \"side_bar_header\" },\n    [\n      _c(\n        \"button\",\n        { staticClass: \"btn-circle-flat\", on: { click: _vm.openModal } },\n        [_vm._v(\"+\")]\n      ),\n      _vm._v(\" \"),\n      _c(\"ModalWindow\", {\n        directives: [\n          {\n            name: \"show\",\n            rawName: \"v-show\",\n            value: _vm.showContent,\n            expression: \"showContent\"\n          }\n        ],\n        on: { \"from-child\": _vm.closeModal }\n      })\n    ],\n    1\n  )\n}\nvar staticRenderFns = []\nrender._withStripped = true\n\n\n\n//# sourceURL=webpack://frontend/./src/components/side_bar/NewGroup.vue?./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options");
 
 /***/ }),
 
