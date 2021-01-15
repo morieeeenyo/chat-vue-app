@@ -11,8 +11,10 @@
 export default {
   methods :{
     clickEvent: function(){
+      // 親要素にイベントを渡す
       this.$emit('from-child')
      },stopEvent: function(){
+      //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()
     }
   }

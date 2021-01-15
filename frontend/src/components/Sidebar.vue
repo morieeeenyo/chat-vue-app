@@ -1,6 +1,7 @@
 <template>
   <div class="side_bar">
     <NewGroup></NewGroup>
+    <Groups></Groups>
   </div>
 </template>
 
