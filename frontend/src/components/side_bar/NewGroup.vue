@@ -41,6 +41,11 @@ export default {
   line-height: 40px; 
   text-align: center;
   border: 1px solid #ffffff;
+  /* ボタンは親要素の背景色を継承しないので別途設定 */
+  background-color: gray; 
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 24px;
   border-radius: 50%;
   overflow: hidden;
   transition: .4s;
