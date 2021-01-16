@@ -21,7 +21,7 @@ import ChatContainer from './components/ChatContainer.vue'
 .container {
   display: flex;
   margin: auto;
-  width: 70%;
+  width: 80%;
   height: 100vh;
 }
 </style>
