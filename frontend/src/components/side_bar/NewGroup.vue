@@ -56,4 +56,8 @@ export default {
   cursor: pointer;
 }
 
+.btn-circle-flat:focus {
+  outline: none;
+}
+
 </style>
