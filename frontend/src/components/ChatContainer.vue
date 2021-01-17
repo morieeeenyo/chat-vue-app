@@ -21,7 +21,7 @@
 
 <style scoped>
 .chat {
-  width: calc(100% - 300px);
+  width: calc(100% - 240px);
   background-color: #FFF;
   padding: 10px;
 }

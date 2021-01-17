@@ -18,7 +18,7 @@ import NewGroup from './side_bar/NewGroup.vue'
 
 <style>
  .side_bar {
-  width: 300px;
+  width: 240px;
   background-color: gray;
   padding: 20px;
 }
