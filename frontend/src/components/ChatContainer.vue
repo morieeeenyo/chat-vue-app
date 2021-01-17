@@ -20,6 +20,7 @@
 </script>
 
 <style scoped>
+/* チャット画面(右側白いところ) */
 .chat {
   width: calc(100% - 240px);
   background-color: #FFF;

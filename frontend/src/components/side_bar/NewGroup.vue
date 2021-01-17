@@ -32,6 +32,7 @@ export default {
 </script>
 
 <style scoped>
+  /* +ボタン */
   .btn-circle-flat {
   display: inline-block;
   text-decoration: none;
@@ -47,15 +48,14 @@ export default {
   font-weight: bold;
   font-size: 24px;
   border-radius: 50%;
-  overflow: hidden;
-  transition: .4s;
 }
 
-.btn-circle-flat:hover {
   /* ボタンにカーソルが乗ったときにカーソルを変えて押しやすくする */
+.btn-circle-flat:hover {
   cursor: pointer;
 }
 
+  /* ボタンをクリックした時に青い枠が出ないようにする */
 .btn-circle-flat:focus {
   outline: none;
 }

@@ -17,6 +17,7 @@ import NewGroup from './side_bar/NewGroup.vue'
 </script>
 
 <style>
+/* サイドバー(左側のグレー) */
  .side_bar {
   width: 240px;
   background-color: gray;

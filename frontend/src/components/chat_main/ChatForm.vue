@@ -12,17 +12,20 @@ export default {
 </script>
 
 <style>
+  /* form全体 */
   .message-form {
     display: flex;
     width: 90%;
     height: 40px;
     margin: 0 auto;
   }
-
+   
+   /* テキスト入力欄 */
   .message-input {
     width: calc(100% - 80px);
   }
 
+  /* 送信ボタン */
   .message-submit {
     width: 80px;
     background-color: gray;

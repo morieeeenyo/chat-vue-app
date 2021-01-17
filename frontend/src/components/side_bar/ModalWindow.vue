@@ -22,6 +22,7 @@ export default {
 </script>
 
 <style>
+/* モーダルの背景(透明) */
 #overlay{
   /*　要素を重ねた時の順番　*/
   z-index:1;
@@ -41,6 +42,7 @@ export default {
 
 }
 
+/* モーダルウィンドウ内の背景(白色部分) */
 #content{
   z-index:2;
   width:50%;

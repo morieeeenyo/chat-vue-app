@@ -1,6 +1,6 @@
 <template>
-  <div class="vue">
-    <ul class="tabs">
+  <div class="groups">
+    <ul class="group-list">
       <!-- 以下は実装途中 -->
       <li>
         チャットグループ1
@@ -21,20 +21,25 @@
 </template>
 
 <style>
- .tabs {
+ /* グループのリスト */
+ .group-list {
    padding: 0;
  }
- .tabs > li {
+
+ /* グループリストの中の一つ一つのグループ名の表示 */
+ .group-list > li {
    color: #fff;
    list-style: none;
    font-size: 18px;
    margin-bottom: 16px;
  }
 
- .tabs > li:hover {
+  /* グループ名にカーソルが乗った時にポインターにする */
+ .groups-list > li:hover {
    cursor: pointer; 
-   /* チャットグループ名にカーソルが乗ったときクリックしやすくする */
  }
+
+  /* メンバー数の表示 */
   .member-count {
     background-color: #f36767;
     color: #fff;

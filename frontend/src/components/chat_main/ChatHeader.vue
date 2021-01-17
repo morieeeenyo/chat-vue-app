@@ -15,6 +15,7 @@ export default {
 </script>
 
 <style>
+  /* ヘッダー全体 */
   .chat-header {
     display: flex;
     justify-content: space-between;
@@ -26,21 +27,25 @@ export default {
     padding: 0 10px;
   }
 
+   /* グループ名と編集ボタン */
   .header-left {
     display: flex;
     justify-content: space-between;
   }
 
+  /* グループ名 */
   .group-name {
     margin: 0 20px 0 0;
     font-size: 24px;
   }
 
+  /* 編集ボタンと削除ボタン */
   .chat-header a {
     color: gray;
     font-size: 12px;
   }
 
+  編集ボタンと削除ボタンにカーソルが乗ったときにポインターに変更
   .chat-header a:hover {
     cursor: pointer;
   }
