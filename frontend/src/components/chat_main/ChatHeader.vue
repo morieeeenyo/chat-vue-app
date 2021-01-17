@@ -40,4 +40,8 @@ export default {
     color: gray;
     font-size: 12px;
   }
+
+  .chat-header a:hover {
+    cursor: pointer;
+  }
 </style>
