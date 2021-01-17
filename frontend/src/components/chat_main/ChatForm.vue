@@ -20,13 +20,16 @@ export default {
   }
 
   .message-input {
-    width: 100%;
+    width: calc(100% - 80px);
   }
 
   .message-submit {
-    width: 100px;
+    width: 80px;
     background-color: gray;
     color: #FFF;
-    margin: 0 10px;
+    margin: 0 20px;
+    border-radius: 2px;
+    border-style: none;
+    font-size: 18px;
   }
 </style>
