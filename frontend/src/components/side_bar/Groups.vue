@@ -2,16 +2,16 @@
   <div class="vue">
     <ul class="tabs">
       <!-- 以下は実装途中 -->
-      <li v-on:click="change('1')" v-bind:class="{'active': isActive === '1'}">
+      <li>
         チャットグループ1
         <!-- チャットの参加人数 -->
         <span class="member-count">3</span>
       </li>
-      <li v-on:click="change('2')" v-bind:class="{'active': isActive === '2'}">
+      <li>
         チャットグループ2
         <span class="member-count">2</span>
       </li>
-      <li v-on:click="change('3')" v-bind:class="{'active': isActive === '3'}">
+      <li>
         チャットグループ3
         <span class="member-count">1</span>
       </li>
