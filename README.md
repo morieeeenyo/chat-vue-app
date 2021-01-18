@@ -32,6 +32,7 @@ Things you may want to cover:
 # chat_messagesテーブル
 |column_name|type|options|
 |message_text|text|null: false|
+|group|reference|null: false, foreing_key: true|
 
 ### ユーザーを管理する機能は今回の研修では不要とあったためusersテーブルおよび
 各テーブルのuser_idカラムは作成しない。それに伴い、フロントで実装したチャットの参加人数
