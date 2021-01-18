@@ -19,11 +19,10 @@
 
 /public/assets
 .byebug_history
-
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-public/uploads/*
 
+public/uploads/*
 /public/packs
 /public/packs-test
 /node_modules
@@ -33,4 +32,5 @@ yarn-debug.log*
 node_modules/
 !/app/assets/javascripts/.keep
 /app/assets/javascripts
-/frontend/node_modules 
+/frontend/node_modules/
+frontend/node_modules
