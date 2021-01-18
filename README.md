@@ -22,3 +22,17 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+# DB設計
+
+## chat_groupsテーブル
+|column_name|type|options|
+|group_name|string|null: false, default: ""|
+
+# chat_messagesテーブル
+|column_name|type|options|
+|message_text|text|null: false|
+
+### ユーザーを管理する機能は今回の研修では不要とあったためusersテーブルおよび
+各テーブルのuser_idカラムは作成しない。それに伴い、フロントで実装したチャットの参加人数
+はDBのデータを参照っせず固定された数字を扱うこととする。
