@@ -1,7 +1,11 @@
 <template>
   <div id="overlay" @click="clickEvent">
     <div id="content" @click="stopEvent">
-      <p>これがモーダルウィンドウです。</p>
+      <form>
+      <h3>チャットグループ新規作成</h3>
+      <input type="text" placeholder="チャットグループの名前" name="group_name" v-model="form.group_name" >
+      <button type="submit" @click="post">作成</button>
+      </form>
       <p><button @click="clickEvent">close</button></p>
     </div>
   </div>
@@ -9,7 +13,18 @@
 
 <script>
 export default {
+  data: function () { 
+    return {
+        form: {
+          group_name: ""
+        },             //v-model="form.group_name"と連動。初期値を空文字列で設定
+     }       
+      },
   methods :{
+    post: function(e) {
+      e.preventDefault()
+      console.log(e)
+    },
     clickEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')
