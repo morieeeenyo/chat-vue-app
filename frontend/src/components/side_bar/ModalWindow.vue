@@ -1,6 +1,7 @@
 <template>
   <div id="overlay" @click="clickEvent">
     <div id="content" @click="stopEvent">
+      <!-- submit.preventでevent.preventDefaultと同様の動きになる -->
       <form @submit.prevent="createGroup">
       <h3>チャットグループ新規作成</h3>
       <input type="text" placeholder="チャットグループの名前" name="group_name" v-model="chat_group.group_name" >
