@@ -26,8 +26,8 @@ export default {
       axios
         .post('/api/v1/chat_groups', this.chat_group)
         .then(response => {
-          let e = response.data;
-          this.$router.push({ name: '', params: { id: e.id } });
+          let e = response.data.group;
+          this.$router.push({ name: 'ChatView', params: { id: e.id } });
         })
     },
     clickEvent: function(){
