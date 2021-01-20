@@ -23,9 +23,6 @@ Vue.use(VueAxios, axios)
 import VueRouter from 'vue-router'
 const router = new VueRouter({
   routes: [
-    { path: '/chat_group/new',  // :id は数値のみに制限する
-    name: 'GroupCreateForm',
-    component: ModalWindow  },
     { path: '/chat_group/:id(\\d+)',  // :id は数値のみに制限する
     name: 'ChatView',
     component: ChatContainer  }
@@ -39,7 +36,7 @@ Vue.use(VueRouter)
       Sidebar,
       ChatContainer,
     },
-      router
+      router //routerはcomponentではないのでここにexportする
   }
 </script>
 

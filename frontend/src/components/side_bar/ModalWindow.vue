@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'; //ajaxを行うためにimport
 export default {
   data: function () { 
     return {
@@ -24,10 +24,10 @@ export default {
   methods :{
     createGroup: function(e) {
       axios
-        .post('/api/v1/chat_groups', this.chat_group)
+        .post('/api/v1/chat_groups', this.chat_group) //api/v1/groups#createへのルーティング
         .then(response => {
-          let e = response.data.group;
-          this.$router.push({ name: 'ChatView', params: { id: e.id } });
+          let e = response.data.group; //返却されたjsonからgroupの情報を取得
+          this.$router.push({ name: 'ChatView', params: { id: e.id } }); //groupのidをパラメータとして渡す
         })
     },
     clickEvent: function(){
