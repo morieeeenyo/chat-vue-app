@@ -1,10 +1,10 @@
 <template>
   <div id="overlay" @click="clickEvent">
     <div id="content" @click="stopEvent">
-      <form>
+      <form @submit.prevent="createGroup">
       <h3>チャットグループ新規作成</h3>
-      <input type="text" placeholder="チャットグループの名前" name="group_name" v-model="form.group_name" >
-      <button type="submit" @click="post">作成</button>
+      <input type="text" placeholder="チャットグループの名前" name="group_name" v-model="chat_group.group_name" >
+      <button type="submit">作成</button>
       </form>
       <p><button @click="clickEvent">close</button></p>
     </div>
@@ -12,18 +12,23 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data: function () { 
     return {
-        form: {
+        chat_group: {
           group_name: ""
         },             //v-model="form.group_name"と連動。初期値を空文字列で設定
      }       
       },
   methods :{
-    post: function(e) {
-      e.preventDefault()
-      console.log(e)
+    createGroup: function(e) {
+      axios
+        .post('/api/v1/chat_groups', this.chat_group)
+        .then(response => {
+          let e = response.data;
+          this.$router.push({ name: '', params: { id: e.id } });
+        })
     },
     clickEvent: function(){
       // 親要素にイベントを渡す
