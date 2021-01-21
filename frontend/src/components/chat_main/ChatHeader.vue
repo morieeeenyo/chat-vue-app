@@ -1,7 +1,7 @@
 <template>
   <div class="chat-header">
     <div class="header-left">
-      <p class="group-name">チャットグループ1</p>
+      <p class="group-name">{{ group.group_name }}</p>
       <a>編集</a> 
     </div>
     <a>チャットグループを削除する</a>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  
+  props: ['group']
 }
 </script>
 
