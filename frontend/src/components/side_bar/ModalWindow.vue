@@ -28,7 +28,7 @@ export default {
         .post('/api/v1/chat_groups', this.chat_group) //api/v1/groups#createへのルーティング
         .then(response => {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
-          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す
+          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。遷移先は詳細画面にしたい
         })
     },
     clickEvent: function(){

@@ -1,6 +1,7 @@
 <template>
   <div class="chat-header">
     <div class="header-left">
+      <!-- グループの情報は親から受け継ぐ -->
       <p class="group-name">{{ group.group_name }}</p>
       <a>編集</a> 
     </div>
@@ -10,7 +11,7 @@
 
 <script>
 export default {
-  props: ['group']
+  props: ['group'] //親から受け継いだグループのデータを表示するための属性。値には現在表示しているグループの情報が入っている。
 }
 </script>
 

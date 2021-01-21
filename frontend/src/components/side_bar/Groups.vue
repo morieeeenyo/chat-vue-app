@@ -24,7 +24,7 @@
 export default {
   data: function () {
     return {
-      groups: []
+      groups: [] //group一覧機能実装時に使う。もし必要なさそうならグループ作成時はコメントアウトする。
     }
   },
 }
