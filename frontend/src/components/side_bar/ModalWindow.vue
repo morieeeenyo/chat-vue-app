@@ -27,8 +27,8 @@ export default {
       axios
         .post('/api/v1/chat_groups', this.chat_group) //api/v1/groups#createへのルーティング
         .then(response => {
-          let e = response.data.group; //返却されたjsonからgroupの情報を取得
-          this.$router.push({ name: 'ChatView', params: { id: e.id } }); //groupのidをパラメータとして渡す
+          let group = response.data.group; //返却されたjsonからgroupの情報を取得
+          this.$router.push({ name: 'ChatGroups', params: { id: group.id } }); //groupのidをパラメータとして渡す
         })
     },
     clickEvent: function(){
