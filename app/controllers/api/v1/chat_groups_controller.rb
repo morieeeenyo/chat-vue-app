@@ -8,6 +8,11 @@ class Api::V1::ChatGroupsController < ApiController
     end
   end
 
+  def show 
+    @group = ChatGroup.find(params[:id])
+    render json: @group
+  end
+
   private 
 
   def group_parans
