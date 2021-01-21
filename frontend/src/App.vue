@@ -12,7 +12,7 @@ import Vue from 'vue'
 // コンポーネントの読み込み
 import Sidebar from './components/Sidebar.vue'
 import ChatContainer from './components/ChatContainer.vue'
-import ModalWindow from './components/side_bar/ModalWindow.vue'
+import Groups from './components/side_bar/Groups.vue'
 
 // 以下はajaxを行うために必要
 import axios from 'axios' 
@@ -24,7 +24,7 @@ import VueRouter from 'vue-router'
 const router = new VueRouter({
   routes: [
     { path: '/chat_group/:id(\\d+)',  // :id は数値のみに制限する
-    name: 'ChatView',
+    name: 'ChatGroup',
     component: ChatContainer  }
   ]
 })
