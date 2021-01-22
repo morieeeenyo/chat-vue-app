@@ -40,10 +40,7 @@ Vue.use(VueRouter)
       }
     },mounted () {
     // 同期したときの処理。これがないとリロードした時にグループの情報が消える
-    axios
-    // chat_groups#showアクションへのルーティング
-      .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
-      .then(response => (this.group_data = response.data))
+    this.fetchData()
    },
     components:{
       Sidebar,
