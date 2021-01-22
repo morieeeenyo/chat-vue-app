@@ -1,5 +1,5 @@
 <template>
-  <div id="overlay" @click="clickEvent">
+  <div id="overlay" @click="emitCloseEvent">
     <div id="content" @click="stopEvent">
       <!-- submit.preventでevent.preventDefaultと同様の動きになる -->
       <form @submit.prevent="createGroup" id="group_form">
@@ -13,7 +13,7 @@
           <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chat_group.group_name" >
           <button type="submit" id="group_form_submit">作成</button>
       </form>
-     <p><button @click="clickEvent" id="close_button">close</button></p>
+     <p><button @click="emitCloseEvent" id="close_button">close</button></p>
     </div>
   </div>
 </template>
@@ -36,19 +36,20 @@ export default {
         .then(response => {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
           this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
-          this.$emit('from-child') //作成後モーダルを閉じる
+          this.chat_group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
+          this.emitCloseEvent() //モーダルを閉じる
         })
         .catch(error => {
-          console.error(error);
+          console.error(error); //コンソールにエラーを表示。
           if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors;
+            this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
           }
         });
     },
-    clickEvent: function(){
+    emitCloseEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')
-      this.errors = ""
+      this.errors = "" //エラーメッセージをリセットする
      },stopEvent: function(){
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()
