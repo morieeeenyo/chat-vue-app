@@ -3,9 +3,14 @@
     <div id="content" @click="stopEvent">
       <!-- submit.preventでevent.preventDefaultと同様の動きになる -->
       <form @submit.prevent="createGroup">
-      <h3>チャットグループ新規作成</h3>
-      <input type="text" placeholder="チャットグループの名前" name="group_name" v-model="chat_group.group_name" >
-      <button type="submit">作成</button>
+        <div v-if="errors.length != 0">
+          <ul v-for="e in errors" :key="e">
+           <li class="error-messages"><font color="red">{{ e }}</font></li>
+          </ul>
+        </div>
+        <h3>チャットグループ新規作成</h3>
+          <input type="text" placeholder="チャットグループの名前" name="group_name" v-model="chat_group.group_name" >
+          <button type="submit">作成</button>
       </form>
       <p><button>close</button></p>
     </div>
@@ -19,7 +24,8 @@ export default {
     return {
         chat_group: {
           group_name: ""
-        },             //v-model="form.group_name"と連動。初期値を空文字列で設定
+        },   
+        errors: ''          //v-model="form.group_name"と連動。初期値を空文字列で設定
      }       
       },
   methods :{
@@ -31,10 +37,17 @@ export default {
           this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
           this.$emit('from-child') //作成後モーダルを閉じる
         })
+        .catch(error => {
+          console.error(error);
+          if (error.response.data && error.response.data.errors) {
+            this.errors = error.response.data.errors;
+          }
+        });
     },
     clickEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')
+      this.errors = ""
      },stopEvent: function(){
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()
@@ -70,5 +83,9 @@ export default {
   width:50%;
   padding: 1em;
   background:#fff;
+}
+
+.error-messages {
+  list-style: none;
 }
 </style>
