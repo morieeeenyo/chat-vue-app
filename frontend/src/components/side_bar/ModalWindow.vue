@@ -4,6 +4,7 @@
       <!-- submit.preventでevent.preventDefaultと同様の動きになる -->
       <form @submit.prevent="createGroup" id="group_form">
         <div v-if="errors.length != 0">
+          <!-- エラーメッセージの表示 -->
           <ul v-for="e in errors" :key="e">
            <li class="error-messages"><font color="red">{{ e }}</font></li>
           </ul>
@@ -84,16 +85,18 @@ export default {
   padding: 1em;
   background:#fff;
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  border-radius: 2px;
 }
 
 #group_form {
+  /* formが狭く感じたので余白をつけた */
   padding: 0 3%;
 }
 
-#group_form_submit {
+#content button {
+  /* グループ作成ボタンと閉じるボタン共通のスタイル */
   width: 80px;
-  background-color: gray;
   color: #FFF;
   margin: 0 20px;
   border-radius: 2px;
@@ -101,7 +104,13 @@ export default {
   font-size: 18px;
 }
 
+#group_form_submit {
+  /* グループ作成ボタン。メッセージ送信ボタンとスタイルは同じ */
+  background-color: gray;
+}
+
 #group_name_input {
+  /* グループ名の入力欄 */
   width: 200px;
   border-radius: 2px;
   font-size: 18px;
@@ -110,20 +119,17 @@ export default {
 }
 
 #close_button {
-  width: 80px;
+  /* 閉じるボタン */
   background-color: red;
-  color: #FFF;
-  margin: 0 20px;
-  border-radius: 2px;
-  border-style: none;
-  font-size: 18px;
 }
 
 .error-messages {
+  /* エラーメッセージの先頭の・をなくす */
   list-style: none;
 }
 
-button:hover {
+#content button:hover {
+  /* ボタンにホバーした時のスタイル */
   cursor: pointer;
   opacity: 0.8;
 }
