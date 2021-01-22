@@ -1,7 +1,7 @@
 <template>
  <div class="chat">
    <!-- 各コンポーネントにgroupの情報を渡す -->
-   <ChatHeader :group="group"></ChatHeader>
+   <ChatHeader :group_name="group.group_name"></ChatHeader>
    <Messages></Messages>
    <ChatForm></ChatForm>
  </div>
@@ -14,23 +14,12 @@
   // 以下はajaxを行うために必要
   import axios from 'axios' 
   export default {
-    data: function () {
-    return {
-      group: {} //初期値を空オブジェクトで定義
-    }
-  },mounted () { 
-    // コンポーネントが読まれた際に以下の処理を実行
-    axios
-    // chat_groups#showアクションへのルーティング
-      .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
-      .then(response => (this.group = response.data))
-      // response.dataには取得したグループの情報が入っている
-  },
     components:{
       ChatHeader,
       Messages,
       ChatForm
-    }
+    },
+    props: ['group'] //親から受け継いだグループの情報
   }
 </script>
 

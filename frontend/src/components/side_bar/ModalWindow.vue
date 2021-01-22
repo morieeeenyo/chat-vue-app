@@ -7,7 +7,7 @@
       <input type="text" placeholder="チャットグループの名前" name="group_name" v-model="chat_group.group_name" >
       <button type="submit">作成</button>
       </form>
-      <p><button @click="clickEvent">close</button></p>
+      <p><button>close</button></p>
     </div>
   </div>
 </template>
@@ -28,7 +28,8 @@ export default {
         .post('/api/v1/chat_groups', this.chat_group) //api/v1/groups#createへのルーティング
         .then(response => {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
-          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。遷移先は詳細画面にしたい
+          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
+          this.$emit('from-child') //作成後モーダルを閉じる
         })
     },
     clickEvent: function(){

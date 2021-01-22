@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <sidebar></sidebar>
-    <chat-container></chat-container>
+    <!-- 現在のグループの情報を子孫へ受け継ぐ -->
+    <chat-container :group="group_data"></chat-container>
   </div>
 </template>
 
@@ -23,7 +24,8 @@ Vue.use(VueAxios, axios)
 import VueRouter from 'vue-router'
 const router = new VueRouter({
   routes: [
-    { path: '/chat_group/:id(\\d+)',  // :id は数値のみに制限する
+    // グループの情報の取得
+    { path: '/chat_groups/:id(\\d+)',  // :id は数値のみに制限する
     name: 'ChatGroup',
     component: ChatContainer  }
   ]
@@ -32,9 +34,35 @@ const router = new VueRouter({
 Vue.use(VueRouter)
 
   export default {
+    data: function() {
+      return {
+        group_data: {} //初期値のセット
+      }
+    },mounted () {
+    // 同期したときの処理。これがないとリロードした時にグループの情報が消える
+    axios
+    // chat_groups#showアクションへのルーティング
+      .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
+      .then(response => (this.group_data = response.data))
+   },
     components:{
       Sidebar,
       ChatContainer,
+    },
+    methods: {
+      fetchData: function() {
+        axios
+    // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
+      .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
+      .then(response => {
+        this.group_data = response.data
+       }
+      )
+      }
+    },
+     // ルーティングに変更があった際のイベント。これで非同期で処理を反映する
+    watch: {
+    '$route' : 'fetchData'
     },
       router //routerはcomponentではないのでここにexportする
   }
