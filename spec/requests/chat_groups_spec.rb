@@ -32,7 +32,7 @@ RSpec.describe "ChatGroups", type: :request do
       
       it "リクエストに失敗すること" do
         post api_v1_chat_groups_path, params: { chat_group: @chat_group  }
-        expect(response).to have_http_status(422) #不正なパラメータが送信された時、422でステータスコードが返ってくる
+        expect(response).to have_http_status(422) #リクエストには成功したがパラメータが不正のとき、422でステータスコードが返ってくる
       end
 
       it "chat_groupsテーブルのデータが増えていないこと" do
