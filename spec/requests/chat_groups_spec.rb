@@ -9,7 +9,7 @@ RSpec.describe "ChatGroups", type: :request do
     context "パラメータが正しいとき" do
       it "リクエストが成功すること" do
         post api_v1_chat_groups_path, params: { chat_group: @chat_group  }
-        expect(response).to have_http_status(201) #json形式で返却する場合成功時のステータスは201
+        expect(response).to have_http_status(201) #リソースを保存する処理の成功時のステータスは201
       end
   
       it "chat_groupsテーブルに一つデータが追加されること" do
