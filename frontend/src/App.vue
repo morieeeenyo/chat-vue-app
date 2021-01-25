@@ -39,6 +39,9 @@ Vue.use(VueRouter)
         group_data: {} //初期値のセット
       }
     },mounted () {
+      if (this.$route.path === '/') {
+        return null;
+      }
     // 同期したときの処理。これがないとリロードした時にグループの情報が消える
     this.fetchGroup()
    },
