@@ -13,20 +13,20 @@ RSpec.describe "ChatGroups", type: :request do
     
     context "パラメータが正しいとき" do
       it "リクエストが成功すること" do
-        post api_v1_chat_groups_path, params: { chat_group: @chat_group_params } 
+        post api_v1_chat_groups_path,  xhr: true, params: { chat_group: @chat_group_params } 
         #リソースを保存する処理の成功時のステータスは201
         expect(response).to have_http_status(201) 
       end
   
       it "chat_groupsテーブルに一つデータが追加されること" do
         expect do  #長いのでブロックで引数に渡してます
-         post api_v1_chat_groups_path, params: { chat_group: @chat_group_params  }
+         post api_v1_chat_groups_path, xhr: true, params: { chat_group: @chat_group_params  }
          #ChatGroupモデルの数が1増えていることを検証
         end.to change(ChatGroup, :count).by(1) 
       end
   
       it "json形式で正しくデータが返却されること" do
-        post api_v1_chat_groups_path, params: { chat_group: @chat_group_params  }
+        post api_v1_chat_groups_path, xhr: true, params: { chat_group: @chat_group_params  }
         #返却されたデータをjson形式に変換     
         json = JSON.parse(response.body) 
         #パラメータとして送った値とレスポンスの中身が合っているか検証
@@ -42,7 +42,7 @@ RSpec.describe "ChatGroups", type: :request do
       end
       
       it "リクエストに失敗すること" do
-        post api_v1_chat_groups_path, params: { chat_group: @chat_group_params  }
+        post api_v1_chat_groups_path, xhr: true, params: { chat_group: @chat_group_params  }
         #リクエストには成功したがパラメータが不正のとき、422でステータスコードが返ってくる
         expect(response).to have_http_status(422) 
       end
@@ -50,13 +50,13 @@ RSpec.describe "ChatGroups", type: :request do
       it "chat_groupsテーブルのデータが増えていないこと" do
         #長いのでブロックで引数に渡してます
         expect do  
-          post api_v1_chat_groups_path, params: { chat_group: @chat_group_params  }
+          post api_v1_chat_groups_path, xhr: true, params: { chat_group: @chat_group_params  }
           #ChatGroupモデルの数が増えていないことを検証
         end.to change(ChatGroup, :count).by(0) 
       end
 
       it "エラーメッセージがjson形式で返却されること" do
-        post api_v1_chat_groups_path, params: { chat_group: @chat_group_params  }
+        post api_v1_chat_groups_path, xhr: true, params: { chat_group: @chat_group_params  }
         #返却されたデータをjson形式に変換
         json = JSON.parse(response.body) 
         # コントローラーのエラーハンドリングでバリデーションに
@@ -76,13 +76,13 @@ RSpec.describe "ChatGroups", type: :request do
     
     context "グループが存在するとき" do
       it "リクエストに成功すること" do       
-        get api_v1_chat_group_path(@chat_group)
+        get api_v1_chat_group_path(@chat_group), xhr: true
         #getメソッドを使用した際の成功ステータスは200
         expect(response.status).to eq 200
       end
 
       it "JSON形式で正しくデータが返却されること" do       
-        get api_v1_chat_group_path(@chat_group)
+        get api_v1_chat_group_path(@chat_group), xhr: true
         json = JSON.parse(response.body)        
         #送ったパラメータとレスポンスのデータが一致しているか検証
         expect(@chat_group['id']).to eq json['id']
@@ -93,7 +93,7 @@ RSpec.describe "ChatGroups", type: :request do
       it "idがnilのとき" do    
         @chat_group.id = nil
         expect  do
-          get api_v1_chat_group_path(@chat_group)
+          get api_v1_chat_group_path(@chat_group), xhr: true
           #idがnilのときはリクエストがそもそも送信できない
         end.to raise_error ActionController::UrlGenerationError 
       end
@@ -103,14 +103,14 @@ RSpec.describe "ChatGroups", type: :request do
       it "idが0のときエラーが発生すること" do       
         @chat_group.id = 0
         expect  do
-          get api_v1_chat_group_path(@chat_group)  
+          get api_v1_chat_group_path(@chat_group), xhr: true  
         end.to raise_error ActiveRecord::RecordNotFound 
       end
 
       it "idがfloat型のときエラーが発生すること" do       
         @chat_group.id = 1.5
         expect  do
-          get api_v1_chat_group_path(@chat_group)  
+          get api_v1_chat_group_path(@chat_group), xhr: true  
         end.to raise_error ActiveRecord::RecordNotFound 
       end
       
