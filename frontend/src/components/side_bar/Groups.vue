@@ -1,9 +1,9 @@
 <template>
   <div class="groups">
-    <ul class="group-list">
+    <ul class="group-list" v-for="group in groups" :key="group.id">
       <!-- 以下は実装途中 -->
       <li>
-        チャットグループ1
+        {{ group.group_name }}
         <!-- チャットの参加人数 -->
         <span class="member-count">3</span>
       </li>
@@ -19,6 +19,16 @@
     </ul>
   </div>
 </template>
+
+<script>
+export default {
+  data: function () {
+    return {
+      groups: [] //group一覧機能実装時に使う。もし必要なさそうならグループ作成時はコメントアウトする。
+    }
+  },
+}
+</script>
 
 <style>
  /* グループのリスト */

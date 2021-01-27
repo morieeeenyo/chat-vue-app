@@ -1,6 +1,7 @@
 <template>
  <div class="chat">
-   <ChatHeader></ChatHeader>
+   <!-- 各コンポーネントにgroupの情報を渡す -->
+   <ChatHeader :group_name="group.group_name"></ChatHeader>
    <Messages></Messages>
    <ChatForm></ChatForm>
  </div>
@@ -10,12 +11,15 @@
   import ChatHeader from './chat_main/ChatHeader.vue'
   import Messages from './chat_main/Messages.vue'
   import ChatForm from './chat_main/ChatForm.vue'
+  // 以下はajaxを行うために必要
+  import axios from 'axios' 
   export default {
     components:{
       ChatHeader,
       Messages,
       ChatForm
-    }
+    },
+    props: ['group'] //親から受け継いだグループの情報
   }
 </script>
 
