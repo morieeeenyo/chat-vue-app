@@ -6,7 +6,6 @@
         <!-- チャットの参加人数 -->
         <span class="member-count">3</span>
       </li>
-      <!-- ここまで実装途中 -->
     </ul>
   </div>
 </template>
