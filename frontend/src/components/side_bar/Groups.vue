@@ -1,19 +1,10 @@
 <template>
   <div class="groups">
     <ul class="group-list" v-for="group in groups" :key="group.id">
-      <!-- 以下は実装途中 -->
-      <li>
-        {{ group.group_name }}
+      <li class="group-list-item">
+        <p>{{ group.group_name }}</p>
         <!-- チャットの参加人数 -->
         <span class="member-count">3</span>
-      </li>
-      <li>
-        チャットグループ2
-        <span class="member-count">2</span>
-      </li>
-      <li>
-        チャットグループ3
-        <span class="member-count">1</span>
       </li>
       <!-- ここまで実装途中 -->
     </ul>
@@ -21,12 +12,24 @@
 </template>
 
 <script>
+// Vueのインポート
+import Vue from 'vue'
+
+// 以下はajaxを行うために必要
+import axios from 'axios' 
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios) 
+
 export default {
   data: function () {
     return {
       groups: [] //group一覧機能実装時に使う。もし必要なさそうならグループ作成時はコメントアウトする。
     }
-  },
+  },mounted() {
+     axios
+    .get('/api/v1/chat_groups.json')
+    .then(response => (this.groups = response.data.groups))
+  }
 }
 </script>
 
@@ -37,16 +40,27 @@ export default {
  }
 
  /* グループリストの中の一つ一つのグループ名の表示 */
- .group-list > li {
+ .group-list-item {
    color: #fff;
    list-style: none;
    font-size: 18px;
    margin-bottom: 16px;
+   display: flex;
+   justify-content: space-between;
  }
 
   /* グループ名にカーソルが乗った時にポインターにする */
- .groups-list > li:hover {
+ .group-list-item:hover {
    cursor: pointer; 
+ }
+
+ .group-list-item > p {
+   width: 70%;
+   margin: 0;
+   /* グループ名が長いときに途中から…で省略 */
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
  }
 
   /* メンバー数の表示 */

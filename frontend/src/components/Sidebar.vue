@@ -12,7 +12,7 @@ import NewGroup from './side_bar/NewGroup.vue'
     components:{
       Groups,
       NewGroup,
-    }
+    },
   }
 </script>
 
@@ -22,5 +22,6 @@ import NewGroup from './side_bar/NewGroup.vue'
   width: 240px;
   background-color: gray;
   padding: 20px;
+  overflow: scroll;
 }
 </style>

@@ -36,14 +36,13 @@ Vue.use(VueRouter)
   export default {
     data: function() {
       return {
-        group_data: {} //初期値のセット
+        group_data: {}, //初期値のセット
       }
     },mounted () {
       if (this.$route.path === '/') {
-        return null;
-      }
-    // 同期したときの処理。これがないとリロードした時にグループの情報が消える
-    this.fetchGroup()
+        return null; // ルートパスに同期したときは何もしない。
+    }
+       this.fetchGroup() //これがないとリロードした時にグループの情報が消える
    },
     components:{
       Sidebar,
