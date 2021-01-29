@@ -36,7 +36,7 @@ Vue.use(VueRouter)
   export default {
     data: function() {
       return {
-        group_data: {}, //初期値のセット
+        group_data: {}, //現在のグループ
       }
     },
     components:{
