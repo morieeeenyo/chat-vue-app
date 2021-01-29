@@ -38,18 +38,16 @@ Vue.use(VueRouter)
       return {
         group_data: {}, //初期値のセット
       }
-    },mounted () {
-      if (this.$route.path === '/') {
-        return null; // ルートパスに同期したときは何もしない。
-    }
-       this.fetchGroup() //これがないとリロードした時にグループの情報が消える
-   },
+    },
     components:{
       Sidebar,
       ChatContainer,
     },
     methods: {
       fetchGroup: function() {
+        if (this.$route.path === '/') {
+        return null; // ルートパスに同期したときは何もしない。
+       }
         axios
     // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
       .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
@@ -61,7 +59,12 @@ Vue.use(VueRouter)
     },
      // ルーティングに変更があった際のイベント。これで非同期で処理を反映する
     watch: {
-    '$route' : 'fetchGroup'
+    '$route': {
+      handler: function () {
+        this.fetchGroup()
+      },
+      immediate: true
+     } 
     },
       router //routerはcomponentではないのでここにexportする
   }
