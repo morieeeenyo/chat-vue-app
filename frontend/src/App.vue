@@ -2,7 +2,7 @@
   <div class="container">
     <sidebar></sidebar>
     <!-- 現在のグループの情報を子孫へ受け継ぐ -->
-    <chat-container :group="group_data"></chat-container>
+    <chat-container :current_group="group_data"></chat-container>
   </div>
 </template>
 
@@ -49,10 +49,10 @@ Vue.use(VueRouter)
         return null; // ルートパスに同期したときは何もしない。
        }
         axios
-    // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
+        // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
       .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
       .then(response => {
-        this.group_data = response.data
+        this.group_data = response.data 
        }
       )
       }
@@ -63,7 +63,7 @@ Vue.use(VueRouter)
       handler: function () {
         this.fetchGroup()
       },
-      immediate: true
+      immediate: true //同期したときの処理
      } 
     },
       router //routerはcomponentではないのでここにexportする
