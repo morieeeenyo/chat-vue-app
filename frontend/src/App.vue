@@ -55,7 +55,7 @@ Vue.use(VueRouter)
         this.group_data = response.data 
        }
       )
-      }
+      },
     },
      // ルーティングに変更があった際のイベント。これで非同期で処理を反映する
     watch: {
@@ -64,9 +64,9 @@ Vue.use(VueRouter)
         this.fetchGroup()
       },
       immediate: true //同期したときの処理
-     } 
+     },
     },
-      router //routerはcomponentではないのでここにexportする
+    router //routerはcomponentではないのでここにexportする
   }
 </script>
 

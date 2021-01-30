@@ -3,7 +3,7 @@
     <!-- @clickでボタンをクリックした時にモーダルを開く -->
    <button class="btn-circle-flat" @click="openModal">+</button>
    <!-- from-Childは子要素ModalWindowから受け取る -->
-   <ModalWindow v-show="showContent" v-on:from-child="closeModal"></ModalWindow>
+   <ModalWindow v-show="showContent" v-on:from-child="closeModal" @created-group="emitNewGroupData"></ModalWindow>
   </div>
 </template>
 
@@ -26,6 +26,8 @@ export default {
     },closeModal: function(){
       // モーダルを閉じる。
       this.showContent = false
+    },emitNewGroupData: function () {
+      this.$emit('emit-new-group-data')
     }
    }
   }

@@ -20,15 +20,7 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios) 
 
 export default {
-  data: function () {
-    return {
-      groups: [] //group一覧機能実装時に使う。もし必要なさそうならグループ作成時はコメントアウトする。
-    }
-  },mounted() {
-     axios
-    .get('/api/v1/chat_groups.json')
-    .then(response => (this.groups = response.data.groups))
-  }
+  props: ['groups']
 }
 </script>
 
