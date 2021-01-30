@@ -37,6 +37,7 @@ export default {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
           this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
           this.chat_group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
+          this.$emit('created-group', group) //親コンポーネントにイベントと作成したグループを渡す
           this.emitCloseEvent() //モーダルを閉じる
         })
         .catch(error => {

@@ -1,4 +1,8 @@
 class Api::V1::ChatGroupsController < ApiController
+  def index 
+    render json: { groups: ChatGroup.all }
+  end
+  
   def create
     chat_group = ChatGroup.new(group_parans)
     if chat_group.save 

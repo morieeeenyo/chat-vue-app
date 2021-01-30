@@ -4,6 +4,37 @@ RSpec.describe "ChatGroups", type: :request do
   before do
     @chat_group = build(:chat_group) 
   end
+
+  describe "api/v1/chat_groups#index" do
+        
+    context "正しいurlにアクセスしたとき" do
+      it "リクエストが成功すること" do
+        get api_v1_chat_groups_path, xhr: true
+        #getメソッドを使用した際の成功ステータスは200
+        expect(response.status).to eq 200
+      end
+
+      it "DBに保存されたすべてのグループの情報がidが小さい順にレスポンスとして返ってくること" do
+        @chat_group.save 
+        chat_group_2 = create(:chat_group) #順番を検証するために2つめのデータを挿入
+        get api_v1_chat_groups_path, xhr: true
+        json = JSON.parse(response.body)        
+        expect(json['groups'][0]['id']).to eq @chat_group.id
+        expect(json['groups'][1]['id']).to eq chat_group_2.id
+      end
+
+      it "グループがDBに存在しないとき、空の配列が返却されること" do
+        get api_v1_chat_groups_path, xhr: true
+        json = JSON.parse(response.body)   
+        # eq []としても通ったが念の為型と要素の数を分けた
+        expect(json['groups']).to be_a_kind_of(Array)
+        expect(json['groups'].length).to eq 0
+      end
+      
+      
+    end
+    
+  end
   
   describe "api/v1/chat_groups#create" do
     before do
@@ -30,7 +61,7 @@ RSpec.describe "ChatGroups", type: :request do
         #返却されたデータをjson形式に変換     
         json = JSON.parse(response.body) 
         #パラメータとして送った値とレスポンスの中身が合っているか検証
-        expect(@chat_group_params['group_name']).to eq json['group']['group_name']  
+        expect(json['group']['group_name']).to eq @chat_group_params['group_name']
       end
     end
 
@@ -85,7 +116,7 @@ RSpec.describe "ChatGroups", type: :request do
         get api_v1_chat_group_path(@chat_group), xhr: true
         json = JSON.parse(response.body)        
         #送ったパラメータとレスポンスのデータが一致しているか検証
-        expect(@chat_group['id']).to eq json['id']
+        expect(json['id']).to eq @chat_group['id']
       end
     end
 
@@ -117,5 +148,6 @@ RSpec.describe "ChatGroups", type: :request do
     end
     
   end
+  
   
 end

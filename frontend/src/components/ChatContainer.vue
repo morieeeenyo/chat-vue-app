@@ -1,7 +1,7 @@
 <template>
  <div class="chat">
    <!-- 各コンポーネントにgroupの情報を渡す -->
-   <ChatHeader :group_name="group.group_name"></ChatHeader>
+   <ChatHeader :group_name="current_group.group_name"></ChatHeader>
    <Messages></Messages>
    <ChatForm></ChatForm>
  </div>
@@ -19,7 +19,7 @@
       Messages,
       ChatForm
     },
-    props: ['group'] //親から受け継いだグループの情報
+    props: ['current_group'] //親から受け継いだグループの情報
   }
 </script>
 
