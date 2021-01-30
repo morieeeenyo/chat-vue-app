@@ -7,7 +7,8 @@ RSpec.describe "ChatGroups", type: :system do
   
 
   context "グループ新規作成成功" do
-    it "グループ名を入力して作成ボタンを押すと非同期でグループが作成され、作成したチャットグループのページに遷移すること" do 
+    it "グループ名を入力して作成ボタンを押すと非同期でグループが作成され、作成したチャットグループのページに遷移する。
+    また、サイドバーの一番下に作成したグループのページを見るためのリンクが設置される。" do 
       visit root_path
       expect(page).to  have_selector '.group-name', text: ""
       expect(page).to  have_button '+'
@@ -18,8 +19,12 @@ RSpec.describe "ChatGroups", type: :system do
         click_button '作成'
         sleep 1 #sleepがないとmysqlの処理が追いつかない
       end.to change(ChatGroup, :count).by(1)
-      expect(page).to  have_selector '.group-name', text: @chat_group.group_name #同じ名前のグループが作成されたときにこの検証だとやや弱い気がしている
-      #作成されたグループのidを使ってグループが保存できたことを検証すべきか？
+      expect(page).to  have_selector '.group-name', text: @chat_group.group_name 
+      #同じ名前のグループが作成されたときにこの検証だとやや弱い気がしている
+      # サイドバーの一番下にあるpタグのテキストが作成したグループ名と一致することを検証
+      expect(
+        all('.group-list-item p')[-1].text 
+      ).to  eq @chat_group.group_name
     end
     
   end
