@@ -54,7 +54,10 @@ Vue.use(VueRouter)
       .then(response => {
         this.group_data = response.data 
        }
-      )
+      ).catch(error => {
+          console.error(error); //コンソールにエラーを表示。
+          alert('不正なidです')
+        });
       },
     },
      // ルーティングに変更があった際のイベント。これで非同期で処理を反映する
