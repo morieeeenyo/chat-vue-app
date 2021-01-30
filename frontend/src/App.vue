@@ -24,15 +24,16 @@ Vue.use(VueAxios, axios)
 import VueRouter from 'vue-router'
 const router = new VueRouter({
   routes: [
-    // グループの情報の取得
-    { path: '/chat_groups/:id(\\d+)',  // :id は数値のみに制限する
-    name: 'ChatGroup',
-    component: ChatContainer  },
+    // ルートパス。現状はshowアクションで不正なidが送信された際に使用
     {
       path: '/',
       name: 'home',
       component: Sidebar
-    }
+    },
+    // グループの情報の取得
+    { path: '/chat_groups/:id(\\d+)',  // :id は数値のみに制限する
+    name: 'ChatGroup',
+    component: ChatContainer  },
   ]
 })
 
@@ -66,7 +67,7 @@ Vue.use(VueRouter)
         });
       },
     },
-     // ルーティングに変更があった際のイベント。これで非同期で処理を反映する
+     // ルーティングに変更があった際にURLからアクセスしているグループの情報を取得。これで非同期で処理を反映する
     watch: {
     '$route': {
       handler: function () {
