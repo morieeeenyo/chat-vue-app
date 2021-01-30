@@ -27,7 +27,7 @@ export default {
       // モーダルを閉じる。
       this.showContent = false
     },emitNewGroupData: function () {
-      this.$emit('emit-new-group-data')
+      this.$emit('emit-new-group-data') //ModalWindowで新規作成したときにemitしてきたイベントをさらに親に渡す
     }
    }
   }
