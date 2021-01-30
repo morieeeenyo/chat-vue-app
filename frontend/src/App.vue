@@ -51,7 +51,7 @@ Vue.use(VueRouter)
     methods: {
       fetchGroup: function() {
         if (this.$route.path === '/') {
-        return null; // ルートパスに同期したときは何もしない。
+        return this.group_data = {} // ルートパスに同期したときはヘッダーにあるgroupのデータを空にする
        }
         axios
         // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
