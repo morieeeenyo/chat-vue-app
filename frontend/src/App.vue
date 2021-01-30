@@ -27,7 +27,12 @@ const router = new VueRouter({
     // グループの情報の取得
     { path: '/chat_groups/:id(\\d+)',  // :id は数値のみに制限する
     name: 'ChatGroup',
-    component: ChatContainer  }
+    component: ChatContainer  },
+    {
+      path: '/',
+      name: 'home',
+      component: Sidebar
+    }
   ]
 })
 
@@ -57,6 +62,7 @@ Vue.use(VueRouter)
       ).catch(error => {
           console.error(error); //コンソールにエラーを表示。
           alert('不正なidです')
+          this.$router.push( {name: 'home'} ) //不正なidが送信された際にルートパスに戻す
         });
       },
     },
