@@ -1,8 +1,8 @@
 <template>
   <div class="side_bar">
-    <NewGroup></NewGroup>
+    <NewGroup @emit-group-from-grand-child="AddNewGroup"></NewGroup>
     <!-- グループの新規作成時に子コンポーネントからイベントが渡ることでfetchGroupAllが発火する。 -->
-    <Groups :groups="all_group_data" @emit-new-group-data="fetchGroupAll"></Groups>
+    <Groups :groups="all_group_data"></Groups>
   </div>
 </template>
 
@@ -23,7 +23,10 @@ Vue.use(VueAxios, axios)
     data: function () {
       return {
         all_group_data: [], //全てのグループ
+        emittedGroup: {} //子コンポーネントから受け取った新規グループのデータ
       }
+    }, mounted: function () {
+      this.fetchGroupAll()
     },
     components:{
       Groups,
@@ -34,16 +37,11 @@ Vue.use(VueAxios, axios)
         axios
         .get('/api/v1/chat_groups.json')
         .then(response => (this.all_group_data = response.data.groups))
+      },
+      AddNewGroup: function (emittedGroup) {
+        this.all_group_data.push(emittedGroup) //子コンポーネントから受け取った新規グループを一覧表示のための配列に追加
       }
-    },
-    watch: {
-      all_group_data: {
-       handler: function () {
-         this.fetchGroupAll()
-       },
-       immediate: true //同期したときの処理
-     }
-    } 
+    }
   }
 </script>
 

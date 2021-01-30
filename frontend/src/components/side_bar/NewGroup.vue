@@ -3,7 +3,7 @@
     <!-- @clickでボタンをクリックした時にモーダルを開く -->
    <button class="btn-circle-flat" @click="openModal">+</button>
    <!-- from-Childは子要素ModalWindowから受け取る -->
-   <ModalWindow v-show="showContent" v-on:from-child="closeModal" @created-group="emitNewGroupData"></ModalWindow>
+   <ModalWindow v-show="showContent" v-on:from-child="closeModal" @created-group="emitGroupDataToParent"></ModalWindow>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
     data: function (){
       return {
         // コンポーネントのデータ管理は関数なので
-        showContent: false
+        showContent: false,
+        group: {}
       }
     },
     methods:{
@@ -26,8 +27,9 @@ export default {
     },closeModal: function(){
       // モーダルを閉じる。
       this.showContent = false
-    },emitNewGroupData: function () {
-      this.$emit('emit-new-group-data') //ModalWindowで新規作成したときにemitしてきたイベントをさらに親に渡す
+    }, emitGroupDataToParent: function (emittedGroup) {
+      this.group = emittedGroup //引数として新規作成したグループを受け取り一度オブジェクトに代入する
+      this.$emit('emit-group-from-grand-child', this.group) //ModalWindowで新規作成したときにemitしてきたイベントと作成したグループの情報さらに親に渡す
     }
    }
   }
