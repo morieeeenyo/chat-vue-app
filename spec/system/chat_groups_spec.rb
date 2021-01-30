@@ -22,7 +22,7 @@ RSpec.describe "ChatGroups", type: :system do
         another_group_1 = create(:chat_group, group_name: 'another_test_1')
         another_group_2 = create(:chat_group, group_name: 'another_test_2')
         visit root_path
-        expect(page).to  have_selector '.group-name', text: ""
+        expect(page).to  have_selector '#group-name', text: ""
         expect(page).to  have_button '+'
         click_button '+'
         expect(page).to  have_content 'チャットグループ新規作成'
@@ -31,7 +31,7 @@ RSpec.describe "ChatGroups", type: :system do
           click_button '作成'
           sleep 1 #sleepがないとmysqlの処理が追いつかない
         end.to change(ChatGroup, :count).by(1)
-        expect(page).to  have_selector '.group-name', text: @chat_group.group_name 
+        expect(page).to  have_selector '#group-name', text: @chat_group.group_name 
         #同じ名前のグループが作成されたときにこの検証だとやや弱い気がしている。本当はidで検証すべきかも
         expect(
           all('.group-list-item p')[-1].text 
@@ -70,7 +70,7 @@ RSpec.describe "ChatGroups", type: :system do
         visit root_path
         @chat_group.save
         visit "/#/chat_groups/#{@chat_group.id}" #vue-routerで設定したパスなのでprefixが存在しない
-        expect(page).to have_selector '.group-name', text: @chat_group.group_name  
+        expect(page).to have_selector '#group-name', text: @chat_group.group_name  
       end
     end
   end
@@ -81,7 +81,7 @@ RSpec.describe "ChatGroups", type: :system do
     context "グループ新規作成失敗" do
       it "グループ名が空のままフォームを送信するとエラーメッセージが表示され、モーダルウィンドウが開いたままである" do 
         visit root_path
-        expect(page).to  have_selector '.group-name', text: ""
+        expect(page).to  have_selector '#group-name', text: ""
         expect(page).to  have_button '+'
         click_button '+'
         expect(page).to  have_content 'チャットグループ新規作成'
@@ -107,6 +107,8 @@ RSpec.describe "ChatGroups", type: :system do
           sleep 1
           page.raise_server_error! #手動でサーバーエラーを発生させることで実行環境と同様のエラーを得る
         end.to raise_error(ActiveRecord::RecordNotFound)
+        expect(current_path).to  eq root_path
+        expect(find('#group-name').text).to eq "" #ルートパスに遷移し、ヘッダーのグループ名が空であるか検証
       end
     end
   end

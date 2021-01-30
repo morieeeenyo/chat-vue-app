@@ -2,7 +2,7 @@
   <div class="chat-header">
     <div class="header-left">
       <!-- グループの情報は親から受け継ぐ -->
-      <p class="group-name">{{ group_name }}</p>
+      <p id="group-name">{{ group_name }}</p>
       <a>編集</a> 
     </div>
     <a>チャットグループを削除する</a>
@@ -35,7 +35,7 @@ export default {
   }
 
   /* グループ名 */
-  .group-name {
+  #group-name {
     margin: 0 20px 0 0;
     font-size: 24px;
   }
