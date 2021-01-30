@@ -16,7 +16,7 @@ RSpec.describe "ChatGroups", type: :request do
 
       it "DBに保存されたすべてのグループの情報がidが小さい順にレスポンスとして返ってくること" do
         @chat_group.save 
-        chat_group_2 = create(:chat_group)
+        chat_group_2 = create(:chat_group) #順番を検証するために2つめのデータを挿入
         get api_v1_chat_groups_path, xhr: true
         json = JSON.parse(response.body)        
         expect(json['groups'][0]['id']).to eq @chat_group.id
