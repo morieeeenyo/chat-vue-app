@@ -3,14 +3,35 @@
     <div class="header-left">
       <!-- グループの情報は親から受け継ぐ -->
       <p id="group-name">{{ group_name }}</p>
-      <a>編集</a> 
+      <a @click="openModal">編集</a> 
+      <ModalWindow v-show="showContent" v-on:from-child="closeModal"></ModalWindow>
     </div>
     <a>チャットグループを削除する</a>
   </div>
 </template>
 
 <script>
+import ModalWindow from '../ModalWindow.vue' // コンポーネントの読み込み
+
 export default {
+  components:{
+      ModalWindow
+    },
+    data: function (){
+      return {
+        // コンポーネントのデータ管理は関数なので
+        showContent: false,
+      }
+    },
+    methods:{
+    openModal: function(){
+      // モーダルを開く。これを入れるとstyleにディスプレイプロパティが付与される
+      this.showContent = true
+    },closeModal: function(){
+      // モーダルを閉じる。
+      this.showContent = false
+    }, 
+  },
   props: ['group_name'] //親から受け継いだグループのデータを表示するための属性。値には現在表示しているグループの情報が入っている。親でgroupというpropを使ったので名前は別にする。
 }
 </script>
