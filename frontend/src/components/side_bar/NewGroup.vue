@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ModalWindow from './ModalWindow.vue' // コンポーネントの読み込み
+import ModalWindow from '../ModalWindow.vue' // コンポーネントの読み込み
 export default {
     components:{
       ModalWindow
