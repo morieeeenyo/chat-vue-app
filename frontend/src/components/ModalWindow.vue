@@ -9,7 +9,7 @@
            <li class="error-messages"><font color="red">{{ e }}</font></li>
           </ul>
         </div>
-         <h2 class="form-title">チャットグループ新規作成</h2>
+         <h2 class="form-title">{{ createOrEdit }}</h2>
           <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chat_group.group_name" >
           <button type="submit" id="group_form_submit">作成</button>
       </form>
@@ -55,7 +55,8 @@ export default {
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()
     }
-  }
+  },
+  props: ['createOrEdit']
 }
 </script>
 

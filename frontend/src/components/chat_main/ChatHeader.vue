@@ -4,7 +4,7 @@
       <!-- グループの情報は親から受け継ぐ -->
       <p id="group-name">{{ group_name }}</p>
       <a id="edit_button" @click="openModal">編集</a> 
-      <ModalWindow v-show="showContent" v-on:from-child="closeModal"></ModalWindow>
+      <ModalWindow v-show="showContent" v-on:from-child="closeModal" :createOrEdit="edit"></ModalWindow>
     </div>
     <a>チャットグループを削除する</a>
   </div>
@@ -21,6 +21,7 @@ export default {
       return {
         // コンポーネントのデータ管理は関数なので
         showContent: false,
+        edit: 'チャットグループ名変更'
       }
     },
     methods:{
