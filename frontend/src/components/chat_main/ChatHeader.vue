@@ -3,7 +3,7 @@
     <div class="header-left">
       <!-- グループの情報は親から受け継ぐ -->
       <p id="group-name">{{ group_name }}</p>
-      <a @click="openModal">編集</a> 
+      <a id="edit_button" @click="openModal">編集</a> 
       <ModalWindow v-show="showContent" v-on:from-child="closeModal"></ModalWindow>
     </div>
     <a>チャットグループを削除する</a>
@@ -67,7 +67,7 @@ export default {
     font-size: 12px;
   }
 
-  編集ボタンと削除ボタンにカーソルが乗ったときにポインターに変更
+  /* 編集ボタンと削除ボタンにカーソルが乗ったときにポインターに変更 */
   .chat-header a:hover {
     cursor: pointer;
   }
