@@ -1,7 +1,7 @@
 <template>
  <div class="chat">
    <!-- 各コンポーネントにgroupの情報を渡す -->
-   <ChatHeader :group_name="current_group.group_name"></ChatHeader>
+   <ChatHeader :group="current_group"></ChatHeader>
    <Messages></Messages>
    <ChatForm></ChatForm>
  </div>

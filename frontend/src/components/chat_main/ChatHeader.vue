@@ -2,7 +2,7 @@
   <div class="chat-header">
     <div class="header-left">
       <!-- グループの情報は親から受け継ぐ -->
-      <p id="group-name">{{ group_name }}</p>
+      <p id="group-name">{{ group.group_name }}</p>
       <a id="edit_button" @click="openModal">編集</a> 
       <ModalWindow v-show="showContent" v-on:from-child="closeModal" :createOrEdit="edit"></ModalWindow>
     </div>
@@ -33,7 +33,7 @@ export default {
       this.showContent = false
     }, 
   },
-  props: ['group_name'] //親から受け継いだグループのデータを表示するための属性。値には現在表示しているグループの情報が入っている。親でgroupというpropを使ったので名前は別にする。
+  props: ['group'] //親から受け継いだグループのデータを表示するための属性。値には現在表示しているグループの情報が入っている。親でgroupというpropを使ったので名前は別にする。
 }
 </script>
 
