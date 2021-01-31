@@ -3,7 +3,7 @@
     <!-- @clickでボタンをクリックした時にモーダルを開く -->
    <button class="btn-circle-flat" @click="openModal">+</button>
    <!-- from-Childは子要素ModalWindowから受け取る -->
-   <ModalWindow v-show="showContent" v-on:from-child="closeModal" @created-group="emitGroupDataToParent" :createOrEdit="create"></ModalWindow>
+   <ModalWindow v-show="showContent" v-on:from-child="closeModal" @created-group="emitGroupDataToParent" :createOrEdit="create" :chat_group="group" :errors="errors"></ModalWindow>
   </div>
 </template>
 
@@ -18,7 +18,8 @@ export default {
         // コンポーネントのデータ管理は関数なので
         showContent: false,
         group: {},
-        create: '新規グループ作成'
+        create: '新規グループ作成',
+        errors: ''
       }
     },
     methods:{

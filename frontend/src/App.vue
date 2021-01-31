@@ -14,6 +14,7 @@ import Vue from 'vue'
 import Sidebar from './components/Sidebar.vue'
 import ChatContainer from './components/ChatContainer.vue'
 import Groups from './components/side_bar/Groups.vue'
+import ModalWindow from './components//ModalWindow.vue' 
 
 // 以下はajaxを行うために必要
 import axios from 'axios' 
@@ -34,6 +35,10 @@ const router = new VueRouter({
     { path: '/chat_groups/:id(\\d+)',  // :id は数値のみに制限する
     name: 'ChatGroup',
     component: ChatContainer  },
+
+    { path: '/chat_groups/:id(\\d+)/edit',  // :id は数値のみに制限する
+    name: 'EditGroup',
+    component: ModalWindow  },
   ]
 })
 

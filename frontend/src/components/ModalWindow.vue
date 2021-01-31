@@ -21,14 +21,6 @@
 <script>
 import axios from 'axios'; //ajaxを行うためにimport
 export default {
-  data: function () { 
-    return {
-        chat_group: {
-          group_name: ""
-        },   
-        errors: ''          //v-model="form.group_name"と連動。初期値を空文字列で設定
-     }       
-      },
   methods :{
     createGroup: function(e) {
       axios
@@ -56,7 +48,7 @@ export default {
       event.stopPropagation()
     }
   },
-  props: ['createOrEdit']
+  props: ['createOrEdit', 'chat_group', 'errors']
 }
 </script>
 

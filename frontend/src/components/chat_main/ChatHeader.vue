@@ -3,8 +3,8 @@
     <div class="header-left">
       <!-- グループの情報は親から受け継ぐ -->
       <p id="group-name">{{ group.group_name }}</p>
-      <a id="edit_button" @click="openModal">編集</a> 
-      <ModalWindow v-show="showContent" v-on:from-child="closeModal" :createOrEdit="edit"></ModalWindow>
+      <router-link :to="{ name: 'EditGroup', params: { id: group.id } }" id="edit_button" @click.native="openModal">編集</router-link> 
+      <ModalWindow v-show="showContent" v-on:from-child="closeModal" :createOrEdit="edit" :chat_group="group" :errors="errors"></ModalWindow>
     </div>
     <a>チャットグループを削除する</a>
   </div>
@@ -21,9 +21,11 @@ export default {
       return {
         // コンポーネントのデータ管理は関数なので
         showContent: false,
-        edit: 'チャットグループ名変更'
+        edit: 'チャットグループ名変更',
+        errors: ''
       }
     },
+
     methods:{
     openModal: function(){
       // モーダルを開く。これを入れるとstyleにディスプレイプロパティが付与される
@@ -66,6 +68,7 @@ export default {
   .chat-header a {
     color: gray;
     font-size: 12px;
+    text-decoration: none;
   }
 
   /* 編集ボタンと削除ボタンにカーソルが乗ったときにポインターに変更 */
