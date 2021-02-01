@@ -2,7 +2,7 @@
   <div id="overlay" @click="emitCloseEvent">
     <div id="content" @click="stopEvent">
       <!-- submit.preventでevent.preventDefaultと同様の動きになる -->
-      <form @submit.prevent="createGroup" id="group_form">
+      <form @submit.prevent="$emit('submit')" id="group_form">
         <div v-if="errors.length != 0">
           <!-- エラーメッセージの表示 -->
           <ul v-for="e in errors" :key="e">
