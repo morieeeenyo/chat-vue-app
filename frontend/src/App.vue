@@ -61,8 +61,8 @@ Vue.use(VueRouter)
     },
     methods: {
       fetchGroup: function() {
-        if (this.$route.path === '/') {
-        return this.group_data = {} // ルートパスに同期したときはヘッダーにあるgroupのデータを空にする
+        if (this.$route.path === '/' || this.$route.path === '/chat_groups/new') {
+        return this.group_data = {} // ルートパスにおよび新規投稿画面同期したときはヘッダーにあるgroupのデータを空にする
        }
         axios
         // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
