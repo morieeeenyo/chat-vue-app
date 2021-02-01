@@ -31,6 +31,11 @@ const router = new VueRouter({
       name: 'home',
       component: Sidebar
     },
+    {
+      path: '/chat_groups/new',
+      name: 'CreateGroup',
+      component: ModalWindow
+    },
     // グループの情報の取得
     { path: '/chat_groups/:id(\\d+)',  // :id は数値のみに制限する
     name: 'ChatGroup',

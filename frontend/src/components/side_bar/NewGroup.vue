@@ -1,7 +1,7 @@
 <template>
   <div class="side_bar_header">
     <!-- @clickでボタンをクリックした時にモーダルを開く -->
-   <button class="btn-circle-flat" @click="openModal">+</button>
+   <router-link :to="{ name: 'CreateGroup' }" class="btn-circle-flat" @click.native="openModal">+</router-link>
    <!-- from-Childは子要素ModalWindowから受け取る -->
    <ModalWindow v-show="showContent" v-on:from-child="closeModal" @created-group="emitGroupDataToParent" :createOrEdit="create" :chat_group="group" :errors="errors"></ModalWindow>
   </div>
@@ -24,6 +24,7 @@ export default {
     },
     methods:{
     openModal: function(){
+      this.grouo = {}
       // モーダルを開く。これを入れるとstyleにディスプレイプロパティが付与される
       this.showContent = true
     },closeModal: function(){
