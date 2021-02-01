@@ -4,7 +4,7 @@ class Api::V1::ChatGroupsController < ApiController
   end
   
   def create
-    chat_group = ChatGroup.new(group_parans)
+    chat_group = ChatGroup.new(group_params)
     if chat_group.save 
       render json: { group: chat_group }, status: :created 
     else
@@ -17,17 +17,17 @@ class Api::V1::ChatGroupsController < ApiController
   end
 
   def update
-    @chat_group = ChatGroup.find(params[:id])
-    if @chat_grpup.update(group_params)
+    @chat_group = ChatGroup.find(params[:id])  
+    if @chat_group.update(group_params)
       render json: { group: @chat_group }
     else
-      render json: { errors: chat_group.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @chat_group.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   private 
 
-  def group_parans
+  def group_params
     params.require(:chat_group).permit(:group_name)
   end
 end

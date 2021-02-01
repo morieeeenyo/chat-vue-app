@@ -12,6 +12,7 @@
 
 <script>
 import ModalWindow from '../ModalWindow.vue' // コンポーネントの読み込み
+import axios from 'axios'; //ajaxを行うためにimport
 
 export default {
   components:{
@@ -38,7 +39,20 @@ export default {
       // モーダルを閉じる。
       this.showContent = false
     }, updateGroup: function () {
-      this.showContent = false
+      axios
+        .patch(`/api/v1/chat_groups/${this.group.id}`, {chat_group: {group_name: this.group.group_name}} ) //api/v1/groups#createへのルーティング
+        .then(response => {
+          let group = response.data.group; //返却されたjsonからgroupの情報を取得
+          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
+          this.group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
+          this.closeModal() //モーダルを閉じる
+        })
+        .catch(error => {
+          console.error(error); //コンソールにエラーを表示。
+          if (error.response.data && error.response.data.errors) {
+            this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
+          }
+        });
     }
   },
   props: ['group'] //親から受け継いだグループのデータを表示するための属性。値には現在表示しているグループの情報が入っている。親でgroupというpropを使ったので名前は別にする。
