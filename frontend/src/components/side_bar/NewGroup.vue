@@ -24,7 +24,7 @@ export default {
     },
     methods:{
     openModal: function(){
-      this.grouo = {}
+      this.group = {}
       // モーダルを開く。これを入れるとstyleにディスプレイプロパティが付与される
       this.showContent = true
     },closeModal: function(){
