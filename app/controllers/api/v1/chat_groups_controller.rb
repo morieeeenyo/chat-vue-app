@@ -16,6 +16,15 @@ class Api::V1::ChatGroupsController < ApiController
     render json: ChatGroup.find(params[:id])
   end
 
+  def update
+    @chat_group = ChatGroup.find(params[:id])
+    if @chat_grpup.update(group_params)
+      render json: { group: @chat_group }
+    else
+      render json: { errors: chat_group.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private 
 
   def group_parans
