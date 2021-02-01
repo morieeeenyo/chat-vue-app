@@ -4,7 +4,7 @@
       <!-- グループの情報は親から受け継ぐ -->
       <p id="group-name">{{ group.group_name }}</p>
       <router-link :to="{ name: 'EditGroup', params: { id: group.id } }" id="edit_button" @click.native="openModal">編集</router-link> 
-      <ModalWindow v-show="showContent" v-on:from-child="closeModal" :createOrEdit="edit" :chat_group="group" :errors="errors"></ModalWindow>
+      <ModalWindow v-show="showContent" v-on:from-child="closeModal" :formTitle="form_title" :createOrEdit="edit" :chat_group="group" :errors="errors"></ModalWindow>
     </div>
     <a>チャットグループを削除する</a>
   </div>
@@ -21,7 +21,8 @@ export default {
       return {
         // コンポーネントのデータ管理は関数なので
         showContent: false,
-        edit: 'チャットグループ名変更',
+        form_title: 'チャットグループ名変更',
+        edit: '変更',
         errors: ''
       }
     },

@@ -9,9 +9,9 @@
            <li class="error-messages"><font color="red">{{ e }}</font></li>
           </ul>
         </div>
-         <h2 class="form-title">{{ createOrEdit }}</h2>
+         <h2 class="form-title">{{ formTitle }}</h2>
           <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chat_group.group_name" >
-          <button type="submit" id="group_form_submit">作成</button>
+          <button type="submit" id="group_form_submit">{{ createOrEdit }}</button>
       </form>
      <p><button @click="emitCloseEvent" id="close_button">close</button></p>
     </div>
@@ -48,7 +48,7 @@ export default {
       event.stopPropagation()
     }
   },
-  props: ['createOrEdit', 'chat_group', 'errors']
+  props: ['createOrEdit', 'chat_group', 'errors', 'formTitle']
 }
 </script>
 
