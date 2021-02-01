@@ -29,6 +29,9 @@ export default {
 
     methods:{
     openModal: function(){
+      if (this.group.id === undefined) {
+        return alert('グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。') 
+      }
       // モーダルを開く。これを入れるとstyleにディスプレイプロパティが付与される
       this.showContent = true
     },closeModal: function(){
