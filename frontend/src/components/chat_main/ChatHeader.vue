@@ -4,6 +4,7 @@
       <!-- グループの情報は親から受け継ぐ -->
       <p id="group-name">{{ group.group_name }}</p>
       <router-link :to="{ name: 'EditGroup', params: { id: group.id } }" id="edit_button" @click.native="openModal">編集</router-link> 
+      <!-- 子要素から受け取ったsubmitイベントを使ってupdateを動かす -->
       <ModalWindow v-show="showContent" v-on:from-child="closeModal" :formTitle="form_title" :createOrEdit="edit" :chat_group="group" :errors="errors" @submit="updateGroup"></ModalWindow>
     </div>
     <a>チャットグループを削除する</a>
@@ -40,7 +41,7 @@ export default {
       this.showContent = false
     }, updateGroup: function () {
       axios
-        .patch(`/api/v1/chat_groups/${this.group.id}`, {chat_group: {group_name: this.group.group_name}} ) //api/v1/groups#createへのルーティング
+        .patch(`/api/v1/chat_groups/${this.group.id}`, {chat_group: {group_name: this.group.group_name}} ) //api/v1/groups#updateへのルーティング
         .then(response => {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
           this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。

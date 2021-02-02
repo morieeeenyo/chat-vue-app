@@ -2,6 +2,7 @@
   <div id="overlay" @click="emitCloseEvent">
     <div id="content" @click="stopEvent">
       <!-- submit.preventでevent.preventDefaultと同様の動きになる -->
+      <!-- emitして親コンポーネントで処理を動かすことでeditとupdateで処理を分ける -->
       <form @submit.prevent="$emit('submit')" id="group_form">
         <div v-if="errors.length != 0">
           <!-- エラーメッセージの表示 -->
