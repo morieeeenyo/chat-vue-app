@@ -49,7 +49,6 @@ export default {
           console.error(error); //コンソールにエラーを表示。
           if (error.response.data && error.response.data.errors) {
             this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
-            console.log(this.errors)
           }
         });
     },
@@ -60,6 +59,7 @@ export default {
     },closeModal: function(){
       // モーダルを閉じる。
       this.showContent = false
+      this.errors = "" //エラーメッセージをリセットする
     }
    }
   }

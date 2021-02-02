@@ -26,7 +26,6 @@ export default {
     emitCloseEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')
-      this.errors = "" //エラーメッセージをリセットする
      },stopEvent: function(){
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()

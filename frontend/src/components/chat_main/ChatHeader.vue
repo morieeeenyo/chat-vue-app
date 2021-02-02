@@ -39,6 +39,7 @@ export default {
     },closeModal: function(){
       // モーダルを閉じる。
       this.showContent = false
+      this.errors = "" //エラーメッセージをリセットする
     }, updateGroup: function () {
       axios
         .patch(`/api/v1/chat_groups/${this.group.id}`, this.group ) //api/v1/groups#updateへのルーティング
