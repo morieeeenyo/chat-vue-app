@@ -26,6 +26,7 @@ export default {
     emitCloseEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')
+      this.$router.push({ name: 'ChatGroup', params: { id: this.chat_group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
      },stopEvent: function(){
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()
