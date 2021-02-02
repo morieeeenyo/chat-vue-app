@@ -1,6 +1,6 @@
 <template>
   <div class="side_bar">
-    <NewGroup @emit-group-from-grand-child="AddNewGroup"></NewGroup>
+    <NewGroup @emit-create-group="AddNewGroup"></NewGroup>
     <!-- グループの新規作成時に子コンポーネントからイベントが渡ることでfetchGroupAllが発火する。 -->
     <Groups :groups="all_group_data"></Groups>
   </div>

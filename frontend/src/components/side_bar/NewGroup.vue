@@ -3,12 +3,21 @@
     <!-- @clickでボタンをクリックした時にモーダルを開く -->
    <router-link :to="{ name: 'CreateGroup' }" class="btn-circle-flat" @click.native="openModal">+</router-link>
    <!-- from-Childは子要素ModalWindowから受け取る -->
-   <ModalWindow v-show="showContent" v-on:from-child="closeModal" @created-group="emitGroupDataToParent" :formTitle="form_title" :createOrEdit="create" :chat_group="group" :errors="errors"></ModalWindow>
+   <ModalWindow v-show="showContent" v-on:from-child="closeModal" @submit="createGroup" :formTitle="form_title" :createOrEdit="create" :chat_group="group" :errors="errors"></ModalWindow>
   </div>
 </template>
 
 <script>
+// Vueのインポート
+import Vue from 'vue'
+
 import ModalWindow from '../ModalWindow.vue' // コンポーネントの読み込み
+
+// 以下はajaxを行うために必要
+import axios from 'axios' 
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios) 
+
 export default {
     components:{
       ModalWindow
@@ -17,13 +26,33 @@ export default {
       return {
         // コンポーネントのデータ管理は関数なので
         showContent: false,
-        group: {},
+        group: {
+          group_name: ""
+        },
         form_title: '新規グループ作成',
         create: '作成',
         errors: ''
       }
     },
     methods:{
+    createGroup: function(e) {
+      axios
+        .post('/api/v1/chat_groups', this.group) //api/v1/groups#createへのルーティング
+        .then(response => {
+          let group = response.data.group; //返却されたjsonからgroupの情報を取得
+          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
+          this.group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
+          this.$emit('emit-create-group', group) //ModalWindowで新規作成したときに作成したグループの情報をSidebarに渡す
+          this.closeModal() //モーダルを閉じる
+        })
+        .catch(error => {
+          console.error(error); //コンソールにエラーを表示。
+          if (error.response.data && error.response.data.errors) {
+            this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
+            console.log(this.errors)
+          }
+        });
+    },
     openModal: function(){
       this.group = {}
       // モーダルを開く。これを入れるとstyleにディスプレイプロパティが付与される
@@ -31,9 +60,6 @@ export default {
     },closeModal: function(){
       // モーダルを閉じる。
       this.showContent = false
-    }, emitGroupDataToParent: function (emittedGroup) {
-      this.group = emittedGroup //引数として新規作成したグループを受け取り一度オブジェクトに代入する
-      this.$emit('emit-group-from-grand-child', this.group) //ModalWindowで新規作成したときにemitしてきたイベントと作成したグループの情報さらに親に渡す
     }
    }
   }
