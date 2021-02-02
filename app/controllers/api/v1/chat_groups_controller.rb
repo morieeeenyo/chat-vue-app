@@ -28,8 +28,7 @@ class Api::V1::ChatGroupsController < ApiController
   private 
 
   def group_params
-    # params.require(:chat_group).permit(:group_name)
-    params.fetch(:chat_group, {}).permit(:group_name)
+    params.fetch(:chat_group, {}).permit(:group_name) #空の値を送ったときにエラーが発生しないようにする
   end
 end
 
