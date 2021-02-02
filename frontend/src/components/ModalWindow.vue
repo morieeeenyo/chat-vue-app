@@ -23,23 +23,6 @@
 import axios from 'axios'; //ajaxを行うためにimport
 export default {
   methods :{
-    createGroup: function(e) {
-      axios
-        .post('/api/v1/chat_groups', this.chat_group) //api/v1/groups#createへのルーティング
-        .then(response => {
-          let group = response.data.group; //返却されたjsonからgroupの情報を取得
-          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
-          this.chat_group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
-          this.$emit('created-group', group) //親コンポーネントにイベントと作成したグループを渡す
-          this.emitCloseEvent() //モーダルを閉じる
-        })
-        .catch(error => {
-          console.error(error); //コンソールにエラーを表示。
-          if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
-          }
-        });
-    },
     emitCloseEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')

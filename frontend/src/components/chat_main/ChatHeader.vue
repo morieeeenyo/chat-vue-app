@@ -41,7 +41,7 @@ export default {
       this.showContent = false
     }, updateGroup: function () {
       axios
-        .patch(`/api/v1/chat_groups/${this.group.id}`, {chat_group: {group_name: this.group.group_name}} ) //api/v1/groups#updateへのルーティング
+        .patch(`/api/v1/chat_groups/${this.group.id}`, this.group ) //api/v1/groups#updateへのルーティング
         .then(response => {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
           this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
