@@ -73,7 +73,7 @@ Vue.use(VueRouter)
       ).catch(error => {
           console.error(error); //コンソールにエラーを表示。
           alert('不正なidです')
-          this.$router.push( {name: 'home'} ) //不正なidが送信された際にルートパスに戻す
+          this.$router.push( { name: 'home' } ) //不正なidが送信された際にルートパスに戻す
         });
       },
     },

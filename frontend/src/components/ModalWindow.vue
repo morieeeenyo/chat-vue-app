@@ -30,7 +30,7 @@ export default {
      },stopEvent: function(){
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()
-    }
+    },
   },
   props: ['createOrEdit', 'chat_group', 'errors', 'formTitle']
 }
