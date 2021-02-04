@@ -53,6 +53,7 @@ Vue.use(VueRouter)
     data: function() {
       return {
         group_data: {}, //現在のグループ
+        dataChanged: false
       }
     },
     components:{
@@ -61,7 +62,7 @@ Vue.use(VueRouter)
     },
     methods: {
       fetchGroup: function() {
-        if (this.$route.path === '/' || this.$route.path === '/chat_groups/new') {
+      if (this.$route.path === '/' || this.$route.path === '/chat_groups/new') {
         return this.group_data = {} // ルートパスにおよび新規投稿画面同期したときはヘッダーにあるgroupのデータを空にする
        }
         axios
@@ -75,17 +76,36 @@ Vue.use(VueRouter)
           alert('不正なidです')
           this.$router.push( { name: 'home' } ) //不正なidが送信された際にルートパスに戻す
         });
-      },
+      }, 
+      confirmSave: function (e) {
+      e.preventDefault()
+      console.log('passed1')
+      if ( this.$route.path === `/chat_groups/${this.group_data.id}` ) {
+         console.log('passed2')
+         return null;
+      }
+       console.log('changed')
+       console.log(this.$route.path)
+       this.$router.push({name: 'ChatGroup', params: { id: this.group_data.id }})
+    }
+  },
+    mounted() {
+    console.log('created')
+     window.addEventListener("load", this.confirmSave);
     },
-     // ルーティングに変更があった際にURLからアクセスしているグループの情報を取得。これで非同期で処理を反映する
+    destroyed () {
+    console.log('destroyed')
+     window.removeEventListener("load", this.confirmSave);
+    },
     watch: {
+     // ルーティングに変更があった際にURLからアクセスしているグループの情報を取得。これで非同期で処理を反映する
     '$route': {
       handler: function () {
         this.fetchGroup()
       },
       immediate: true //同期したときの処理
      },
-    },
+   },
     router //routerはcomponentではないのでここにexportする
   }
 </script>
