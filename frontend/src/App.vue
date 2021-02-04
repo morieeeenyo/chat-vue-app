@@ -77,25 +77,20 @@ Vue.use(VueRouter)
           this.$router.push( { name: 'home' } ) //不正なidが送信された際にルートパスに戻す
         });
       }, 
-      confirmSave: function (e) {
-      e.preventDefault()
-      console.log('passed1')
+      changePathOnReload: function (e) {
       if ( this.$route.path === `/chat_groups/${this.group_data.id}` ) {
-         console.log('passed2')
-         return null;
+         return null; //既に'chatGroupのページにいる場合はNavigationDuplicatedエラーが出るのでreturn nullする
       }
-       console.log('changed')
-       console.log(this.$route.path)
-       this.$router.push({name: 'ChatGroup', params: { id: this.group_data.id }})
+       this.$router.push({name: 'ChatGroup', params: { id: this.group_data.id }}) //editの場合はparams.idが存在するので詳細へ、それ以外はparams.idがないのでrootへ戻す
     }
   },
     mounted() {
     console.log('created')
-     window.addEventListener("load", this.confirmSave);
+     window.addEventListener("load", this.changePathOnReload); //コンポーネント読み込み時にイベント予約
     },
     destroyed () {
     console.log('destroyed')
-     window.removeEventListener("load", this.confirmSave);
+     window.removeEventListener("load", this.changePathOnReload); //予約されたイベントを消去
     },
     watch: {
      // ルーティングに変更があった際にURLからアクセスしているグループの情報を取得。これで非同期で処理を反映する
