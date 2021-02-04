@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <sidebar></sidebar>
+    <!-- グループの更新情報をサイドバーに渡す -->
+    <sidebar :updated_group="changedData"></sidebar>
     <!-- 現在のグループの情報を子孫へ受け継ぐ -->
-    <chat-container :current_group="group_data"></chat-container>
+    <chat-container :current_group="group_data" @emit-update-group-from-grand-child="passChangedGroupData"></chat-container>
   </div>
 </template>
 
@@ -53,7 +54,7 @@ Vue.use(VueRouter)
     data: function() {
       return {
         group_data: {}, //現在のグループ
-        dataChanged: false
+        changedData: {}
       }
     },
     components:{
@@ -82,6 +83,9 @@ Vue.use(VueRouter)
          return null; //既に'chatGroupのページにいる場合はNavigationDuplicatedエラーが出るのでreturn nullする
       }
        this.$router.push({name: 'ChatGroup', params: { id: this.group_data.id }}) //editの場合はparams.idが存在するので詳細へ、それ以外はparams.idがないのでrootへ戻す
+    }, 
+    passChangedGroupData: function (emiitedGroup) {
+      this.changedData = emiitedGroup //子に渡すために一旦dataに代入
     }
   },
     mounted() {

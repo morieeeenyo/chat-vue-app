@@ -1,7 +1,7 @@
 <template>
  <div class="chat">
    <!-- 各コンポーネントにgroupの情報を渡す -->
-   <ChatHeader :group="current_group"></ChatHeader>
+   <ChatHeader :group="current_group" @emit-update-group="changeUpdatedGroup"></ChatHeader>
    <Messages></Messages>
    <ChatForm></ChatForm>
  </div>
@@ -19,7 +19,12 @@
       Messages,
       ChatForm
     },
-    props: ['current_group'] //親から受け継いだグループの情報
+    methods: {
+      changeUpdatedGroup: function(emittedGroup) {
+        this.$emit('emit-update-group-from-grand-child', emittedGroup) //Sidebarの情報を更新するために一度Appに情報を渡す
+      },
+    },
+    props: ['current_group'] //親から受け継いだ現在いるグループの情報
   }
 </script>
 
