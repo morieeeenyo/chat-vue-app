@@ -102,7 +102,7 @@ RSpec.describe "ChatGroups", type: :system do
 
     context "グループ情報の更新(非同期)" do
       it "group_nameを入力して送信するとヘッダーのグループ名とサイドバーのグループ名が非同期で変化し、そのグループのページに遷移する" do
-        # 新規作成したグループが複数あるデータの一番下に来ることを検証するためにデータを挿入
+        # 非同期でのグループ情報の取得はここに含めている
         @chat_group.save
         visit root_path
         click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
@@ -117,11 +117,10 @@ RSpec.describe "ChatGroups", type: :system do
           sleep 1 #sleepがないとmysqlの処理が追いつかない
         end.to change(ChatGroup, :count).by(0)
         expect(page).to  have_selector '#group-name', text: 'hoge' 
-        #同じ名前のグループが作成されたときにこの検証だとやや弱い気がしている。本当はidで検証すべきかも
         link = find('.group-list-item a')
         expect(
           link.text 
-        ).to  eq 'hoge' # サイドバーの一番下にあるpタグのテキストが作成したグループ名と一致することを検証
+        ).to  eq 'hoge' # サイドバーの一番下にあるpタグのテキストが変更されていることを検証
       end
       
       
@@ -157,6 +156,7 @@ RSpec.describe "ChatGroups", type: :system do
         expect(page).to have_content '編集'
         click_link '編集'
         expect(page).to  have_content 'チャットグループ名変更'
+        expect(page).to have_field 'group_name_input', with: @chat_group.group_name
         fill_in "group_name_input",	with: ""
         expect do 
           click_button '変更'
@@ -189,8 +189,8 @@ RSpec.describe "ChatGroups", type: :system do
         visit root_path
         expect(find('#group-name').text).to eq "" #グループが選択されていないことを検証
         click_link '編集'
-        expect(page.driver.browser.switch_to.alert.text).to eq "グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。" #非同期で通信するため内部エラーが見えない。よってモーダルでアラートを表示
-        page.driver.browser.switch_to.alert.accept #OKを押す。個々らへんの処理は速すぎて追いつかなかったのでsleepを入れた
+        expect(page.driver.browser.switch_to.alert.text).to eq "グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。" #
+        page.driver.browser.switch_to.alert.accept #サーバーエラーは検証しなくてもOKで、アラートが出ることだけ検証した
         expect(current_path).to  eq root_path
       end
     end
