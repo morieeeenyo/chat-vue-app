@@ -2,7 +2,7 @@
   <div class="side_bar">
     <NewGroup @emit-create-group="AddNewGroup"></NewGroup>
     <!-- グループの新規作成時に子コンポーネントからイベントが渡ることでfetchGroupAllが発火する。 -->
-    <Groups :groups="all_group_data"></Groups>
+    <Groups :groups="allGroupData"></Groups>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ Vue.use(VueAxios, axios)
   export default {
     data: function () {
       return {
-        all_group_data: [], //全てのグループ
+        allGroupData: [], //全てのグループ
         emittedGroup: {} //子コンポーネントから受け取った新規グループのデータ
       }
     }, mounted: function () {
@@ -36,18 +36,18 @@ Vue.use(VueAxios, axios)
       fetchGroupAll: function () {
         axios
         .get('/api/v1/chat_groups.json')
-        .then(response => (this.all_group_data = response.data.groups))
+        .then(response => (this.allGroupData = response.data.groups))
       },
       AddNewGroup: function (emittedGroup) {
-        this.all_group_data.push(emittedGroup) //子コンポーネントから受け取った新規グループを一覧表示のための配列に追加
+        this.allGroupData.push(emittedGroup) //子コンポーネントから受け取った新規グループを一覧表示のための配列に追加
       }
     },
     watch: {
-      'updated_group': function(updatedGroup) {
-        this.all_group_data.filter(e => e.id == updatedGroup.id)[0].group_name = updatedGroup.group_name //更新されたグループとidが一致する要素を検索し、更新
+      'updatedGroup': function(updatedGroup) {
+        this.allGroupData.filter(e => e.id == updatedGroup.id)[0].group_name = updatedGroup.group_name //更新されたグループとidが一致する要素を検索し、更新
       }
     },
-    props: ['updated_group']
+    props: ['updatedGroup']
   }
 </script>
 

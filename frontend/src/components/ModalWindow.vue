@@ -11,7 +11,7 @@
           </ul>
         </div>
          <h2 class="form-title">{{ formTitle }}</h2>
-          <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chat_group.group_name" >
+          <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chatGroup.group_name" >
           <button type="submit" id="group_form_submit">{{ createOrEdit }}</button>
       </form>
      <p><button @click="emitCloseEvent" id="close_button">close</button></p>
@@ -26,13 +26,13 @@ export default {
     emitCloseEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')
-      this.$router.push({ name: 'ChatGroup', params: { id: this.chat_group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
+      this.$router.push({ name: 'ChatGroup', params: { id: this.chatGroup.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
      },stopEvent: function(){
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()
     },
   },
-  props: ['createOrEdit', 'chat_group', 'errors', 'formTitle']
+  props: ['createOrEdit', 'chatGroup', 'errors', 'formTitle']
 }
 </script>
 

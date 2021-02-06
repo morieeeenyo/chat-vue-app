@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <!-- グループの更新情報をサイドバーに渡す -->
-    <sidebar :updated_group="changedData"></sidebar>
+    <side-bar :updated-group="changedData"></side-bar>
     <!-- 現在のグループの情報を子孫へ受け継ぐ -->
-    <chat-container :current_group="group_data" @emit-update-group-from-grand-child="passChangedGroupData"></chat-container>
+    <chat-container :current-group="groupData" @emit-update-group-from-grand-child="passChangedGroupData"></chat-container>
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 import Vue from 'vue'
 
 // コンポーネントの読み込み
-import Sidebar from './components/Sidebar.vue'
+import SideBar from './components/SideBar.vue'
 import ChatContainer from './components/ChatContainer.vue'
 import Groups from './components/side_bar/Groups.vue'
 import ModalWindow from './components//ModalWindow.vue' 
@@ -30,7 +30,7 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'home',
-      component: Sidebar
+      component: SideBar
     },
     {
       path: '/chat_groups/new',
@@ -53,24 +53,24 @@ Vue.use(VueRouter)
   export default {
     data: function() {
       return {
-        group_data: {}, //現在のグループ
+        groupData: {}, //現在のグループ
         changedData: {}
       }
     },
     components:{
-      Sidebar,
+      SideBar,
       ChatContainer,
     },
     methods: {
       fetchGroup: function() {
       if (this.$route.path === '/' || this.$route.path === '/chat_groups/new') {
-        return this.group_data = {} // ルートパスにおよび新規投稿画面同期したときはヘッダーにあるgroupのデータを空にする
+        return this.groupData = {} // ルートパスにおよび新規投稿画面同期したときはヘッダーにあるgroupのデータを空にする
        }
         axios
         // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
       .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
       .then(response => {
-        this.group_data = response.data 
+        this.groupData = response.data 
        }
       ).catch(error => {
           console.error(error); //コンソールにエラーを表示。
@@ -79,10 +79,10 @@ Vue.use(VueRouter)
         });
       }, 
       changePathOnReload: function (e) {
-      if ( this.$route.path === `/chat_groups/${this.group_data.id}` ) {
+      if ( this.$route.path === `/chat_groups/${this.groupData.id}` ) {
          return null; //既に'chatGroupのページにいる場合はNavigationDuplicatedエラーが出るのでreturn nullする
       }
-       this.$router.push({name: 'ChatGroup', params: { id: this.group_data.id }}) //editの場合はparams.idが存在するので詳細へ、それ以外はparams.idがないのでrootへ戻す
+       this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //editの場合はparams.idが存在するので詳細へ、それ以外はparams.idがないのでrootへ戻す
     }, 
     passChangedGroupData: function (emiitedGroup) {
       this.changedData = emiitedGroup //子に渡すために一旦dataに代入

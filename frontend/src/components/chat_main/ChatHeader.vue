@@ -5,7 +5,7 @@
       <p id="group-name">{{ group.group_name }}</p>
       <router-link :to="{ name: 'EditGroup', params: { id: group.id } }" id="edit_button" @click.native="openModal">編集</router-link> 
       <!-- 子要素から受け取ったsubmitイベントを使ってupdateを動かす -->
-      <ModalWindow v-show="showContent" v-on:from-child="closeModal" :formTitle="form_title" :createOrEdit="edit" :chat_group="group" :errors="errors" @submit="updateGroup"></ModalWindow>
+      <modal-window v-show="showContent" v-on:from-child="closeModal" :form-title="formTitle" :create-or-edit="edit" :chat-group="group" :errors="errors" @submit="updateGroup"></modal-window>
     </div>
     <a>チャットグループを削除する</a>
   </div>
@@ -23,7 +23,7 @@ export default {
       return {
         // コンポーネントのデータ管理は関数なので
         showContent: false,
-        form_title: 'チャットグループ名変更',
+        formTitle: 'チャットグループ名変更',
         edit: '変更',
         errors: ''
       }

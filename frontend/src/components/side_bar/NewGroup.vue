@@ -3,7 +3,7 @@
     <!-- @clickでボタンをクリックした時にモーダルを開く -->
    <router-link :to="{ name: 'CreateGroup' }" class="btn-circle-flat" @click.native="openModal">+</router-link>
    <!-- from-Childは子要素ModalWindowから受け取る -->
-   <ModalWindow v-show="showContent" v-on:from-child="closeModal" @submit="createGroup" :formTitle="form_title" :createOrEdit="create" :chat_group="group" :errors="errors"></ModalWindow>
+   <modal-window v-show="showContent" v-on:from-child="closeModal" @submit="createGroup" :form-title="formTitle" :create-or-edit="create" :chat-group="group" :errors="errors"></modal-window>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
         group: {
           group_name: ""
         },
-        form_title: '新規グループ作成',
+        formTitle: '新規グループ作成',
         create: '作成',
         errors: ''
       }
@@ -42,7 +42,7 @@ export default {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
           this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
           this.group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
-          this.$emit('emit-create-group', group) //ModalWindowで新規作成したときに作成したグループの情報をSidebarに渡す
+          this.$emit('emit-create-group', group) //ModalWindowで新規作成したときに作成したグループの情報をSideBarに渡す
           this.closeModal() //モーダルを閉じる
         })
         .catch(error => {
