@@ -79,6 +79,7 @@ Vue.use(VueRouter)
         });
       }, 
       changePathOnReload: function (e) {
+        e.preventDefault()
       if ( this.$route.path === `/chat_groups/${this.groupData.id}` ) {
          return null; //既に'chatGroupのページにいる場合はNavigationDuplicatedエラーが出るのでreturn nullする
       }
