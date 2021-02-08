@@ -45,6 +45,10 @@ const router = new VueRouter({
     { path: '/chat_groups/:id(\\d+)/edit',  // :id は数値のみに制限する
     name: 'EditGroup',
     component: ModalWindow  },
+
+    { path: '/chat_groups/:id(\\d+)/destroy',  // :id は数値のみに制限する
+    name: 'BeforeDestroy',
+    component: ModalWindow  },
   ]
 })
 
