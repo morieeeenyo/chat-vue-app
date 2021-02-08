@@ -14,7 +14,7 @@ class Api::V1::ChatGroupsController < ApiController
   end
 
   def show 
-    render json: ChatGroup.find(params[:id])
+    render json: ChatGroup.find(params[:id]) #1行にrender json:としてまとめて書くならインスタンス化しないほうがいいのでは？
   end
 
   def update
@@ -26,6 +26,7 @@ class Api::V1::ChatGroupsController < ApiController
   end
 
   def destroy
+    @chat_group.destroy 
 
   end
 
