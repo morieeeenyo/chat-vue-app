@@ -7,17 +7,19 @@
       <!-- 子要素から受け取ったsubmitイベントを使ってupdateを動かす -->
       <modal-window v-show="showContent" v-on:from-child="closeModal" :form-title="formTitle" :create-or-edit="edit" :chat-group="group" :errors="errors" @submit="updateGroup"></modal-window>
     </div>
-    <a>チャットグループを削除する</a>
+    <delete-button :group="group"></delete-button>
   </div>
 </template>
 
 <script>
 import ModalWindow from '../ModalWindow.vue' // コンポーネントの読み込み
+import DeleteButton from './DeleteButton.vue' // コンポーネントの読み込み
 import axios from 'axios'; //ajaxを行うためにimport
 
 export default {
   components:{
-      ModalWindow
+      ModalWindow,
+      DeleteButton
     },
     data: function (){
       return {

@@ -26,8 +26,11 @@ class Api::V1::ChatGroupsController < ApiController
   end
 
   def destroy
-    @chat_group.destroy 
-
+    if @chat_group.destroy 
+      render json: { group: @chat_group }
+    else
+      render json: { errors: @chat_group.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   private 
