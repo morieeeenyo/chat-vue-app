@@ -58,9 +58,9 @@ export default {
             this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
           }
         });
-    }, emitGroup: function(group) {
+    }, emitGroup: function(group, event) {
       console.log(group)
-      this.$emit('emit-group', group) //削除と更新両方で使えるようにメソッドとして切り離す
+      this.$emit('emit-group', group, event) //削除と更新両方で使えるようにメソッドとして切り離す
     }
   },
   props: ['group'] //親から受け継いだグループのデータを表示するための属性。値には現在表示しているグループの情報が入っている。親でgroupというpropを使ったので名前は別にする。

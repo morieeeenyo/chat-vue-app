@@ -20,8 +20,8 @@
       ChatForm
     },
     methods: {
-      groupIsChanged: function(emittedGroup) {
-        this.$emit('emit-group-from-grand-child', emittedGroup) //SideBarの情報を更新するために一度Appに情報を渡す
+      groupIsChanged: function(emittedGroup, event) {
+        this.$emit('emit-group-from-grand-child', emittedGroup, event) //SideBarの情報を更新するために一度Appに情報を渡す
       },
     },
     props: ['currentGroup'] //親から受け継いだ現在いるグループの情報

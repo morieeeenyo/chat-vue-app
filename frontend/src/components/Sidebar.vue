@@ -43,11 +43,14 @@ Vue.use(VueAxios, axios)
       }
     },
     watch: {
-      'updatedGroup': function(updatedGroup) {
-        this.allGroupData.filter(e => e.id == updatedGroup.id)[0].group_name = updatedGroup.group_name //更新されたグループとidが一致する要素を検索し、更新
+      'changedGroup': function(changedGroup) {
+        if(this.isDestroyed === true) {
+          return this.allGroupData = this.allGroupData.filter(e => e.id !== changedGroup.id)
+        }
+        this.allGroupData.filter(e => e.id == changedGroup.id)[0].group_name = changedGroup.group_name //更新されたグループとidが一致する要素を検索し、更新
       }
     },
-    props: ['updatedGroup']
+    props: ['changedGroup', 'isDestroyed']
   }
 </script>
 
