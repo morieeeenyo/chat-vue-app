@@ -1,4 +1,5 @@
 class Api::V1::ChatGroupsController < ApiController
+  before_action :select_group, only: [:update, :destroy]
   def index 
     render json: { groups: ChatGroup.all }
   end
@@ -17,7 +18,6 @@ class Api::V1::ChatGroupsController < ApiController
   end
 
   def update
-    @chat_group = ChatGroup.find(params[:id])  
     if @chat_group.update(group_params)
       render json: { group: @chat_group }
     else
@@ -25,10 +25,18 @@ class Api::V1::ChatGroupsController < ApiController
     end
   end
 
+  def destroy
+
+  end
+
   private 
 
   def group_params
     params.fetch(:chat_group, {}).permit(:group_name) #空の値を送ったときにエラーが発生しないようにする
+  end
+
+  def select_group 
+    @chat_group = ChatGroup.find(params[:id])  
   end
 end
 
