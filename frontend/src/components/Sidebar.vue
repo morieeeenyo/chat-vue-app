@@ -44,13 +44,13 @@ Vue.use(VueAxios, axios)
     },
     watch: {
       'changedGroup': function(changedGroup) {
-        if(this.isDestroyed === true) {
+        if(this.eventType === 'destroyed') {
           return this.allGroupData = this.allGroupData.filter(e => e.id !== changedGroup.id)
         }
         this.allGroupData.filter(e => e.id == changedGroup.id)[0].group_name = changedGroup.group_name //更新されたグループとidが一致する要素を検索し、更新
       }
     },
-    props: ['changedGroup', 'isDestroyed']
+    props: ['changedGroup', 'eventType']
   }
 </script>
 

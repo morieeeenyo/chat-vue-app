@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- グループの更新情報をサイドバーに渡す -->
-    <side-bar :changed-group="changedData" :is-destroyed=isDestroyed></side-bar>
+    <side-bar :changed-group="changedData" :event-type=eventType></side-bar>
     <!-- 現在のグループの情報を子孫へ受け継ぐ -->
     <chat-container :current-group="groupData" @emit-group-from-grand-child="passChangedGroupData"></chat-container>
   </div>
@@ -59,7 +59,7 @@ Vue.use(VueRouter)
       return {
         groupData: {}, //現在のグループ
         changedData: {}, 
-        isDestroyed: false
+        eventType: ''
       }
     },
     components:{
@@ -92,9 +92,7 @@ Vue.use(VueRouter)
     }, 
     passChangedGroupData: function (emiitedGroup, event) {
       this.changedData = emiitedGroup //子に渡すために一旦dataに代入
-      if (event === 'destroyed') {
-        this.isDestroyed = true
-      }
+      this.eventType = event
       console.log(event)
     }
   },
