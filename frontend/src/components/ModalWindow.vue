@@ -11,7 +11,8 @@
           </ul>
         </div>
          <h2 class="form-title">{{ formTitle }}</h2>
-          <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chatGroup.group_name" >
+          <!-- 削除のときはgroup_nameの入力は不要 -->
+          <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chatGroup.group_name" v-if="eventType != '削除'">
           <button type="submit" id="group_form_submit">{{ eventType }}</button>
       </form>
      <p><button @click="emitCloseEvent" id="close_button">close</button></p>
