@@ -12,7 +12,7 @@
         </div>
          <h2 class="form-title">{{ formTitle }}</h2>
           <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chatGroup.group_name" >
-          <button type="submit" id="group_form_submit">{{ createOrEdit }}</button>
+          <button type="submit" id="group_form_submit">{{ eventType }}</button>
       </form>
      <p><button @click="emitCloseEvent" id="close_button">close</button></p>
     </div>
@@ -32,7 +32,7 @@ export default {
       event.stopPropagation()
     },
   },
-  props: ['createOrEdit', 'chatGroup', 'errors', 'formTitle']
+  props: ['eventType', 'chatGroup', 'errors', 'formTitle']
 }
 </script>
 

@@ -3,7 +3,7 @@
     <!-- @clickでボタンをクリックした時にモーダルを開く -->
    <router-link :to="{ name: 'CreateGroup' }" class="btn-circle-flat" @click.native="openModal">+</router-link>
    <!-- from-Childは子要素ModalWindowから受け取る -->
-   <modal-window v-show="showContent" v-on:from-child="closeModal" @submit="createGroup" :form-title="formTitle" :create-or-edit="create" :chat-group="group" :errors="errors"></modal-window>
+   <modal-window v-show="showContent" v-on:from-child="closeModal" @submit="createGroup" :form-title="formTitle" :event-type="create" :chat-group="group" :errors="errors"></modal-window>
   </div>
 </template>
 

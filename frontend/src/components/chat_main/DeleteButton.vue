@@ -1,7 +1,7 @@
 <template>
  <div class="header-right">
   <router-link :to="{ name: 'EditGroup', params: { id: group.id } }" id="edit_button" @click.native="openModal">チャットグループを削除する</router-link>
-  <modal-window v-show="showContent" v-on:from-child="closeModal" :form-title="formTitle" :create-or-edit="destroy" :chat-group="group" :errors="errors" ></modal-window>
+  <modal-window v-show="showContent" v-on:from-child="closeModal" :form-title="formTitle" :event-type="destroy" :chat-group="group" :errors="errors" ></modal-window>
  </div>
 </template>
 
