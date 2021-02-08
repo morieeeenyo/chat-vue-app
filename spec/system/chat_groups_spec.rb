@@ -23,9 +23,9 @@ RSpec.describe "ChatGroups", type: :system do
         another_group_2 = create(:chat_group, group_name: 'another_test_2')
         visit root_path
         expect(page).to  have_selector '#group-name', text: ""
-        expect(page).to  have_button '+'
-        click_button '+'
-        expect(page).to  have_content 'チャットグループ新規作成'
+        expect(page).to  have_link '+'
+        click_link '+'
+        expect(page).to  have_content '新規グループ作成'
         fill_in "group_name_input",	with: @chat_group.group_name
         expect do 
           click_button '作成'
@@ -44,23 +44,49 @@ RSpec.describe "ChatGroups", type: :system do
         # 編集のときも考慮してcontext作成
         before do
           visit root_path
-          expect(page).to  have_button '+'
-          click_button '+'
+          expect(page).to  have_link '+'
+          click_link '+'
         end
         
         it "モーダルウィンドウ内部をクリックしてもモーダルウィンドウが開いたままである" do 
           find("#content").click
-          expect(page).to  have_content 'チャットグループ新規作成'
+          expect(page).to  have_content '新規グループ作成'
         end
         
         it "closeボタンをクリックするとモーダルウィンドウを閉じる" do
           click_button 'close', id: 'close_button'
-          expect(page).to have_no_content 'チャットグループ新規作成'
+          expect(page).to have_no_content '新規グループ作成'
         end
         
         it "モーダルウィンドウ外部をクリックするとモーダルウィンドウが閉じる" do
           find("#overlay").click
-          expect(page).to  have_content 'チャットグループ新規作成'
+          expect(page).to  have_content '新規グループ作成'
+        end
+      end  
+
+      context "グループの更新" do
+        # 編集のときも考慮してcontext作成
+        before do
+          @chat_group.save
+          visit root_path
+          click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
+          expect(page).to have_content '編集'
+          click_link '編集'
+        end
+        
+        it "モーダルウィンドウ内部をクリックしてもモーダルウィンドウが開いたままである" do 
+          find("#content").click
+          expect(page).to  have_content 'チャットグループ名変更'
+        end
+        
+        it "closeボタンをクリックするとモーダルウィンドウを閉じる" do
+          click_button 'close', id: 'close_button'
+          expect(page).to have_no_content 'チャットグループ名変更'
+        end
+        
+        it "モーダルウィンドウ外部をクリックするとモーダルウィンドウが閉じる" do
+          find("#overlay").click
+          expect(page).to  have_content 'チャットグループ名変更'
         end
       end  
     end
@@ -73,6 +99,33 @@ RSpec.describe "ChatGroups", type: :system do
         expect(page).to have_selector '#group-name', text: @chat_group.group_name  
       end
     end
+
+    context "グループ情報の更新(非同期)" do
+      it "group_nameを入力して送信するとヘッダーのグループ名とサイドバーのグループ名が非同期で変化し、そのグループのページに遷移する" do
+        # 非同期でのグループ情報の取得はここに含めている
+        @chat_group.save
+        visit root_path
+        click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
+        expect(page).to  have_selector '#group-name', text: @chat_group.group_name
+        expect(page).to  have_link '編集'
+        click_link '編集'
+        expect(page).to  have_content 'チャットグループ名変更'
+        expect(page).to have_field 'group_name_input', with: @chat_group.group_name
+        fill_in "group_name_input",	with: 'hoge'
+        expect do 
+          click_button '変更'
+          sleep 1 #sleepがないとmysqlの処理が追いつかない
+        end.to change(ChatGroup, :count).by(0)
+        expect(page).to  have_selector '#group-name', text: 'hoge' 
+        link = find('.group-list-item a')
+        expect(
+          link.text 
+        ).to  eq 'hoge' # サイドバーの一番下にあるpタグのテキストが変更されていることを検証
+      end
+      
+      
+    end
+    
   end
   
 
@@ -82,14 +135,33 @@ RSpec.describe "ChatGroups", type: :system do
       it "グループ名が空のままフォームを送信するとエラーメッセージが表示され、モーダルウィンドウが開いたままである" do 
         visit root_path
         expect(page).to  have_selector '#group-name', text: ""
-        expect(page).to  have_button '+'
-        click_button '+'
-        expect(page).to  have_content 'チャットグループ新規作成'
+        expect(page).to  have_link '+'
+        click_link '+'
+        expect(page).to  have_content '新規グループ作成'
         fill_in "group_name_input",	with: ""
         expect do 
           click_button '作成'
         end.to change(ChatGroup, :count).by(0)
-        expect(page).to  have_content 'チャットグループ新規作成' #モーダルウィンドウにとどまっていることを検証
+        expect(page).to  have_content '新規グループ作成' #モーダルウィンドウにとどまっていることを検証
+        expect(page).to  have_selector '.error-messages', text: "Group name can't be blank" #エラーメッセージの表示を確認
+      end
+      
+    end
+
+    context "グループ更新失敗" do
+      it "グループ名が空のままフォームを送信するとエラーメッセージが表示され、モーダルウィンドウが開いたままである" do 
+        @chat_group.save
+        visit root_path
+        click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
+        expect(page).to have_content '編集'
+        click_link '編集'
+        expect(page).to  have_content 'チャットグループ名変更'
+        expect(page).to have_field 'group_name_input', with: @chat_group.group_name
+        fill_in "group_name_input",	with: ""
+        expect do 
+          click_button '変更'
+        end.to change(ChatGroup, :count).by(0)
+        expect(page).to  have_content 'チャットグループ名変更' #モーダルウィンドウにとどまっていることを検証
         expect(page).to  have_selector '.error-messages', text: "Group name can't be blank" #エラーメッセージの表示を確認
       end
       
@@ -109,6 +181,17 @@ RSpec.describe "ChatGroups", type: :system do
         end.to raise_error(ActiveRecord::RecordNotFound)
         expect(current_path).to  eq root_path
         expect(find('#group-name').text).to eq "" #ルートパスに遷移し、ヘッダーのグループ名が空であるか検証
+      end
+    end
+
+    context "グループ情報取得失敗" do
+      it "グループが選択されていないとき編集用のモーダルウィンドウを開こうとするとアラートが出てモーダルが開かない" do
+        visit root_path
+        expect(find('#group-name').text).to eq "" #グループが選択されていないことを検証
+        click_link '編集'
+        expect(page.driver.browser.switch_to.alert.text).to eq "グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。" #
+        page.driver.browser.switch_to.alert.accept #サーバーエラーは検証しなくてもOKで、アラートが出ることだけ検証した
+        expect(current_path).to  eq root_path
       end
     end
   end

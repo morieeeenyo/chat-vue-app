@@ -4,7 +4,7 @@ class Api::V1::ChatGroupsController < ApiController
   end
   
   def create
-    chat_group = ChatGroup.new(group_parans)
+    chat_group = ChatGroup.new(group_params)
     if chat_group.save 
       render json: { group: chat_group }, status: :created 
     else
@@ -16,10 +16,19 @@ class Api::V1::ChatGroupsController < ApiController
     render json: ChatGroup.find(params[:id])
   end
 
+  def update
+    @chat_group = ChatGroup.find(params[:id])  
+    if @chat_group.update(group_params)
+      render json: { group: @chat_group }
+    else
+      render json: { errors: @chat_group.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private 
 
-  def group_parans
-    params.require(:chat_group).permit(:group_name)
+  def group_params
+    params.fetch(:chat_group, {}).permit(:group_name) #空の値を送ったときにエラーが発生しないようにする
   end
 end
 

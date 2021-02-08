@@ -2,16 +2,17 @@
   <div id="overlay" @click="emitCloseEvent">
     <div id="content" @click="stopEvent">
       <!-- submit.preventでevent.preventDefaultと同様の動きになる -->
-      <form @submit.prevent="createGroup" id="group_form">
+      <!-- emitして親コンポーネントで処理を動かすことでeditとupdateで処理を分ける -->
+      <form @submit.prevent="$emit('submit')" id="group_form">
         <div v-if="errors.length != 0">
           <!-- エラーメッセージの表示 -->
           <ul v-for="e in errors" :key="e">
            <li class="error-messages"><font color="red">{{ e }}</font></li>
           </ul>
         </div>
-         <h2 class="form-title">チャットグループ新規作成</h2>
-          <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chat_group.group_name" >
-          <button type="submit" id="group_form_submit">作成</button>
+         <h2 class="form-title">{{ formTitle }}</h2>
+          <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chatGroup.group_name" >
+          <button type="submit" id="group_form_submit">{{ createOrEdit }}</button>
       </form>
      <p><button @click="emitCloseEvent" id="close_button">close</button></p>
     </div>
@@ -21,41 +22,17 @@
 <script>
 import axios from 'axios'; //ajaxを行うためにimport
 export default {
-  data: function () { 
-    return {
-        chat_group: {
-          group_name: ""
-        },   
-        errors: ''          //v-model="form.group_name"と連動。初期値を空文字列で設定
-     }       
-      },
   methods :{
-    createGroup: function(e) {
-      axios
-        .post('/api/v1/chat_groups', this.chat_group) //api/v1/groups#createへのルーティング
-        .then(response => {
-          let group = response.data.group; //返却されたjsonからgroupの情報を取得
-          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
-          this.chat_group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
-          this.$emit('created-group', group) //親コンポーネントにイベントと作成したグループを渡す
-          this.emitCloseEvent() //モーダルを閉じる
-        })
-        .catch(error => {
-          console.error(error); //コンソールにエラーを表示。
-          if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
-          }
-        });
-    },
     emitCloseEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')
-      this.errors = "" //エラーメッセージをリセットする
+      this.$router.push({ name: 'ChatGroup', params: { id: this.chatGroup.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
      },stopEvent: function(){
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()
-    }
-  }
+    },
+  },
+  props: ['createOrEdit', 'chatGroup', 'errors', 'formTitle']
 }
 </script>
 

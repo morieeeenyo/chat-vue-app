@@ -146,6 +146,64 @@ RSpec.describe "ChatGroups", type: :request do
       end
       
     end
+
+    describe "api/v1/chat_group#update" do
+      before do
+        #編集時は既にDBにレコードが保存されている
+        @chat_group.save
+      end
+      
+      
+      context "パラメータが正しいとき" do
+        it "リクエストが成功すること" do
+          # group_nameを変更しつつidはそのままparamsに入れる
+          patch api_v1_chat_group_path(@chat_group),  xhr: true, params: { chat_group: { group_name: 'hoge'}, id: @chat_group.id } 
+          #リソースを保存する処理の成功時のステータスは201
+          expect(response).to have_http_status(200) 
+        end
+
+        it "group_nameが更新されること" do
+          patch api_v1_chat_group_path(@chat_group),  xhr: true, params: { chat_group: { group_name: 'hoge'}, id: @chat_group.id } 
+          # リソースの更新にはリロードが必要
+          expect(@chat_group.reload.group_name).to eq 'hoge'
+        end
+
+        it "更新されたデータがjson形式で返却されること" do
+          patch api_v1_chat_group_path(@chat_group),  xhr: true, params: { chat_group: { group_name: 'hoge'}, id: @chat_group.id } 
+          json = JSON.parse(response.body)  
+          expect(json['group']['group_name']).to eq 'hoge'
+        end
+        
+      end
+
+      context "不正なパラメータが送信されたとき" do
+        before do
+          # バリデーションに引っかかってエラーメッセージが
+          # 返却されることを検証するためにgroup_nameを空にする。
+          patch api_v1_chat_group_path(@chat_group),  xhr: true, params: { chat_group: { group_name: ''}, id: @chat_group.id } 
+        end
+        
+        it "リクエストに失敗すること" do
+          #リクエストには成功したがパラメータが不正のとき、422でステータスコードが返ってくる
+          expect(response).to have_http_status(422) 
+        end
+  
+        it "chat_groupsテーブルのデータが更新されていないこと" do
+          # 更新しようとしたグループ情報が更新されていないことを検証
+          expect(@chat_group.reload.group_name).to eq @chat_group.group_name
+        end
+  
+        it "エラーメッセージがjson形式で返却されること" do
+          #返却されたデータをjson形式に変換
+          json = JSON.parse(response.body) 
+          # コントローラーのエラーハンドリングでバリデーションに
+          # 引っかかった場合はエラーメッセージを返すようにしている
+          expect(json['errors']).to include "Group name can't be blank" 
+        end
+      end
+      
+    end
+    
     
   end
   
