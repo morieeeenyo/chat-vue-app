@@ -3,7 +3,7 @@
     <!-- グループの更新情報をサイドバーに渡す -->
     <side-bar :updated-group="changedData"></side-bar>
     <!-- 現在のグループの情報を子孫へ受け継ぐ -->
-    <chat-container :current-group="groupData" @emit-update-group-from-grand-child="passChangedGroupData"></chat-container>
+    <chat-container :current-group="groupData" @emit-group-from-grand-child="passChangedGroupData"></chat-container>
   </div>
 </template>
 

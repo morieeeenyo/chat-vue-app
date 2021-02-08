@@ -1,7 +1,7 @@
 <template>
  <div class="chat">
    <!-- 各コンポーネントにgroupの情報を渡す -->
-   <chat-header :group="currentGroup" @emit-update-group="changeUpdatedGroup"></chat-header>
+   <chat-header :group="currentGroup" @emit-group="groupIsChanged"></chat-header>
    <chat-messages></chat-messages>
    <chat-form></chat-form>
  </div>
@@ -20,8 +20,8 @@
       ChatForm
     },
     methods: {
-      changeUpdatedGroup: function(emittedGroup) {
-        this.$emit('emit-update-group-from-grand-child', emittedGroup) //SideBarの情報を更新するために一度Appに情報を渡す
+      groupIsChanged: function(emittedGroup) {
+        this.$emit('emit-group-from-grand-child', emittedGroup) //SideBarの情報を更新するために一度Appに情報を渡す
       },
     },
     props: ['currentGroup'] //親から受け継いだ現在いるグループの情報

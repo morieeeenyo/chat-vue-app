@@ -7,7 +7,7 @@
       <!-- 子要素から受け取ったsubmitイベントを使ってupdateを動かす -->
       <modal-window v-show="showContent" v-on:from-child="closeModal" :form-title="formTitle" :event-type="update" :chat-group="group" :errors="errors" @submit="updateGroup"></modal-window>
     </div>
-    <delete-button :group="group"></delete-button>
+    <delete-button :group="group" @emit-destroy-group="emitGroup"></delete-button>
   </div>
 </template>
 
@@ -49,7 +49,7 @@ export default {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
           this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
           this.group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
-          this.$emit('emit-update-group', group) //ModalWindowでデータの更新をしたときに作成したグループの情報をChatContainerに渡す
+          this.emitGroup(group)
           this.closeModal() //モーダルを閉じる
         })
         .catch(error => {
@@ -58,6 +58,9 @@ export default {
             this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
           }
         });
+    }, emitGroup: function(group) {
+      console.log(group)
+      this.$emit('emit-group', group) //削除と更新両方で使えるようにメソッドとして切り離す
     }
   },
   props: ['group'] //親から受け継いだグループのデータを表示するための属性。値には現在表示しているグループの情報が入っている。親でgroupというpropを使ったので名前は別にする。
