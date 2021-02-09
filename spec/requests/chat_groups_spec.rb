@@ -146,7 +146,8 @@ RSpec.describe "ChatGroups", type: :request do
       end
       
     end
-
+  end
+    
     describe "api/v1/chat_group#update" do
       before do
         #編集時は既にDBにレコードが保存されている
@@ -158,7 +159,6 @@ RSpec.describe "ChatGroups", type: :request do
         it "リクエストが成功すること" do
           # group_nameを変更しつつidはそのままparamsに入れる
           patch api_v1_chat_group_path(@chat_group),  xhr: true, params: { chat_group: { group_name: 'hoge'}, id: @chat_group.id } 
-          #リソースを保存する処理の成功時のステータスは201
           expect(response).to have_http_status(200) 
         end
 
@@ -201,11 +201,39 @@ RSpec.describe "ChatGroups", type: :request do
           expect(json['errors']).to include "Group name can't be blank" 
         end
       end
-      
     end
+    describe "api/v1/chat_group#destroy" do
+      before do
+        #削除時は既にDBにレコードが保存されている
+        @chat_group.save
+      end
+
+      context "パラメータが正しいとき" do
+        it "リクエストに成功すること" do
+          delete api_v1_chat_group_path(@chat_group),  xhr: true
+          expect(response).to have_http_status(200)
+        end
+
+        it "パラメータとして送ったチャットグループのレコードが削除されること" do
+          expect do 
+           delete api_v1_chat_group_path(@chat_group),  xhr: true
+          end.to change(ChatGroup, :count).by(-1)
+        end
+
+        it "削除されたグループの情報がレスポンスとして返却されること" do
+          delete api_v1_chat_group_path(@chat_group),  xhr: true
+          json = JSON.parse(response.body)  
+          expect(json['group']['id']).to eq @chat_group.id
+        end
+        
+      end
+      
+
+    end
+      
+
     
     
-  end
   
   
 end
