@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "ChatGroups", type: :system do
+  include SelectGroupSupport 
+
   before do
     @chat_group = build(:chat_group)
   end
@@ -22,7 +24,6 @@ RSpec.describe "ChatGroups", type: :system do
         another_group_1 = create(:chat_group, group_name: 'another_test_1')
         another_group_2 = create(:chat_group, group_name: 'another_test_2')
         visit root_path
-        expect(page).to  have_selector '#group-name', text: ""
         expect(page).to  have_link '+'
         click_link '+'
         expect(page).to  have_content '新規グループ作成'
@@ -67,9 +68,7 @@ RSpec.describe "ChatGroups", type: :system do
       context "グループの更新" do
         # 編集のときも考慮してcontext作成
         before do
-          @chat_group.save
-          visit root_path
-          click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
+          select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
           expect(page).to have_content '編集'
           click_link '編集'
         end
@@ -93,9 +92,7 @@ RSpec.describe "ChatGroups", type: :system do
       context "グループの削除" do
         # 編集のときも考慮してcontext作成
         before do
-          @chat_group.save
-          visit root_path
-          click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
+          select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
           expect(page).to have_content 'チャットグループを削除する'
           click_link 'チャットグループを削除する'
           expect(page).to have_no_field 'group_name_input', with: @chat_group.group_name #削除のときは入力欄がない
@@ -129,11 +126,7 @@ RSpec.describe "ChatGroups", type: :system do
 
     context "グループ情報の更新(非同期)" do
       it "group_nameを入力して送信するとヘッダーのグループ名とサイドバーのグループ名が非同期で変化し、そのグループのページに遷移する" do
-        # 非同期でのグループ情報の取得はここに含めている
-        @chat_group.save
-        visit root_path
-        click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
-        expect(page).to  have_selector '#group-name', text: @chat_group.group_name
+        select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         expect(page).to  have_link '編集'
         click_link '編集'
         expect(page).to  have_content 'チャットグループ名変更'
@@ -149,15 +142,11 @@ RSpec.describe "ChatGroups", type: :system do
           link.text 
         ).to  eq 'hoge' # サイドバーの一番下にあるpタグのテキストが変更されていることを検証
       end
-      
-      
     end
+
     context "グループの削除(非同期)" do
       it "サイドバーからグループを選択し、削除のモーダルウィンドウから削除ボタンを押すとグループが削除されヘッダーとサイドバーのグループ名が消える。" do 
-        @chat_group.save
-        visit root_path
-        click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
-        expect(page).to  have_selector '#group-name', text: @chat_group.group_name
+        select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         expect(page).to have_content 'チャットグループを削除する'
         click_link 'チャットグループを削除する'
         expect(page).to have_no_field 'group_name_input', with: @chat_group.group_name #削除のときは入力欄がない
@@ -168,9 +157,8 @@ RSpec.describe "ChatGroups", type: :system do
         expect(page).to  have_selector '#group-name', text: '' #ヘッダーのテキストが消える
         expect(page).to  have_no_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
       end
-      
     end
-    
+
   end
   
 
@@ -190,14 +178,11 @@ RSpec.describe "ChatGroups", type: :system do
         expect(page).to  have_content '新規グループ作成' #モーダルウィンドウにとどまっていることを検証
         expect(page).to  have_selector '.error-messages', text: "Group name can't be blank" #エラーメッセージの表示を確認
       end
-      
     end
 
     context "グループ更新失敗" do
       it "グループ名が空のままフォームを送信するとエラーメッセージが表示され、モーダルウィンドウが開いたままである" do 
-        @chat_group.save
-        visit root_path
-        click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
+        select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         expect(page).to have_content '編集'
         click_link '編集'
         expect(page).to  have_content 'チャットグループ名変更'
