@@ -1,6 +1,6 @@
 module SelectGroupSupport 
   def select_group(group)
-    # 非同期でのグループ情報の取得はここに含めている
+    # インスタンスを保存し、リンクをクリックして非同期でグループ情報を取得
     group.save
     visit root_path
     click_link group.group_name, href: "#/chat_groups/#{group.id}"
