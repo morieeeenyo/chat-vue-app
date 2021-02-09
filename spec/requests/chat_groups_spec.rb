@@ -209,6 +209,7 @@ RSpec.describe "ChatGroups", type: :request do
       end
 
       context "パラメータが正しいとき" do
+
         it "リクエストに成功すること" do
           delete api_v1_chat_group_path(@chat_group),  xhr: true
           expect(response).to have_http_status(200)
@@ -227,13 +228,15 @@ RSpec.describe "ChatGroups", type: :request do
         end
         
       end
-      
 
+      context "削除に失敗するとき" do
+        it "二重にリクエストを送ると2回目で削除に失敗する" do
+          delete api_v1_chat_group_path(@chat_group),  xhr: true
+           expect do 
+            delete api_v1_chat_group_path(@chat_group),  xhr: true
+           end.to raise_error ActiveRecord::RecordNotFound 
+        end
+        # パラメータが不正な場合もdestroyに失敗するがその場合についてはshowアクションを参照
+      end
     end
-      
-
-    
-    
-  
-  
 end
