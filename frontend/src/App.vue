@@ -84,11 +84,14 @@ Vue.use(VueRouter)
         });
       }, 
       changePathOnReload: function (e) {
-        e.preventDefault()
-      if ( this.$route.path === `/chat_groups/${this.groupData.id}` ) {
-         return null; //既に'chatGroupのページにいる場合はNavigationDuplicatedエラーが出るのでreturn nullする
+      e.preventDefault()
+      if ( this.$route.path === `/chat_groups/${this.groupData.id}/edit` || this.$route.path === `/chat_groups/${this.groupData.id}/destroy`) {
+         this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //edit,destroyの場合はparams.idが存在するので詳細へ
+      } else if (this.$route.path === `/chat_groups/new`) {
+        this.$router.push({name: 'home'}) //新規登録ページにいる場合はルートに戻す
+      } else {
+        return null
       }
-       this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //editの場合はparams.idが存在するので詳細へ、それ以外はparams.idがないのでrootへ戻す
     }, 
     passChangedGroupData: function (emiitedGroup, event) {
       this.changedData = emiitedGroup //子に渡すために一旦dataに代入
@@ -100,10 +103,10 @@ Vue.use(VueRouter)
     console.log('created')
      window.addEventListener("load", this.changePathOnReload); //コンポーネント読み込み時にイベント予約
     },
-    destroyed () {
-    console.log('destroyed')
-     window.removeEventListener("load", this.changePathOnReload); //予約されたイベントを消去
-    },
+    // destroyed () {
+    // console.log('destroyed')
+    //  window.removeEventListener("load", this.changePathOnReload); //予約されたイベントを消去
+    // },
     watch: {
      // ルーティングに変更があった際にURLからアクセスしているグループの情報を取得。これで非同期で処理を反映する
     '$route': {
