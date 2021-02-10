@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <!-- グループの更新情報をサイドバーに渡す -->
-    <side-bar :updated-group="changedData"></side-bar>
+    <side-bar :changed-group="changedData" :event-type=eventType></side-bar>
     <!-- 現在のグループの情報を子孫へ受け継ぐ -->
-    <chat-container :current-group="groupData" @emit-update-group-from-grand-child="passChangedGroupData"></chat-container>
+    <chat-container :current-group="groupData" @emit-group-from-grand-child="passChangedGroupData"></chat-container>
   </div>
 </template>
 
@@ -45,6 +45,10 @@ const router = new VueRouter({
     { path: '/chat_groups/:id(\\d+)/edit',  // :id は数値のみに制限する
     name: 'EditGroup',
     component: ModalWindow  },
+
+    { path: '/chat_groups/:id(\\d+)/destroy',  // :id は数値のみに制限する
+    name: 'BeforeDestroy',
+    component: ModalWindow  },
   ]
 })
 
@@ -54,7 +58,8 @@ Vue.use(VueRouter)
     data: function() {
       return {
         groupData: {}, //現在のグループ
-        changedData: {}
+        changedData: {}, 
+        eventType: ''
       }
     },
     components:{
@@ -79,24 +84,29 @@ Vue.use(VueRouter)
         });
       }, 
       changePathOnReload: function (e) {
-        e.preventDefault()
-      if ( this.$route.path === `/chat_groups/${this.groupData.id}` ) {
-         return null; //既に'chatGroupのページにいる場合はNavigationDuplicatedエラーが出るのでreturn nullする
+      e.preventDefault()
+      if ( this.$route.path === `/chat_groups/${this.groupData.id}/edit` || this.$route.path === `/chat_groups/${this.groupData.id}/destroy`) {
+         this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //edit,destroyの場合はparams.idが存在するので詳細へ
+      } else if (this.$route.path === `/chat_groups/new`) {
+        this.$router.push({name: 'home'}) //新規登録ページにいる場合はルートに戻す
+      } else {
+        return null
       }
-       this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //editの場合はparams.idが存在するので詳細へ、それ以外はparams.idがないのでrootへ戻す
     }, 
-    passChangedGroupData: function (emiitedGroup) {
+    passChangedGroupData: function (emiitedGroup, event) {
       this.changedData = emiitedGroup //子に渡すために一旦dataに代入
+      this.eventType = event
+      console.log(event)
     }
   },
     mounted() {
     console.log('created')
      window.addEventListener("load", this.changePathOnReload); //コンポーネント読み込み時にイベント予約
     },
-    destroyed () {
-    console.log('destroyed')
-     window.removeEventListener("load", this.changePathOnReload); //予約されたイベントを消去
-    },
+    // destroyed () {
+    // console.log('destroyed')
+    //  window.removeEventListener("load", this.changePathOnReload); //予約されたイベントを消去
+    // },
     watch: {
      // ルーティングに変更があった際にURLからアクセスしているグループの情報を取得。これで非同期で処理を反映する
     '$route': {

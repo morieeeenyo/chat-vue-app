@@ -1,4 +1,5 @@
 class Api::V1::ChatGroupsController < ApiController
+  before_action :select_group, only: [:update, :destroy]
   def index 
     render json: { groups: ChatGroup.all }
   end
@@ -13,12 +14,19 @@ class Api::V1::ChatGroupsController < ApiController
   end
 
   def show 
-    render json: ChatGroup.find(params[:id])
+    render json: ChatGroup.find(params[:id]) #1行にrender json:としてまとめて書くならインスタンス化しないほうがいいのでは？
   end
 
   def update
-    @chat_group = ChatGroup.find(params[:id])  
     if @chat_group.update(group_params)
+      render json: { group: @chat_group }
+    else
+      render json: { errors: @chat_group.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @chat_group.destroy 
       render json: { group: @chat_group }
     else
       render json: { errors: @chat_group.errors.full_messages }, status: :unprocessable_entity
@@ -29,6 +37,10 @@ class Api::V1::ChatGroupsController < ApiController
 
   def group_params
     params.fetch(:chat_group, {}).permit(:group_name) #空の値を送ったときにエラーが発生しないようにする
+  end
+
+  def select_group 
+    @chat_group = ChatGroup.find(params[:id])  
   end
 end
 
