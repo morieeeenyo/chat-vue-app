@@ -55,7 +55,7 @@ Vue.use(VueRouter)
 
 // ActionCableを使えるようにするための設定
 import ActionCable from 'actioncable';
-const cable = ActionCable.createConsumer('ws:hoge.com:3000/cable');
+const cable = ActionCable.createConsumer('ws:localhost:3000/cable');
 Vue.prototype.$cable = cable;
 
 

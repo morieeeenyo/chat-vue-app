@@ -8,7 +8,19 @@
 
 <script>
 export default {
-  
+  data: function () {
+    return {
+      messages: [],
+      messageChannel: null,
+    }
+  },
+  created() {
+  this.messageChannel = this.$cable.subscriptions.create( "MessageChannel",{
+    received: (data) => {
+      this.messages.push(data)
+    },
+  })
+},
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <form class="message-form">
+  <form class="message-form" @submit.prevent="speak">
     <input type="text" class="message-input">
     <input type="submit" value="送信" class="message-submit">
   </form>
@@ -7,7 +7,14 @@
 
 <script>
 export default {
-  
+  data: function() {
+    return {
+      message: {
+        text: ""
+      },
+      messageChannel: null
+    }
+  },
 }
 </script>
 
