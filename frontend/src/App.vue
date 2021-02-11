@@ -22,7 +22,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios) 
 
-// 以下は非同期通信後の遷移先の指定
+// 以下は遷移先の指定
 import VueRouter from 'vue-router'
 const router = new VueRouter({
   routes: [
@@ -51,8 +51,13 @@ const router = new VueRouter({
     component: ModalWindow  },
   ]
 })
-
 Vue.use(VueRouter)
+
+// ActionCableを使えるようにするための設定
+import ActionCable from 'actioncable';
+const cable = ActionCable.createConsumer('ws:hoge.com:3000/cable');
+Vue.prototype.$cable = cable;
+
 
   export default {
     data: function() {
@@ -69,10 +74,10 @@ Vue.use(VueRouter)
     methods: {
       fetchGroup: function() {
       if (this.$route.path === '/' || this.$route.path === '/chat_groups/new') {
-        return this.groupData = {} // ルートパスにおよび新規投稿画面同期したときはヘッダーにあるgroupのデータを空にする
+        return this.groupData = {} // ルートパスにおよび新規投稿画面に遷移したときはヘッダーにあるgroupのデータを空にする
        }
         axios
-        // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
+        // chat_groups#showアクションへのルーティング。変更後のパスから現在のグループを取得してビューに返す
       .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
       .then(response => {
         this.groupData = response.data 
@@ -103,10 +108,6 @@ Vue.use(VueRouter)
     console.log('created')
      window.addEventListener("load", this.changePathOnReload); //コンポーネント読み込み時にイベント予約
     },
-    // destroyed () {
-    // console.log('destroyed')
-    //  window.removeEventListener("load", this.changePathOnReload); //予約されたイベントを消去
-    // },
     watch: {
      // ルーティングに変更があった際にURLからアクセスしているグループの情報を取得。これで非同期で処理を反映する
     '$route': {
