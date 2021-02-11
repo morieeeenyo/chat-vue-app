@@ -105,7 +105,6 @@ Vue.prototype.$cable = cable;
     }
   },
     mounted() {
-    console.log('created')
      window.addEventListener("load", this.changePathOnReload); //コンポーネント読み込み時にイベント予約
     },
     watch: {
