@@ -29,10 +29,11 @@ import ActionCable from 'actioncable';
     },
     created() {
     const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
+    console.log(this.$route.params.id)
 
-    this.messageChannel = cable.subscriptions.create( "MessageChannel",{
+    this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: this.$route.params.id},{
       received: (data) => {
-        this.messages.push(data.message);
+          this.messages.push(data.message);
       },
     })
   },

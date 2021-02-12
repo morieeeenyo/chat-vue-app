@@ -1,6 +1,7 @@
 class MessageChannel < ApplicationCable::Channel
+  
   def subscribed
-    stream_from "message_channel"
+    stream_from "message_channel_#{params['chat_group_id']}"
   end
 
   # メッセージを保存し、ブロードキャストするためのアクション
@@ -8,7 +9,7 @@ class MessageChannel < ApplicationCable::Channel
     @chat_group = ChatGroup.find(data['group']['id'])
     @message = @chat_group.messages.build(text: data['message'])
     if @message.save 
-     ActionCable.server.broadcast 'message_channel', message: @message, group: @chat_group
+     ActionCable.server.broadcast "message_channel_#{params['chat_group_id']}", message: @message
     end
   end
 
