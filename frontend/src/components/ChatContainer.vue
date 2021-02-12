@@ -2,7 +2,7 @@
  <div class="chat">
    <!-- 各コンポーネントにgroupの情報を渡す -->
    <chat-header :group="currentGroup" @emit-group="groupIsChanged"></chat-header>
-   <chat-messages :messages=messages></chat-messages>
+   <chat-messages :messages=group.messages></chat-messages>
    <chat-form :group="currentGroup" @message-post="postMessage"></chat-form>
  </div>
 </template>
@@ -19,7 +19,11 @@ import ActionCable from 'actioncable';
   export default {
     data: function () {
       return {
-        messages: [],
+        group: {
+          id: null,
+          group_name: '',
+          messages: [],
+        }
       }
     },
     components:{
@@ -28,14 +32,12 @@ import ActionCable from 'actioncable';
       ChatForm
     },
     created() {
-    const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
-    console.log(this.$route.params.id)
-
-    this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: this.$route.params.id},{
-      received: (data) => {
-          this.messages.push(data.message);
-      },
-    })
+    // const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
+    // this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: this.group.id},{
+    //   received: (data) => {
+    //     this.group.messages.push(data.message);
+    //   },
+    // })
   },
     methods: {
       groupIsChanged: function(emittedGroup, event) {
@@ -46,9 +48,22 @@ import ActionCable from 'actioncable';
       //ActionCable MessageChannelにおけるpostメソッドを実行する
       this.messageChannel.perform('post', { 
         message: message.text,
-        group: this.currentGroup //グループごとに配信先を分けたい…ができない
       });
     }
+    },
+    watch: {
+    'currentGroup': {
+      handler: function (group) {
+        // this.group.id = group.id
+        const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
+        this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: group.id},{
+        received: (data) => {
+        group.messages.push(data.message);
+       },
+    })
+      }
+     },
+      immediate: true //同期したときの処理
     },
     props: ['currentGroup'] //親から受け継いだ現在いるグループの情報
   }
