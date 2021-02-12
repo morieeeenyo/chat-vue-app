@@ -56,7 +56,9 @@ Vue.use(VueRouter)
   export default {
     data: function() {
       return {
-        groupData: {}, //現在のグループ
+        groupData: {
+          messages: []
+        }, //現在のグループ
         changedData: {}, 
         eventType: ''
       }
@@ -74,7 +76,8 @@ Vue.use(VueRouter)
         // chat_groups#showアクションへのルーティング。変更後のパスから現在のグループを取得してビューに返す
       .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
       .then(response => {
-        this.groupData = response.data 
+        this.groupData = response.data.group 
+        this.groupData.messages = response.data.messages
        }
       ).catch(error => {
           console.error(error); //コンソールにエラーを表示。
