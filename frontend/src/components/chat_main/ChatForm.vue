@@ -17,6 +17,7 @@ export default {
   methods: {
     emitPostMessage: function () {
       this.$emit('message-post', this.message)
+      this.message.text = ""
     }
   },
   props: ['group']
