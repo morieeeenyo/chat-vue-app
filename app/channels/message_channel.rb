@@ -4,8 +4,8 @@ class MessageChannel < ApplicationCable::Channel
   end
 
   # メッセージをブロードキャストするためのアクション
-  def speak(data)
-    ActionCable.server.broadcast 'message_channel', message: data['message']
+  def spost(data)
+    ActionCable.server.broadcast 'message_channel', message: data['message'], group: data['group']
   end
 
   def unsubscribed

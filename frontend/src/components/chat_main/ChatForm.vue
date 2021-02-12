@@ -1,5 +1,5 @@
 <template>
-  <form class="message-form" @submit.prevent="speak">
+  <form class="message-form">
     <input type="text" class="message-input">
     <input type="submit" value="送信" class="message-submit">
   </form>
@@ -12,9 +12,9 @@ export default {
       message: {
         text: ""
       },
-      messageChannel: null
     }
   },
+  props: ['group']
 }
 </script>
 

@@ -3,7 +3,7 @@
    <!-- 各コンポーネントにgroupの情報を渡す -->
    <chat-header :group="currentGroup" @emit-group="groupIsChanged"></chat-header>
    <chat-messages></chat-messages>
-   <chat-form></chat-form>
+   <chat-form :group="currentGroup" @submit="postMessage"></chat-form>
  </div>
 </template>
 
@@ -13,16 +13,43 @@
   import ChatForm from './chat_main/ChatForm.vue'
   // 以下はajaxを行うために必要
   import axios from 'axios' 
+
+  // ActionCableを使えるようにするための設定。ChatConatainer内でしか使わないはず
+import ActionCable from 'actioncable';
   export default {
+    data: function () {
+      return {
+        messages: [],
+      }
+    },
     components:{
       ChatHeader,
       ChatMessages,
       ChatForm
     },
+    created() {
+    const cable = ActionCable.createConsumer('ws:localhost:3000/cable');
+
+    this.messageChannel = cable.subscriptions.create( "MessageChannel",{
+      received: (data) => {
+        this.messages.push(data);
+      },
+    })
+  },
     methods: {
       groupIsChanged: function(emittedGroup, event) {
         this.$emit('emit-group-from-grand-child', emittedGroup, event) //SideBarの情報を更新するために一度Appに情報を渡す
       },
+      postMessage: function () {
+      //ActionCable PostChannelにおけるpostメソッドを実行する
+      this.messageChannel.perform('post', { 
+        message: this.message.text,
+        group: group
+      });
+      // console.log(this.$store.state.messages);
+      //メッセージ追加後にテキストボックスを空にする
+      this.messageText = ""
+    }
     },
     props: ['currentGroup'] //親から受け継いだ現在いるグループの情報
   }
