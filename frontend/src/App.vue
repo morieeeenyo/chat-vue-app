@@ -101,7 +101,6 @@ Vue.prototype.$cable = cable;
     passChangedGroupData: function (emiitedGroup, event) {
       this.changedData = emiitedGroup //子に渡すために一旦dataに代入
       this.eventType = event
-      console.log(event)
     }
   },
     mounted() {
