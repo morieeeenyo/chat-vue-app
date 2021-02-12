@@ -2,7 +2,7 @@
  <div class="chat">
    <!-- 各コンポーネントにgroupの情報を渡す -->
    <chat-header :group="currentGroup" @emit-group="groupIsChanged"></chat-header>
-   <chat-messages></chat-messages>
+   <chat-messages :messages=messages></chat-messages>
    <chat-form :group="currentGroup" @message-post="postMessage"></chat-form>
  </div>
 </template>
@@ -32,7 +32,7 @@ import ActionCable from 'actioncable';
 
     this.messageChannel = cable.subscriptions.create( "MessageChannel",{
       received: (data) => {
-        this.messages.push(data);
+        this.messages.push(data.message);
       },
     })
   },

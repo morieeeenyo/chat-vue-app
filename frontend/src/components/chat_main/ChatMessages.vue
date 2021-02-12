@@ -1,18 +1,14 @@
 <template>
   <div class="messages">
-   <p class="message">メッセージ</p>
-   <p class="message">メッセージ</p>
-   <p class="message">メッセージ</p>
+   <div v-for="message in messages" :key="message.text">
+    <p class="message">{{ message }}</p>
+   </div>
   </div>
 </template>
 
 <script>
 export default {
-  data: function () {
-    return {
-      messages: [],
-    }
-  },
+  props: ['messages']
 }
 </script>
 
