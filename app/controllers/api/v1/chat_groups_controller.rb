@@ -1,5 +1,5 @@
 class Api::V1::ChatGroupsController < ApiController
-  before_action :select_group, only: [:update, :destroy]
+  before_action :select_group, only: [:show, :update, :destroy]
   def index 
     render json: { groups: ChatGroup.all }
   end
@@ -14,7 +14,7 @@ class Api::V1::ChatGroupsController < ApiController
   end
 
   def show 
-    render json: ChatGroup.find(params[:id]) #1行にrender json:としてまとめて書くならインスタンス化しないほうがいいのでは？
+    render json: {group: @chat_group, messages: @chat_group.messages} #1行にrender json:としてまとめて書くならインスタンス化しないほうがいいのでは？
   end
 
   def update
