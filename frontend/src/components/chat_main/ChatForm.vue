@@ -1,6 +1,6 @@
 <template>
-  <form class="message-form">
-    <input type="text" class="message-input">
+  <form class="message-form" @submit.prevent="emitPostMessage">
+    <input type="text" class="message-input" v-model="message.text">
     <input type="submit" value="送信" class="message-submit">
   </form>
 </template>
@@ -12,6 +12,11 @@ export default {
       message: {
         text: ""
       },
+    }
+  },
+  methods: {
+    emitPostMessage: function () {
+      this.$emit('message-post', this.message)
     }
   },
   props: ['group']

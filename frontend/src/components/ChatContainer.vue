@@ -3,7 +3,7 @@
    <!-- 各コンポーネントにgroupの情報を渡す -->
    <chat-header :group="currentGroup" @emit-group="groupIsChanged"></chat-header>
    <chat-messages></chat-messages>
-   <chat-form :group="currentGroup" @submit="postMessage"></chat-form>
+   <chat-form :group="currentGroup" @message-post="postMessage"></chat-form>
  </div>
 </template>
 
@@ -40,11 +40,11 @@ import ActionCable from 'actioncable';
       groupIsChanged: function(emittedGroup, event) {
         this.$emit('emit-group-from-grand-child', emittedGroup, event) //SideBarの情報を更新するために一度Appに情報を渡す
       },
-      postMessage: function () {
+      postMessage: function (message) {
       //ActionCable PostChannelにおけるpostメソッドを実行する
       this.messageChannel.perform('post', { 
-        message: this.message.text,
-        group: group
+        message: message.text,
+        group: this.currentGroup
       });
       // console.log(this.$store.state.messages);
       //メッセージ追加後にテキストボックスを空にする
