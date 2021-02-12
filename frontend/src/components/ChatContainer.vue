@@ -28,7 +28,7 @@ import ActionCable from 'actioncable';
       ChatForm
     },
     created() {
-    const cable = ActionCable.createConsumer('ws:localhost:3000/cable');
+    const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
 
     this.messageChannel = cable.subscriptions.create( "MessageChannel",{
       received: (data) => {
@@ -40,15 +40,13 @@ import ActionCable from 'actioncable';
       groupIsChanged: function(emittedGroup, event) {
         this.$emit('emit-group-from-grand-child', emittedGroup, event) //SideBarの情報を更新するために一度Appに情報を渡す
       },
+      // ChatFormでメッセージが送信されると発火
       postMessage: function (message) {
-      //ActionCable PostChannelにおけるpostメソッドを実行する
+      //ActionCable MessageChannelにおけるpostメソッドを実行する
       this.messageChannel.perform('post', { 
         message: message.text,
-        group: this.currentGroup
+        group: this.currentGroup //グループごとに配信先を分けたい…ができない
       });
-      // console.log(this.$store.state.messages);
-      //メッセージ追加後にテキストボックスを空にする
-      this.messageText = ""
     }
     },
     props: ['currentGroup'] //親から受け継いだ現在いるグループの情報

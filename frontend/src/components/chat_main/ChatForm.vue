@@ -17,7 +17,7 @@ export default {
   methods: {
     emitPostMessage: function () {
       this.$emit('message-post', this.message)
-      this.message.text = ""
+      this.message.text = "" //入力値のリセット
     }
   },
   props: ['group']
