@@ -3,9 +3,13 @@ class MessageChannel < ApplicationCable::Channel
     stream_from "message_channel"
   end
 
-  # メッセージをブロードキャストするためのアクション
+  # メッセージを保存し、ブロードキャストするためのアクション
   def post(data)
-    ActionCable.server.broadcast 'message_channel', message: data['message'], group: data['group']
+    @chat_group = ChatGroup.find(data['group']['id'])
+    @message = @chat_group.messages.build(text: data['message'])
+    if @message.save 
+     ActionCable.server.broadcast 'message_channel', message: @message, group: @chat_group
+    end
   end
 
   def unsubscribed
