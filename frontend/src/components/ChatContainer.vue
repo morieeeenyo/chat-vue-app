@@ -42,12 +42,13 @@ import ActionCable from 'actioncable';
         const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
         this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: group.id},{
         received: (data) => {
-         group.messages.push(data.message);
+          group.messages.push(data.message);
        },
-    })
-      }
-     },
+       })
+      },
+      deep: true,
       immediate: true //同期したときの処理
+     },
     },
     props: ['currentGroup'] //親から受け継いだ現在いるグループの情報
   }
