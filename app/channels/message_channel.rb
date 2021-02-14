@@ -1,6 +1,7 @@
 class MessageChannel < ApplicationCable::Channel
   
   def subscribed
+    stop_all_streams
     stream_from "message_channel_#{params['chat_group_id']}"
   end
 
@@ -14,6 +15,6 @@ class MessageChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    stop_all_streams
   end
 end

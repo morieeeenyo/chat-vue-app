@@ -19,6 +19,10 @@ export default {
   watch: {
     'newMessage': {
       handler: function (newMessage) {
+        if (this.currentGroup.messages.find(message => message.id == newMessage.id)) {
+          console.log('passed')
+          return null;
+        }
         this.currentGroup.messages.push(newMessage)
       }
     },
@@ -26,7 +30,7 @@ export default {
       handler: function (group) {
         this.currentGroup.messages = group.messages 
       },
-      deep: true,
+      // deep: true,
       immediate: true
     }
   }
