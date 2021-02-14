@@ -2,7 +2,7 @@
  <div class="chat">
    <!-- 各コンポーネントにgroupの情報を渡す -->
    <chat-header :group="currentGroup" @emit-group="groupIsChanged"></chat-header>
-   <chat-messages :messages=currentGroup.messages></chat-messages>
+   <chat-messages :group=currentGroup :new-message="newMessage"></chat-messages>
    <chat-form :group="currentGroup" @message-post="postMessage"></chat-form>
  </div>
 </template>
@@ -17,6 +17,11 @@
   // ActionCableを使えるようにするための設定。ChatConatainer内でしか使わないはず
 import ActionCable from 'actioncable';
   export default {
+    data: function () {
+      return {
+        newMessage: {}
+      }
+    },
     components:{
       ChatHeader,
       ChatMessages,
@@ -40,11 +45,11 @@ import ActionCable from 'actioncable';
         const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
         this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: group.id},{
         received: (data) => {
-          group.messages.push(data.message);
+          this.newMessage = data.message
        },
        })
       },
-      deep: true,
+      immediate: true,
      },
     },
     props: ['currentGroup'] //親から受け継いだ現在いるグループの情報

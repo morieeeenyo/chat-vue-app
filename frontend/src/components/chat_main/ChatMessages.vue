@@ -1,6 +1,6 @@
 <template>
   <div class="messages">
-   <div v-for="message in messages" :key="message.id">
+   <div v-for="message in currentGroup.messages" :key="message.id">
     <p class="message">{{ message.text }}</p>
    </div>
   </div>
@@ -8,7 +8,28 @@
 
 <script>
 export default {
-  props: ['messages']
+  data: function () {
+    return {
+      currentGroup: {
+        messages: [],
+      }
+    }
+  },
+  props: ['group', 'newMessage'],
+  watch: {
+    'newMessage': {
+      handler: function (newMessage) {
+        this.currentGroup.messages.push(newMessage)
+      }
+    },
+    'group': {
+      handler: function (group) {
+        this.currentGroup.messages = group.messages 
+      },
+      deep: true,
+      immediate: true
+    }
+  }
 }
 </script>
 
