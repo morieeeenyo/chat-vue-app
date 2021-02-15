@@ -33,27 +33,25 @@ import ActionCable from 'actioncable';
       },
       // ChatFormでメッセージが送信されると発火
       postMessage: function (message) {
+      if (this.messageChannel) {
       //ActionCable MessageChannelにおけるpostメソッドを実行する
       this.messageChannel.perform('post', { 
         message: message.text,
-      });
+       });
+      } else {
+        return alert('グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。') 
+        // このあとChatFromのemitPostMessageで入力値がからになる
+      }
     }
     },
     watch: {
     'currentGroup': {
       handler: function (group) {
         const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
-        console.log(cable.subscriptions)
-        if (cable) {
-          console.log('passed2')
-          cable.subscriptions.remove(cable.subscriptions['subscriptions'])
-          console.log(cable.subscriptions)
-        }
+        cable.subscriptions.remove(cable.subscriptions['subscriptions']) //一度購読を全て止めて新しく購読し直す
         this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: group.id},{
         connected: () => {
-          const count = cable.subscriptions['subscriptions'].length;
-          console.log(count);
-          this.messageChannel.perform('subscribed')
+          this.messageChannel.perform('subscribed') 
         },
         received: (data) => {
           this.newMessage = data.message
