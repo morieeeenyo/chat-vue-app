@@ -43,11 +43,11 @@ import ActionCable from 'actioncable';
     'currentGroup': {
       handler: function (group) {
         const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
-        console.log('passed1')
+        console.log(cable.subscriptions)
         if (cable) {
           console.log('passed2')
-          console.log(cable.subscriptions)
           cable.subscriptions.remove(cable.subscriptions['subscriptions'])
+          console.log(cable.subscriptions)
         }
         this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: group.id},{
         connected: () => {
