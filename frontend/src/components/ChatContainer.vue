@@ -33,16 +33,11 @@ import ActionCable from 'actioncable';
       },
       // ChatFormでメッセージが送信されると発火
       postMessage: function (message) {
-      if (this.messageChannel) {
       //ActionCable MessageChannelにおけるpostメソッドを実行する
       this.messageChannel.perform('post', { 
         message: message.text,
        });
-      } else {
-        return alert('グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。') 
-        // このあとChatFromのemitPostMessageで入力値がからになる
       }
-    }
     },
     watch: {
     'currentGroup': {

@@ -24,7 +24,12 @@ export default {
       }
     },
     emitPostMessage: function () {
-      this.$emit('message-post', this.message)
+      if (Object.keys(this.group).length !== 0) { //groupが空かどうかチェック
+        this.$emit('message-post', this.message)
+      } else {
+        alert('グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。') 
+        this.isActive = true //アラートが出たときもsubmitのdisableが効くように
+      }
       this.message.text = "" //入力値のリセット
     }
   },
