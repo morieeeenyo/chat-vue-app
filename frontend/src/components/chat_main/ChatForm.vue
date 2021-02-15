@@ -12,7 +12,7 @@ export default {
       message: {
         text: ""
       },
-      isActive: true
+      isActive: true //submitが送信可能かどうか
     }
   },
   methods: {
