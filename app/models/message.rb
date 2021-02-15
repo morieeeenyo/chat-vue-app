@@ -1,3 +1,4 @@
 class Message < ApplicationRecord
-  elongs_to :chat_group
+  belongs_to :chat_group
+  validates :text, presence: true
 end
