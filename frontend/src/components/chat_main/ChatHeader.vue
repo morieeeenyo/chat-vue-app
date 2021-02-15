@@ -4,7 +4,6 @@
       <!-- グループの情報は親から受け継ぐ -->
       <p id="group-name">{{ group.group_name }}</p>
       <router-link :to="{ name: 'EditGroup', params: { id: group.id } }" id="edit_button" @click.native="openModal">編集</router-link> 
-      <!-- 子要素から受け取ったsubmitイベントを使ってupdateを動かす -->
       <modal-window v-show="showContent" v-on:from-child="closeModal" :form-title="formTitle" :event-type="update" :chat-group="group" :errors="errors" @submit="updateGroup"></modal-window>
     </div>
     <delete-button :group="group" @emit-destroy-group="emitGroup"></delete-button>
@@ -12,9 +11,11 @@
 </template>
 
 <script>
-import ModalWindow from '../ModalWindow.vue' // コンポーネントの読み込み
-import DeleteButton from './DeleteButton.vue' // コンポーネントの読み込み
-import axios from 'axios'; //ajaxを行うためにimport
+import ModalWindow from '../ModalWindow.vue' 
+import DeleteButton from './DeleteButton.vue' 
+
+//ajaxを行うためにimport
+import axios from 'axios'; 
 
 export default {
   components:{
@@ -23,46 +24,44 @@ export default {
     },
     data: function (){
       return {
-        // コンポーネントのデータ管理は関数なので
         showContent: false,
         formTitle: 'チャットグループ名変更',
         update: '変更',
         errors: ''
       }
     },
-
     methods:{
     openModal: function(){
       if (this.group.id === undefined) {
         return alert('グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。') 
       }
-      // モーダルを開く。これを入れるとstyleにディスプレイプロパティが付与される
+      // モーダルを開く。
       this.showContent = true
     },closeModal: function(){
       // モーダルを閉じる。
       this.showContent = false
-      this.errors = "" //エラーメッセージをリセットする
+      this.errors = "" //モーダルを再度開いたときにエラーメッセージが消えているようにする
     }, updateGroup: function () {
       axios
-        .patch(`/api/v1/chat_groups/${this.group.id}`, this.group ) //api/v1/groups#updateへのルーティング
+        .patch(`/api/v1/chat_groups/${this.group.id}`, this.group ) //updateアクション
         .then(response => {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
-          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
-          this.group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
-          this.emitGroup(group, 'updated')
+          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //編集したグループのページに遷移
+          this.group.group_name = "" //再度モーダルを開いても入力値が空になっているようにする
+          this.emitGroup(group, 'updated') //'updated'は更新か削除かをSidebarで判別するため
           this.closeModal() //モーダルを閉じる
         })
         .catch(error => {
-          console.error(error); //コンソールにエラーを表示。
+          console.error(error); 
           if (error.response.data && error.response.data.errors) {
             this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
           }
         });
     }, emitGroup: function(group, event) {
-      this.$emit('emit-group', group, event) //削除と更新両方で使えるようにメソッドとして切り離す
+      this.$emit('emit-group', group, event) //削除と更新両方で使えるようにしてる
     }
   },
-  props: ['group'] //親から受け継いだグループのデータを表示するための属性。値には現在表示しているグループの情報が入っている。親でgroupというpropを使ったので名前は別にする。
+  props: ['group'] 
 }
 </script>
 

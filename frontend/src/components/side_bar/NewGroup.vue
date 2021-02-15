@@ -2,21 +2,15 @@
   <div class="side_bar_header">
     <!-- @clickでボタンをクリックした時にモーダルを開く -->
    <router-link :to="{ name: 'CreateGroup' }" class="btn-circle-flat" @click.native="openModal">+</router-link>
-   <!-- from-Childは子要素ModalWindowから受け取る -->
    <modal-window v-show="showContent" v-on:from-child="closeModal" @submit="createGroup" :form-title="formTitle" :event-type="create" :chat-group="group" :errors="errors"></modal-window>
   </div>
 </template>
 
 <script>
-// Vueのインポート
-import Vue from 'vue'
-
-import ModalWindow from '../ModalWindow.vue' // コンポーネントの読み込み
+import ModalWindow from '../ModalWindow.vue' 
 
 // 以下はajaxを行うために必要
 import axios from 'axios' 
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios) 
 
 export default {
     components:{
@@ -24,7 +18,6 @@ export default {
     },
     data: function (){
       return {
-        // コンポーネントのデータ管理は関数なので
         showContent: false,
         group: {
           group_name: ""
@@ -37,29 +30,27 @@ export default {
     methods:{
     createGroup: function(e) {
       axios
-        .post('/api/v1/chat_groups', this.group) //api/v1/groups#createへのルーティング
+        .post('/api/v1/chat_groups', this.group) //createアクション
         .then(response => {
-          let group = response.data.group; //返却されたjsonからgroupの情報を取得
-          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
-          this.group.group_name = "" //モーダルを閉じる前に入力欄をリセットする
-          this.$emit('emit-create-group', group) //ModalWindowで新規作成したときに作成したグループの情報をSideBarに渡す
+          let group = response.data.group; 
+          this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //作成したグループのページに遷移する
+          this.group.group_name = "" //再度モーダルを開いても入力値が空になっているようにする
+          this.$emit('emit-create-group', group) //ModalWindowで新規作成したときに作成したグループの情報をSideBarに追加するためのイベント
           this.closeModal() //モーダルを閉じる
         })
         .catch(error => {
-          console.error(error); //コンソールにエラーを表示。
+          console.error(error); 
           if (error.response.data && error.response.data.errors) {
-            this.errors = error.response.data.errors; //ビューにエラーメッセージを表示
+            this.errors = error.response.data.errors; 
           }
         });
     },
     openModal: function(){
       this.group = {}
-      // モーダルを開く。これを入れるとstyleにディスプレイプロパティが付与される
       this.showContent = true
     },closeModal: function(){
-      // モーダルを閉じる。
       this.showContent = false
-      this.errors = "" //エラーメッセージをリセットする
+      this.errors = "" //モーダルを再度開いたときにエラーメッセージが消えているようにする
     }
    }
   }

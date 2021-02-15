@@ -29,7 +29,7 @@ import ActionCable from 'actioncable';
     },
     methods: {
       groupIsChanged: function(emittedGroup, event) {
-        this.$emit('emit-group-from-grand-child', emittedGroup, event) //SideBarの情報を更新するために一度Appに情報を渡す
+        this.$emit('emit-group-from-grand-child', emittedGroup, event) //uopdate,destroy時にSideBarの情報を更新するために一度Appに情報を渡す
       },
       // ChatFormでメッセージが送信されると発火
       postMessage: function (message) {

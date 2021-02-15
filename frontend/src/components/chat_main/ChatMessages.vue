@@ -11,7 +11,7 @@ export default {
   data: function () {
     return {
       currentGroup: {
-        messages: [],
+        messages: [], //リアクティブに反映するための箱、必要？
       }
     }
   },
@@ -20,17 +20,15 @@ export default {
     'newMessage': {
       handler: function (newMessage) {
         if (this.currentGroup.messages.find(message => message.id == newMessage.id)) {
-          console.log('passed')
-          return null;
+          return null; //メッセージが重複するのを防ぐ
         }
-        this.currentGroup.messages.push(newMessage)
+        this.currentGroup.messages.push(newMessage) //メッセージをリアクティブに反映
       }
     },
     'group': {
       handler: function (group) {
-        this.currentGroup.messages = group.messages 
+        this.currentGroup.messages = group.messages //リアクティブに反映するにはpropではなくdataに入れなおす必要がある？
       },
-      // deep: true,
       immediate: true
     }
   }

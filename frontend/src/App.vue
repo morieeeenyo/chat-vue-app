@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <!-- グループの更新情報をサイドバーに渡す -->
+    <!-- グループの更新か削除か情報をサイドバーに渡す -->
     <side-bar :changed-group="changedData" :event-type=eventType></side-bar>
     <!-- 現在のグループの情報を子孫へ受け継ぐ -->
     <chat-container :current-group="groupData" @emit-group-from-grand-child="passChangedGroupData"></chat-container>
@@ -60,7 +60,7 @@ Vue.use(VueRouter)
           messages: []
         }, //現在のグループ
         changedData: {}, 
-        eventType: ''
+        eventType: '' //destroy or updateをサイドバーに渡すためのdata
       }
     },
     components:{
@@ -80,12 +80,12 @@ Vue.use(VueRouter)
         this.groupData.messages = response.data.messages
        }
       ).catch(error => {
-          console.error(error); //コンソールにエラーを表示。
+          console.error(error); 
           alert('不正なidです')
           this.$router.push( { name: 'home' } ) //不正なidが送信された際にルートパスに戻す
         });
       }, 
-      changePathOnReload: function (e) {
+      changePathOnReload: function (e) { //リロード時の処理
       e.preventDefault()
       if ( this.$route.path === `/chat_groups/${this.groupData.id}/edit` || this.$route.path === `/chat_groups/${this.groupData.id}/destroy`) {
          this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //edit,destroyの場合はparams.idが存在するので詳細へ
@@ -109,10 +109,10 @@ Vue.use(VueRouter)
       handler: function () {
         this.fetchGroup()
       },
-      immediate: true //同期したときの処理
+      immediate: true 
      },
    },
-    router //routerはcomponentではないのでここにexportする
+    router 
   }
 </script>
 
