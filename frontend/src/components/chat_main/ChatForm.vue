@@ -1,7 +1,7 @@
 <template>
   <form class="message-form" @submit.prevent="emitPostMessage">
-    <input type="text" class="message-input" v-model="message.text">
-    <input type="submit" value="送信" class="message-submit">
+    <input type="text" class="message-input" v-model="message.text" @keyup="disabledWithEmptyText">
+    <input type="submit" value="送信" class="message-submit" v-bind:disabled="isActive">
   </form>
 </template>
 
@@ -12,9 +12,17 @@ export default {
       message: {
         text: ""
       },
+      isActive: true
     }
   },
   methods: {
+    disabledWithEmptyText: function () {
+      if ( !this.message.text.match(/\S/g) ) { //スペースも含む空文字列を判定
+        this.isActive = true 
+      } else {
+        this.isActive = false //空ではないときはdisableを外して送信可能にする
+      }
+    },
     emitPostMessage: function () {
       this.$emit('message-post', this.message)
       this.message.text = "" //入力値のリセット
@@ -47,5 +55,9 @@ export default {
     border-radius: 2px;
     border-style: none;
     font-size: 18px;
+  }
+
+  .message-submit[disabled] {
+    opacity: 0.5;
   }
 </style>
