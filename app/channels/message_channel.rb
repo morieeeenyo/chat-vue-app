@@ -1,7 +1,7 @@
 class MessageChannel < ApplicationCable::Channel
   
   def subscribed
-    stop_all_streams
+    stop_all_streams #一度全てのストリームを止める (複数のチャネルを1画面で共有しているときは必要？)
     stream_from "message_channel_#{params['chat_group_id']}"
   end
 
