@@ -23,7 +23,7 @@ RSpec.describe MessageChannel, type: :channel do
         expect(subscription).to be_rejected
       end
 
-      it "rejects when room id is invalid" do
+      it "不正なidでアクセスした場合にはsubscribeできない" do
         subscribe(chat_group_id: -1)
         expect(subscription).to be_rejected
       end
