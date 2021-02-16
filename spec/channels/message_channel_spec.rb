@@ -30,4 +30,19 @@ RSpec.describe MessageChannel, type: :channel do
     end
     
   end
+
+  describe "メッセージの送信" do
+    context "送信成功" do
+      it "グループが選択されていればメッセージが送信できる" do
+        subscribe(chat_group_id: @chat_group.id)
+        expect(subscription).to be_confirmed
+        
+        #作成途中
+        
+      end
+      
+    end
+    
+  end
+  
 end
