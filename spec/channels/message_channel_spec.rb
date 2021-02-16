@@ -12,16 +12,25 @@ RSpec.describe MessageChannel, type: :channel do
     context "subscribe失敗" do
       it "groupのidがないとsubscribeできない" do
         subscribe
-        expect(subscription).to be_confirmed
-        expect(subscription).not_to have_streams
+        expect(subscription).to be_rejected
       end
 
       it "rejects when room id is invalid" do
         subscribe(chat_group_id: -1)
-    
         expect(subscription).to be_rejected
       end
     end
+
+    context "subscription成功" do
+      it "正しいグループのidがあればsubscriptionに成功する" do
+          subscribe(chat_group_id: @chat_group.id)
+          expect(subscription).to be_confirmed
+          # check particular stream by name
+          expect(subscription).to have_stream_from("message_channel_#{@chat_group.id}")
+      end
+      
+    end
+    
     
   end
   
