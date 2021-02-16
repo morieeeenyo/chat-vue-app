@@ -2,8 +2,10 @@ class MessageChannel < ApplicationCable::Channel
   
   def subscribed
     stop_all_streams #一度全てのストリームを止める (複数のチャネルを1画面で共有しているときは必要？)
-    if params['chat_group_id'] #グループを選択しているときだけstreamする
+    if  ChatGroup.find_by(id: params['chat_group_id']) #グループを選択しているときだけstreamする。elseの実行のためにfind_byを使う。
       stream_from "message_channel_#{params['chat_group_id']}"
+    else
+      reject
     end
   end
 
