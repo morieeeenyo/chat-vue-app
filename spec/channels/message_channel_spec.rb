@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe MessageChannel, type: :channel do
   before do
     # `stub_connection`は、渡されたidでConnectionインスタンスを初期化する 
-    stub_connection 
     @chat_group = create(:chat_group)
+    stub_connection 
   end
 
   describe "subscribe" do
@@ -32,13 +32,16 @@ RSpec.describe MessageChannel, type: :channel do
   end
 
   describe "メッセージの送信" do
+    before do
+      @message = build(:message, chat_group_id: @chat_group.id)
+    end
+    
     context "送信成功" do
       it "グループが選択されていればメッセージが送信できる" do
-        subscribe(chat_group_id: @chat_group.id)
-        expect(subscription).to be_confirmed
-        
-        #作成途中
-        
+          subscribe(chat_group_id: @chat_group.id)
+          expect(subscription).to be_confirmed
+          perform :post, data: @message.text
+          expect(transmissions.last).to eq(message: @message)
       end
       
     end
