@@ -52,6 +52,7 @@ RSpec.describe MessageChannel, type: :channel do
            perform :post, message: @message.text
           end. to have_broadcasted_to("message_channel_#{@chat_group.id}").with{ |data|
             expect(data['message']['text']).to eq @message.text
+            expect(data['message']['id']).not_to eq nil #idが存在していることを確認
           }
       end
     end 
