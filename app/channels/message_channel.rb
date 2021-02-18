@@ -14,7 +14,7 @@ class MessageChannel < ApplicationCable::Channel
     @chat_group = ChatGroup.find(params['chat_group_id'])
     @message = @chat_group.messages.build(text: data['message'])
     if @message.save 
-     ActionCable.server.broadcast "message_channel_#{params['chat_group_id']}", message: @message, group: @chat_group
+     ActionCable.server.broadcast "message_channel_#{params['chat_group_id']}", message: @message
     end
   end
 
