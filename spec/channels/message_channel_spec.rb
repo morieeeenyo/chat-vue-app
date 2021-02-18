@@ -40,8 +40,10 @@ RSpec.describe MessageChannel, type: :channel do
       it "グループが選択されていればメッセージが送信できる" do
           subscribe(chat_group_id: @chat_group.id)
           expect(subscription).to be_confirmed
-          perform :post, message: @message.text
-          expect(transmissions.last).to eq(message: @message)
+          expect do 
+           perform :post, message: @message.text
+          end. to change(Message, :count).by(1)
+          
       end
       
     end
