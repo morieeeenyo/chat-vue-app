@@ -64,7 +64,23 @@ RSpec.describe MessageChannel, type: :channel do
            perform :post, message: @message.text
           end. to raise_error RuntimeError #Must be subscribed! というエラーが出ることを検証
       end
-    end
 
+      it "textが空の場合メッセージが保存されない" do
+          subscribe(chat_group_id: @chat_group.id)
+          expect(subscription).to be_confirmed
+          expect do 
+           perform :post, message: nil
+          end.to change(Message, :count).by(0)  #空のメッセージを送るとデータが保存されずメッセージの数が増えない
+      end
+
+      it "textが空の場合メッセージがbroadcastされない" do
+          subscribe(chat_group_id: @chat_group.id)
+          expect(subscription).to be_confirmed
+          expect do 
+           perform :post, message: nil
+          end.not_to have_broadcasted_to("message_channel_#{@chat_group.id}") #空のメッセージを送るとデータがroadcastされていない
+      end
+    end
   end
+
 end
