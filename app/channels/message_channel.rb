@@ -17,8 +17,5 @@ class MessageChannel < ApplicationCable::Channel
      ActionCable.server.broadcast "message_channel_#{params['chat_group_id']}", message: @message
     end
   end
-
-  def unsubscribed
-    stop_all_streams
-  end
+  
 end
