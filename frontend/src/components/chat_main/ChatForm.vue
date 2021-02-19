@@ -12,7 +12,7 @@ export default {
       message: {
         text: ""
       },
-      isActive: true //submitが送信可能かどうか
+      isActive: true //submitが送信可能かどうか。trueのとき送信できない
     }
   },
   methods: {
@@ -24,11 +24,14 @@ export default {
       }
     },
     emitPostMessage: function () {
-      if (Object.keys(this.group).length !== 0) { //groupが空かどうかチェック
-        this.$emit('message-post', this.message)
-      } else {
+      if (Object.keys(this.group).length === 0) { //groupが空かどうかチェック
         alert('グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。') 
         this.isActive = true //アラートが出たときもsubmitのdisableが効くように
+      } else if ( !this.message.text.match(/\S/g) ) { //スペースも含む空文字列を判定。検証でdisableを突破された場合の例外処理
+        alert('空のメッセージは保存できません。') 
+        this.isActive = true
+      } else {
+        this.$emit('message-post', this.message)
       }
       this.message.text = "" //入力値のリセット
     }

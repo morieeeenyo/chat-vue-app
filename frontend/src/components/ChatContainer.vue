@@ -19,7 +19,7 @@ import ActionCable from 'actioncable';
   export default {
     data: function () {
       return {
-        newMessage: {}
+        newMessage: {},
       }
     },
     components:{
@@ -33,10 +33,10 @@ import ActionCable from 'actioncable';
       },
       // ChatFormでメッセージが送信されると発火
       postMessage: function (message) {
-      //ActionCable MessageChannelにおけるpostメソッドを実行する
-      this.messageChannel.perform('post', { 
-        message: message.text,
-       });
+        //ActionCable MessageChannelにおけるpostメソッドを実行する
+        this.messageChannel.perform('post', { 
+          message: message.text,
+        });
       }
     },
     watch: {
