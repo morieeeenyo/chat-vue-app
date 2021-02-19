@@ -1,6 +1,6 @@
 <template>
   <form class="message-form" @submit.prevent="emitPostMessage">
-    <input type="text" class="message-input" v-model="message.text" @keyup="disabledWithEmptyText">
+    <input type="text" id="message_input" v-model="message.text" @keyup="disabledWithEmptyText">
     <input type="submit" value="送信" class="message-submit" v-bind:disabled="isActive">
   </form>
 </template>
@@ -50,7 +50,7 @@ export default {
   }
    
    /* テキスト入力欄 */
-  .message-input {
+  #message_input {
     width: calc(100% - 80px);
   }
 
