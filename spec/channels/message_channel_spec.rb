@@ -52,7 +52,7 @@ RSpec.describe MessageChannel, type: :channel do
            perform :post, message: @message.text
           end. to have_broadcasted_to("message_channel_#{@chat_group.id}").with{ |data|
             expect(data['message']['text']).to eq @message.text
-            expect(data['message']['id']).not_to eq nil #idが存在していることを確認
+            expect(data['message']['id']).not_to eq nil #保存されたデータであればidは存在している
           }
       end
     end 
@@ -82,7 +82,7 @@ RSpec.describe MessageChannel, type: :channel do
             expect do 
              perform :post, message: nil
             end.to raise_error ActiveRecord::RecordInvalid #サーバー側で例外を発生させる
-          end.not_to have_broadcasted_to("message_channel_#{@chat_group.id}") #空のメッセージを送るとデータがroadcastされていない
+          end.not_to have_broadcasted_to("message_channel_#{@chat_group.id}") #空のメッセージを送るとデータがbroadcastされていない
       end
     end
   end
