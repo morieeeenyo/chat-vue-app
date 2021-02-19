@@ -13,7 +13,7 @@ class MessageChannel < ApplicationCable::Channel
   def post(data)
     @chat_group = ChatGroup.find(params['chat_group_id'])
     @message = @chat_group.messages.build(text: data['message'])
-    if @message.save!
+    if @message.save! #空のメッセージを送るとクライアント側でアラートが出る。サーバーサイドでの例外処理はおまけ
      ActionCable.server.broadcast "message_channel_#{params['chat_group_id']}", message: @message
     end
   end
