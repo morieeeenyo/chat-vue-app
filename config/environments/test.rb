@@ -24,11 +24,14 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
+  config.action_cable.disable_request_forgery_protection = false
+  config.action_cable.allowed_request_origins = [/ws:\/\/*/, /tcp:\/\/*/, /http:\/\/*/, /https:\/\/*/]  #ChatContainer.vueでws:localhost:3000から接続している
 
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test

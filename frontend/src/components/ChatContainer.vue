@@ -42,7 +42,7 @@ import ActionCable from 'actioncable';
     watch: {
     'currentGroup': {
       handler: function (group) {
-        const cable = ActionCable.createConsumer('ws:localhost:3000/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
+        const cable = ActionCable.createConsumer('/cable'); //routes.rbのmount ActionCable.server => '/cable'と対応
         cable.subscriptions.remove(cable.subscriptions['subscriptions']) //一度購読を全て止めて新しく購読し直す
         this.messageChannel = cable.subscriptions.create({channel: "MessageChannel", chat_group_id: group.id},{
         connected: () => {

@@ -12,11 +12,11 @@ RSpec.describe "Messages", type: :system do
       @message = build(:message, chat_group_id: @chat_group.id)
       expect do   
        fill_in "message_input",	with: @message.text
-       sleep 3
+       sleep 1 
        click_on '送信'
        sleep 3
       end.to change(Message, :count).by(1)
-      expect(page).to have_content '.message', text: @message.text
+      expect(page).to have_selector '.message', text: @message.text
      end
       
     end
