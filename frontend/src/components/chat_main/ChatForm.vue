@@ -1,7 +1,7 @@
 <template>
   <form class="message-form" @submit.prevent="emitPostMessage">
     <input type="text" id="message_input" v-model="message.text" @keyup="disabledWithEmptyText">
-    <input type="submit" value="送信" class="message-submit" v-bind:disabled="isActive">
+    <input type="submit" value="送信" id="message-submit" v-bind:disabled="isActive">
   </form>
 </template>
 
@@ -55,7 +55,7 @@ export default {
   }
 
   /* 送信ボタン */
-  .message-submit {
+  #message-submit {
     width: 80px;
     background-color: gray;
     color: #FFF;
@@ -65,7 +65,7 @@ export default {
     font-size: 18px;
   }
 
-  .message-submit[disabled] {
+  #message-submit[disabled] {
     opacity: 0.5;
   }
 </style>
