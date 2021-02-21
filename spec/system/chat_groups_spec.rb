@@ -68,6 +68,7 @@ RSpec.describe "ChatGroups", type: :system do
       context "グループの更新" do
         # 編集のときも考慮してcontext作成
         before do
+          @chat_group.save
           select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
           expect(page).to have_content '編集'
           click_link '編集'
@@ -92,6 +93,7 @@ RSpec.describe "ChatGroups", type: :system do
       context "グループの削除" do
         # 編集のときも考慮してcontext作成
         before do
+          @chat_group.save
           select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
           expect(page).to have_content 'チャットグループを削除する'
           click_link 'チャットグループを削除する'
@@ -126,6 +128,7 @@ RSpec.describe "ChatGroups", type: :system do
 
     context "グループ情報の更新(非同期)" do
       it "group_nameを入力して送信するとヘッダーのグループ名とサイドバーのグループ名が非同期で変化し、そのグループのページに遷移する" do
+        @chat_group.save
         select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         expect(page).to  have_link '編集'
         click_link '編集'
@@ -146,6 +149,7 @@ RSpec.describe "ChatGroups", type: :system do
 
     context "グループの削除(非同期)" do
       it "サイドバーからグループを選択し、削除のモーダルウィンドウから削除ボタンを押すとグループが削除されヘッダーとサイドバーのグループ名が消える。" do 
+        @chat_group.save
         select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         expect(page).to have_content 'チャットグループを削除する'
         click_link 'チャットグループを削除する'
@@ -182,6 +186,7 @@ RSpec.describe "ChatGroups", type: :system do
 
     context "グループ更新失敗" do
       it "グループ名が空のままフォームを送信するとエラーメッセージが表示され、モーダルウィンドウが開いたままである" do 
+        @chat_group.save
         select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         expect(page).to have_content '編集'
         click_link '編集'

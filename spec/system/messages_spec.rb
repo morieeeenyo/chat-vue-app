@@ -8,15 +8,28 @@ RSpec.describe "Messages", type: :system do
   describe "メッセージの投稿" do
     context "メッセージの投稿成功" do
       it "グループが選択されていて、テキストが存在すればメッセージの投稿ができ、即座に選択したグループに反映される" do
-      select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
-      @message = build(:message, chat_group_id: @chat_group.id)
-      expect {   
-        fill_in "message_input",	with: @message.text
-        sleep 1 
-        click_on '送信'
-        sleep 3
-      }.to change(Message, :count).by(1)
-      expect(page).to have_selector '.message', text: @message.text
+        @chat_group.save
+        select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
+        @message = build(:message, chat_group_id: @chat_group.id)
+        expect {   
+          fill_in "message_input",	with: @message.text
+          sleep 1 
+          click_on '送信'
+          sleep 3
+        }.to change(Message, :count).by(1)
+        expect(page).to have_selector '.message', text: @message.text
+      end
+
+      it "グループを削除するとグループに投稿されていたメッセージも同時に削除される" do
+        @chat_group.save 
+        @messages = create_list(:message, 5, chat_group_id: @chat_group.id)
+        select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得  
+        expect(all('.message').length).to eq 5  
+        expect {   
+          click_link 'チャットグループを削除する'
+          click_button '削除'
+          sleep 1 #sleepがないとmysqlの処理が追いつかない
+        }.to change(Message, :count).by(-5)
       end
         
       
@@ -42,6 +55,7 @@ RSpec.describe "Messages", type: :system do
       end 
 
       it "グループが選択されていてもテキストが空の場合メッセージを送信できない" do
+        @chat_group.save
         select_group(@chat_group)
         @message = build(:message, chat_group_id: @chat_group.id)
         expect {   
