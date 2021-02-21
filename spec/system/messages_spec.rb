@@ -9,6 +9,7 @@ RSpec.describe "Messages", type: :system do
     context "メッセージの投稿成功" do
       it "グループが選択されていて、テキストが存在すればメッセージの投稿ができ、即座に選択したグループに反映される" do
         @chat_group.save
+        another_group = create(:chat_group, group_name: 'hoge test')
         select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         @message = build(:message, chat_group_id: @chat_group.id)
         expect {   
@@ -18,13 +19,17 @@ RSpec.describe "Messages", type: :system do
           sleep 3
         }.to change(Message, :count).by(1)
         expect(page).to have_selector '.message', text: @message.text
+        #グループを移動したときにメッセージが表示されていないことを検証
+        click_link another_group.group_name, href: "#/chat_groups/#{another_group.id}"
+        expect(page).to  have_selector '#group-name', text: another_group.group_name
+        expect(page).not_to have_selector '.message', text: @message.text
       end
 
       it "グループを削除するとグループに投稿されていたメッセージも同時に削除される" do
         @chat_group.save 
         @messages = create_list(:message, 5, chat_group_id: @chat_group.id)
         select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得  
-        expect(all('.message').length).to eq 5  
+        expect(all('.message').length).to eq 5  #ページを読み込んだときに既に保存してあるメッセージが表示されることはここで検証
         expect {   
           click_link 'チャットグループを削除する'
           click_button '削除'
