@@ -116,7 +116,7 @@ RSpec.describe "ChatGroups", type: :request do
         get api_v1_chat_group_path(@chat_group), xhr: true
         json = JSON.parse(response.body)        
         #送ったパラメータとレスポンスのデータが一致しているか検証
-        expect(json['id']).to eq @chat_group['id']
+        expect(json['group']['id']).to eq @chat_group['id']
       end
     end
 
@@ -225,6 +225,14 @@ RSpec.describe "ChatGroups", type: :request do
           delete api_v1_chat_group_path(@chat_group),  xhr: true
           json = JSON.parse(response.body)  
           expect(json['group']['id']).to eq @chat_group.id
+        end
+
+        it "グループの削除に成功するとグループに紐づくメッセージも削除されること" do
+          @messages = create_list(:message, 5, chat_group_id: @chat_group.id)
+          expect{
+            delete api_v1_chat_group_path(@chat_group),  xhr: true
+            expect(response).to have_http_status(200)
+          }.to change(Message, :count).by(-5)
         end
         
       end
