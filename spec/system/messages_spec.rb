@@ -19,6 +19,7 @@ RSpec.describe "Messages", type: :system do
           sleep 3
         }.to change(Message, :count).by(1)
         expect(page).to have_selector '.message', text: @message.text
+        expect(all('.message').length).to eq 1 #メッセージが1件しか投稿されていないことを検証
         #グループを移動したときにメッセージが表示されていないことを検証
         click_link another_group.group_name, href: "#/chat_groups/#{another_group.id}"
         expect(page).to  have_selector '#group-name', text: another_group.group_name
@@ -32,6 +33,7 @@ RSpec.describe "Messages", type: :system do
         select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         click_link another_group.group_name, href: "#/chat_groups/#{another_group.id}"
         expect(page).to  have_selector '#group-name', text: another_group.group_name
+        #元いたグループに戻る。ここで実行環境だとメッセージの投稿が重複することがあり、フロント側で重複を防いでいる。
         click_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
         expect(page).to  have_selector '#group-name', text: @chat_group.group_name
         @message = build(:message, chat_group_id: @chat_group.id)
@@ -42,6 +44,7 @@ RSpec.describe "Messages", type: :system do
           sleep 3
         }.to change(Message, :count).by(1)
         expect(page).to have_selector '.message', text: @message.text
+        expect(all('.message').length).to eq 1 #メッセージが1件しか投稿されていないことを検証
         #グループを移動したときにメッセージが表示されていないことを検証
         click_link another_group.group_name, href: "#/chat_groups/#{another_group.id}"
         expect(page).to  have_selector '#group-name', text: another_group.group_name
@@ -82,7 +85,7 @@ RSpec.describe "Messages", type: :system do
         ).to  be_disabled #アラートを閉じると送信ボタンを送信不可にする
       end 
 
-      it "グループが選択されていてもテキストが空の場合メッセージを送信できない" do
+      it "グループが選択されていてもテキストがスペースを含む空文字列の場合メッセージを送信できない" do
         @chat_group.save
         select_group(@chat_group)
         @message = build(:message, chat_group_id: @chat_group.id)
