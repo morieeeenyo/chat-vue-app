@@ -112,11 +112,17 @@ RSpec.describe "ChatGroups", type: :request do
         expect(response.status).to eq 200
       end
 
-      it "JSON形式で正しくデータが返却されること" do       
+      it "JSON形式で正しくデータが返却されること" do     
+        @message = create_list(:message, 3, chat_group_id: @chat_group.id)
         get api_v1_chat_group_path(@chat_group), xhr: true
         json = JSON.parse(response.body)        
         #送ったパラメータとレスポンスのデータが一致しているか検証
         expect(json['group']['id']).to eq @chat_group['id']
+        #メッセージが紐付いているかも検証
+        json['messages'].each do |message|
+          expect(message['id']).not_to  eq nil
+          expect(message['chat_group_id']).to  eq @chat_group.id
+        end  
       end
     end
 
