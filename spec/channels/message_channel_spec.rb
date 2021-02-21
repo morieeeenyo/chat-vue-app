@@ -40,17 +40,17 @@ RSpec.describe MessageChannel, type: :channel do
       it "グループが選択されている状態でメッセージを送信するとメッセージが一つDBに保存される" do
           subscribe(chat_group_id: @chat_group.id)
           expect(subscription).to be_confirmed
-          expect do 
+          expect { 
            perform :post, message: @message.text
-          end. to change(Message, :count).by(1) 
+          }. to change(Message, :count).by(1) 
       end
 
       it "グループが選択されている状態でメッセージを送信するとメッセージが接続しているチャネルに配信される" do
           subscribe(chat_group_id: @chat_group.id)
           expect(subscription).to be_confirmed
-          expect do 
+          expect { 
            perform :post, message: @message.text
-          end. to have_broadcasted_to("message_channel_#{@chat_group.id}").with{ |data|
+          }. to have_broadcasted_to("message_channel_#{@chat_group.id}").with{ |data|
             expect(data['message']['text']).to eq @message.text
             expect(data['message']['id']).not_to eq nil #保存されたデータであればidは存在している
           }
@@ -60,29 +60,29 @@ RSpec.describe MessageChannel, type: :channel do
     context "送信失敗" do
       it "グループが選択されていない状態でメッセージを送信するとメッセージが保存できない" do
           subscribe(chat_group_id: nil)
-          expect do 
+          expect { 
            perform :post, message: @message.text
-          end. to raise_error RuntimeError #Must be subscribed! というエラーが出ることを検証
+          }. to raise_error RuntimeError #Must be subscribed! というエラーが出ることを検証
       end
 
       it "textが空の場合メッセージが保存されない" do
           subscribe(chat_group_id: @chat_group.id)
           expect(subscription).to be_confirmed
-          expect do
-            expect do 
+          expect {
+            expect { 
              perform :post, message: nil
-            end.to raise_error ActiveRecord::RecordInvalid #サーバー側で例外を発生させる
-          end.to change(Message, :count).by(0)  #空のメッセージを送るとデータが保存されずメッセージの数が増えない
+            }.to raise_error ActiveRecord::RecordInvalid #サーバー側で例外を発生させる
+          }.to change(Message, :count).by(0)  #空のメッセージを送るとデータが保存されずメッセージの数が増えない
       end
 
       it "textが空の場合メッセージがbroadcastされない" do
           subscribe(chat_group_id: @chat_group.id)
           expect(subscription).to be_confirmed
-          expect do
-            expect do 
+          expect {
+            expect { 
              perform :post, message: nil
-            end.to raise_error ActiveRecord::RecordInvalid #サーバー側で例外を発生させる
-          end.not_to have_broadcasted_to("message_channel_#{@chat_group.id}") #空のメッセージを送るとデータがbroadcastされていない
+            }.to raise_error ActiveRecord::RecordInvalid #サーバー側で例外を発生させる
+          }.not_to have_broadcasted_to("message_channel_#{@chat_group.id}") #空のメッセージを送るとデータがbroadcastされていない
       end
     end
   end

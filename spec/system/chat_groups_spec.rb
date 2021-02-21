@@ -28,10 +28,10 @@ RSpec.describe "ChatGroups", type: :system do
         click_link '+'
         expect(page).to  have_content '新規グループ作成'
         fill_in "group_name_input",	with: @chat_group.group_name
-        expect do 
+        expect {
           click_button '作成'
           sleep 1 #sleepがないとmysqlの処理が追いつかない
-        end.to change(ChatGroup, :count).by(1)
+        }.to change(ChatGroup, :count).by(1)
         expect(page).to  have_selector '#group-name', text: @chat_group.group_name 
         #同じ名前のグループが作成されたときにこの検証だとやや弱い気がしている。本当はidで検証すべきかも
         expect(
@@ -135,10 +135,10 @@ RSpec.describe "ChatGroups", type: :system do
         expect(page).to  have_content 'チャットグループ名変更'
         expect(page).to have_field 'group_name_input', with: @chat_group.group_name
         fill_in "group_name_input",	with: 'hoge'
-        expect do 
+        expect { 
           click_button '変更'
           sleep 1 #sleepがないとmysqlの処理が追いつかない
-        end.to change(ChatGroup, :count).by(0)
+        }.to change(ChatGroup, :count).by(0)
         expect(page).to  have_selector '#group-name', text: 'hoge' 
         link = find('.group-list-item a')
         expect(
@@ -154,10 +154,10 @@ RSpec.describe "ChatGroups", type: :system do
         expect(page).to have_content 'チャットグループを削除する'
         click_link 'チャットグループを削除する'
         expect(page).to have_no_field 'group_name_input', with: @chat_group.group_name #削除のときは入力欄がない
-        expect do 
+        expect { 
           click_button '削除'
           sleep 1 #sleepがないとmysqlの処理が追いつかない
-        end.to change(ChatGroup, :count).by(-1)
+        }.to change(ChatGroup, :count).by(-1)
         expect(page).to  have_selector '#group-name', text: '' #ヘッダーのテキストが消える
         expect(page).to  have_no_link @chat_group.group_name, href: "#/chat_groups/#{@chat_group.id}"
       end
@@ -176,9 +176,9 @@ RSpec.describe "ChatGroups", type: :system do
         click_link '+'
         expect(page).to  have_content '新規グループ作成'
         fill_in "group_name_input",	with: ""
-        expect do 
+        expect { 
           click_button '作成'
-        end.to change(ChatGroup, :count).by(0)
+        }.to change(ChatGroup, :count).by(0)
         expect(page).to  have_content '新規グループ作成' #モーダルウィンドウにとどまっていることを検証
         expect(page).to  have_selector '.error-messages', text: "Group name can't be blank" #エラーメッセージの表示を確認
       end
@@ -193,9 +193,9 @@ RSpec.describe "ChatGroups", type: :system do
         expect(page).to  have_content 'チャットグループ名変更'
         expect(page).to have_field 'group_name_input', with: @chat_group.group_name
         fill_in "group_name_input",	with: ""
-        expect do 
+        expect { 
           click_button '変更'
-        end.to change(ChatGroup, :count).by(0)
+        }.to change(ChatGroup, :count).by(0)
         expect(page).to  have_content 'チャットグループ名変更' #モーダルウィンドウにとどまっていることを検証
         expect(page).to  have_selector '.error-messages', text: "Group name can't be blank" #エラーメッセージの表示を確認
       end
@@ -205,7 +205,7 @@ RSpec.describe "ChatGroups", type: :system do
     context "グループ情報取得失敗" do
       it "グループのidが存在しないときURLを直接してグループのページに行こうとするとグループ情報が取得できず、アラートが出る" do
         visit root_path
-        expect do
+        expect {
           visit "/#/chat_groups/#{@chat_group.id}" 
           sleep 2
           expect(page.driver.browser.switch_to.alert.text).to eq "不正なidです" #非同期で通信するため内部エラーが見えない。よってモーダルでアラートを表示
@@ -213,7 +213,7 @@ RSpec.describe "ChatGroups", type: :system do
           page.driver.browser.switch_to.alert.accept #OKを押す。ここらへんの処理は速すぎて追いつかなかったのでsleepを入れた
           sleep 1
           page.raise_server_error! #手動でサーバーエラーを発生させることで実行環境と同様のエラーを得る
-        end.to raise_error(ActiveRecord::RecordNotFound)
+        }.to raise_error(ActiveRecord::RecordNotFound)
         expect(current_path).to  eq root_path
         expect(find('#group-name').text).to eq "" #ルートパスに遷移し、ヘッダーのグループ名が空であるか検証
       end

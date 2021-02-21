@@ -50,10 +50,10 @@ RSpec.describe "ChatGroups", type: :request do
       end
   
       it "chat_groupsテーブルに一つデータが追加されること" do
-        expect do  #長いのでブロックで引数に渡してます
+        expect {  
          post api_v1_chat_groups_path, xhr: true, params: { chat_group: @chat_group_params  }
          #ChatGroupモデルの数が1増えていることを検証
-        end.to change(ChatGroup, :count).by(1) 
+        }.to change(ChatGroup, :count).by(1) 
       end
   
       it "json形式で正しくデータが返却されること" do
@@ -80,10 +80,10 @@ RSpec.describe "ChatGroups", type: :request do
 
       it "chat_groupsテーブルのデータが増えていないこと" do
         #長いのでブロックで引数に渡してます
-        expect do  
+        expect { 
           post api_v1_chat_groups_path, xhr: true, params: { chat_group: @chat_group_params  }
           #ChatGroupモデルの数が増えていないことを検証
-        end.to change(ChatGroup, :count).by(0) 
+        }.to change(ChatGroup, :count).by(0) 
       end
 
       it "エラーメッセージがjson形式で返却されること" do
@@ -129,26 +129,26 @@ RSpec.describe "ChatGroups", type: :request do
     context "グループが存在しないとき" do
       it "idがnilのとき" do    
         @chat_group.id = nil
-        expect  do
+        expect  {
           get api_v1_chat_group_path(@chat_group), xhr: true
           #idがnilのときはリクエストがそもそも送信できない
-        end.to raise_error ActionController::UrlGenerationError 
+        }.to raise_error ActionController::UrlGenerationError 
       end
       
       #idが存在するが値が不正のときはリクエストを送ったあとで
       #レコードが見つからないと言われる
       it "idが0のときエラーが発生すること" do       
         @chat_group.id = 0
-        expect  do
+        expect  {
           get api_v1_chat_group_path(@chat_group), xhr: true  
-        end.to raise_error ActiveRecord::RecordNotFound 
+        }.to raise_error ActiveRecord::RecordNotFound 
       end
 
       it "idがfloat型のときエラーが発生すること" do       
         @chat_group.id = 1.5
-        expect  do
+        expect  {
           get api_v1_chat_group_path(@chat_group), xhr: true  
-        end.to raise_error ActiveRecord::RecordNotFound 
+        }.to raise_error ActiveRecord::RecordNotFound 
       end
       
     end
@@ -222,9 +222,9 @@ RSpec.describe "ChatGroups", type: :request do
         end
 
         it "パラメータとして送ったチャットグループのレコードが削除されること" do
-          expect do 
+          expect { 
            delete api_v1_chat_group_path(@chat_group),  xhr: true
-          end.to change(ChatGroup, :count).by(-1)
+          }.to change(ChatGroup, :count).by(-1)
         end
 
         it "削除されたグループの情報がレスポンスとして返却されること" do
@@ -235,7 +235,7 @@ RSpec.describe "ChatGroups", type: :request do
 
         it "グループの削除に成功するとグループに紐づくメッセージも削除されること" do
           @messages = create_list(:message, 5, chat_group_id: @chat_group.id)
-          expect{
+          expect {
             delete api_v1_chat_group_path(@chat_group),  xhr: true
             expect(response).to have_http_status(200)
           }.to change(Message, :count).by(-5)
@@ -246,9 +246,9 @@ RSpec.describe "ChatGroups", type: :request do
       context "削除に失敗するとき" do
         it "二重にリクエストを送ると2回目で削除に失敗する" do
           delete api_v1_chat_group_path(@chat_group),  xhr: true
-           expect do 
+           expect { 
             delete api_v1_chat_group_path(@chat_group),  xhr: true
-           end.to raise_error ActiveRecord::RecordNotFound 
+           }.to raise_error ActiveRecord::RecordNotFound 
         end
         # パラメータが不正な場合もdestroyに失敗するがその場合についてはshowアクションを参照
       end
