@@ -26,12 +26,12 @@ RSpec.describe "Messages", type: :system do
       it "グループが選択されていない場合テキストを入力してもアラートが出てメッセージを送信できない" do
         visit root_path
         @message = build(:message)
-        expect do   
+        expect {   
           fill_in "message_input",	with: @message.text
           sleep 1 
           click_on '送信'
           sleep 3
-        end.to change(Message, :count).by(0)
+        }.to change(Message, :count).by(0)
         expect(page.driver.browser.switch_to.alert.text).to eq "グループが選択されていません。サイドバーより選択いただくか左上の+ボタンより新規作成してください。" #
         page.driver.browser.switch_to.alert.accept 
         expect(current_path).to  eq root_path
@@ -39,6 +39,24 @@ RSpec.describe "Messages", type: :system do
         expect(
           find('#message-submit')
         ).to  be_disabled #アラートを閉じると送信ボタンを送信不可にする
+      end 
+
+      it "グループが選択されていてもテキストが空の場合メッセージを送信できない" do
+        select_group(@chat_group)
+        @message = build(:message, chat_group_id: @chat_group.id)
+        expect {   
+          fill_in "message_input",	with: ""
+          sleep 2
+          expect(
+            find('#message-submit')
+          ).to  be_disabled #テキストが空だと送信ボタンが動かない
+          fill_in "message_input",	with: "   "
+          sleep 2
+          expect(
+            find('#message-submit')
+          ).to  be_disabled #スペースを入れても送信ボタンが動かない
+        }.to change(Message, :count).by(0)
+        expect(page).not_to have_selector '.message', text: @message.text
       end    
     end
   end
