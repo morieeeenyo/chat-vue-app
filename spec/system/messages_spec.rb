@@ -45,10 +45,6 @@ RSpec.describe "Messages", type: :system do
         }.to change(Message, :count).by(1)
         expect(page).to have_selector '.message', text: @message.text
         expect(all('.message').length).to eq 1 #メッセージが1件しか投稿されていないことを検証
-        #グループを移動したときにメッセージが表示されていないことを検証
-        click_link another_group.group_name, href: "#/chat_groups/#{another_group.id}"
-        expect(page).to  have_selector '#group-name', text: another_group.group_name
-        expect(page).not_to have_selector '.message', text: @message.text
       end
 
       it "グループを削除するとグループに投稿されていたメッセージも同時に削除される" do
