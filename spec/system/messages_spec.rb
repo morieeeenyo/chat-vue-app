@@ -47,20 +47,6 @@ RSpec.describe "Messages", type: :system do
         expect(page).to have_selector '.message', text: @message.text
         expect(all('.message').length).to eq 1 #メッセージが1件しか投稿されていないことを検証
       end
-
-      it "グループを削除するとグループに投稿されていたメッセージも同時に削除される" do
-        @chat_group.save 
-        @messages = create_list(:message, 5, chat_group_id: @chat_group.id)
-        select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得  
-        expect(all('.message').length).to eq 5  #ページを読み込んだときに既に保存してあるメッセージが表示されることはここで検証
-        expect {   
-          click_link 'チャットグループを削除する'
-          click_button '削除'
-          sleep 1 #sleepがないとmysqlの処理が追いつかない
-        }.to change(Message, :count).by(-5)
-      end
-        
-      
     end
     
     context "メッセージの投稿失敗" do
@@ -81,7 +67,7 @@ RSpec.describe "Messages", type: :system do
           find('#message-submit')
         ).to  be_disabled #アラートを閉じると送信ボタンを送信不可にする
       end 
-
+      
       it "グループが選択されていてもテキストがスペースを含む空文字列の場合メッセージを送信できない" do
         @chat_group.save
         select_group(@chat_group)
@@ -100,6 +86,33 @@ RSpec.describe "Messages", type: :system do
         }.to change(Message, :count).by(0)
         expect(page).not_to have_selector '.message', text: @message.text
       end    
+    end
+  end
+    
+  describe "メッセージの表示" do
+    context "メッセージの表示成功" do
+      it "ルートパスに移動しグループを選択すると既に保存してあるメッセージが表示される。" do
+        @chat_group.save 
+        @messages = create_list(:message, 5, chat_group_id: @chat_group.id)
+        select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得  
+        expect(all('.message').length).to eq 5  #ページを読み込んだときに既に保存してあるメッセージが表示されることはここで検証
+      end
+    end
+  end
+
+  describe "メッセージの削除" do
+    context "メッセージの削除成功" do
+      it "グループを削除するとグループに投稿されていたメッセージも同時に削除される" do
+        @chat_group.save 
+        @messages = create_list(:message, 5, chat_group_id: @chat_group.id)
+        select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得  
+        expect(all('.message').length).to eq 5  #ページを読み込んだときに既に保存してあるメッセージが表示されることはここで検証
+        expect {   
+          click_link 'チャットグループを削除する'
+          click_button '削除'
+          sleep 1 #sleepがないとmysqlの処理が追いつかない
+        }.to change(Message, :count).by(-5)
+      end
     end
   end
 end
