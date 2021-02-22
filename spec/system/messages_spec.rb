@@ -1,4 +1,5 @@
 require 'rails_helper'
+Capybara.server = :puma #ActionCableを使うために必要ぽい
 
 RSpec.describe "Messages", type: :system do
   before do
