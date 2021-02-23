@@ -7,17 +7,11 @@
 </template>
 
 <script>
-// Vueのインポート
-import Vue from 'vue'
-
-// コンポーネントの読み込み
 import Groups from './side_bar/Groups.vue'
 import NewGroup from './side_bar/NewGroup.vue'
 
 // 以下はajaxを行うために必要
 import axios from 'axios' 
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios) 
 
   export default {
     data: function () {
@@ -45,9 +39,11 @@ Vue.use(VueAxios, axios)
     watch: {
       'changedGroup': function(changedGroup) {
         if(this.eventType === 'destroyed') {
-          return this.allGroupData = this.allGroupData.filter(e => e.id !== changedGroup.id)
+          //削除時は削除されたグループ以外の要素だけ残して配列を作り直す
+          return this.allGroupData = this.allGroupData.filter(e => e.id !== changedGroup.id) 
         }
-        this.allGroupData.filter(e => e.id == changedGroup.id)[0].group_name = changedGroup.group_name //更新されたグループとidが一致する要素を検索し、更新
+        //更新時は更新されたグループとidが一致する要素を検索し、更新
+        this.allGroupData.filter(e => e.id == changedGroup.id)[0].group_name = changedGroup.group_name 
       }
     },
     props: ['changedGroup', 'eventType']

@@ -3,7 +3,6 @@
     <ul class="group-list" v-for="group in groups" :key="group.id">
       <li class="group-list-item">
         <p><router-link :to="{ name: 'ChatGroup', params: { id: group.id } }">{{ group.group_name }}</router-link></p>
-        <!-- チャットの参加人数 -->
         <span class="member-count">3</span>
       </li>
     </ul>
@@ -11,13 +10,8 @@
 </template>
 
 <script>
-// Vueのインポート
-import Vue from 'vue'
-
 // 以下はajaxを行うために必要
 import axios from 'axios' 
-import VueAxios from 'vue-axios'
-Vue.use(VueAxios, axios) 
 
 export default {
   props: ['groups']

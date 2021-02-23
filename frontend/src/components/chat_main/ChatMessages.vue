@@ -1,14 +1,37 @@
 <template>
   <div class="messages">
-   <p class="message">メッセージ</p>
-   <p class="message">メッセージ</p>
-   <p class="message">メッセージ</p>
+   <div v-for="message in currentGroup.messages" :key="message.id">
+    <p class="message">{{ message.text }}</p>
+   </div>
   </div>
 </template>
 
 <script>
 export default {
-  
+  data: function () {
+    return {
+      currentGroup: {
+        messages: [], //リアクティブに反映するための箱、必要？
+      }
+    }
+  },
+  props: ['group', 'newMessage'],
+  watch: {
+    'newMessage': {
+      handler: function (newMessage) {
+        if (this.currentGroup.messages.find(message => message.id == newMessage.id)) {
+          return null; //メッセージが重複するのを防ぐ
+        }
+        this.currentGroup.messages.push(newMessage) //メッセージをリアクティブに反映
+      }
+    },
+    'group': {
+      handler: function (group) {
+        this.currentGroup.messages = group.messages //リアクティブに反映するにはpropではなくdataに入れなおす必要がある？
+      },
+      immediate: true
+    }
+  }
 }
 </script>
 

@@ -1,7 +1,6 @@
 <template>
   <div id="overlay" @click="emitCloseEvent">
     <div id="content" @click="stopEvent">
-      <!-- submit.preventでevent.preventDefaultと同様の動きになる -->
       <!-- emitして親コンポーネントで処理を動かすことでeditとupdateで処理を分ける -->
       <form @submit.prevent="$emit('submit')" id="group_form">
         <div v-if="errors.length != 0">
@@ -11,7 +10,7 @@
           </ul>
         </div>
          <h2 class="form-title">{{ formTitle }}</h2>
-          <!-- 削除のときはgroup_nameの入力は不要 -->
+          <!-- 削除のときはgroup_nameの入力は不要なので表示しない -->
           <input type="text" placeholder="チャットグループの名前" name="group_name" id="group_name_input" v-model="chatGroup.group_name" v-if="eventType != '削除'">
           <button type="submit" id="group_form_submit">{{ eventType }}</button>
       </form>
@@ -27,7 +26,8 @@ export default {
     emitCloseEvent: function(){
       // 親要素にイベントを渡す
       this.$emit('from-child')
-      this.$router.push({ name: 'ChatGroup', params: { id: this.chatGroup.id } }); //groupのidをパラメータとして渡す。このとっきApp.vueに定義されたwatchが発火する。
+      // モーダルを閉じたときにグループのページに遷移。新規作成の場合はidがないのでトップページに
+      this.$router.push({ name: 'ChatGroup', params: { id: this.chatGroup.id } }); 
      },stopEvent: function(){
       //  contentsをクリックした時にモーダルが消えないように
       event.stopPropagation()

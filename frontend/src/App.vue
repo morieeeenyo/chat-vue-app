@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <!-- グループの更新情報をサイドバーに渡す -->
+    <!-- グループの更新か削除か情報をサイドバーに渡す -->
     <side-bar :changed-group="changedData" :event-type=eventType></side-bar>
     <!-- 現在のグループの情報を子孫へ受け継ぐ -->
     <chat-container :current-group="groupData" @emit-group-from-grand-child="passChangedGroupData"></chat-container>
@@ -22,7 +22,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios) 
 
-// 以下は非同期通信後の遷移先の指定
+// 以下は遷移先の指定
 import VueRouter from 'vue-router'
 const router = new VueRouter({
   routes: [
@@ -51,15 +51,16 @@ const router = new VueRouter({
     component: ModalWindow  },
   ]
 })
-
 Vue.use(VueRouter)
 
   export default {
     data: function() {
       return {
-        groupData: {}, //現在のグループ
+        groupData: {
+          messages: []
+        }, //現在のグループ
         changedData: {}, 
-        eventType: ''
+        eventType: '' //destroy or updateをサイドバーに渡すためのdata
       }
     },
     components:{
@@ -69,21 +70,22 @@ Vue.use(VueRouter)
     methods: {
       fetchGroup: function() {
       if (this.$route.path === '/' || this.$route.path === '/chat_groups/new') {
-        return this.groupData = {} // ルートパスにおよび新規投稿画面同期したときはヘッダーにあるgroupのデータを空にする
+        return this.groupData = {} // ルートパスにおよび新規投稿画面に遷移したときはヘッダーにあるgroupのデータを空にする
        }
         axios
-        // chat_groups#showアクションへのルーティング。変更後のルーティングから現在のグループを取得してビューに返す
+        // chat_groups#showアクションへのルーティング。変更後のパスから現在のグループを取得してビューに返す
       .get(`/api/v1/chat_groups/${this.$route.params.id}.json`)
       .then(response => {
-        this.groupData = response.data 
+        this.groupData = response.data.group 
+        this.groupData.messages = response.data.messages
        }
       ).catch(error => {
-          console.error(error); //コンソールにエラーを表示。
+          console.error(error); 
           alert('不正なidです')
           this.$router.push( { name: 'home' } ) //不正なidが送信された際にルートパスに戻す
         });
       }, 
-      changePathOnReload: function (e) {
+      changePathOnReload: function (e) { //リロード時の処理
       e.preventDefault()
       if ( this.$route.path === `/chat_groups/${this.groupData.id}/edit` || this.$route.path === `/chat_groups/${this.groupData.id}/destroy`) {
          this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //edit,destroyの場合はparams.idが存在するので詳細へ
@@ -96,27 +98,21 @@ Vue.use(VueRouter)
     passChangedGroupData: function (emiitedGroup, event) {
       this.changedData = emiitedGroup //子に渡すために一旦dataに代入
       this.eventType = event
-      console.log(event)
     }
   },
     mounted() {
-    console.log('created')
      window.addEventListener("load", this.changePathOnReload); //コンポーネント読み込み時にイベント予約
     },
-    // destroyed () {
-    // console.log('destroyed')
-    //  window.removeEventListener("load", this.changePathOnReload); //予約されたイベントを消去
-    // },
     watch: {
      // ルーティングに変更があった際にURLからアクセスしているグループの情報を取得。これで非同期で処理を反映する
     '$route': {
       handler: function () {
         this.fetchGroup()
       },
-      immediate: true //同期したときの処理
+      immediate: true 
      },
    },
-    router //routerはcomponentではないのでここにexportする
+    router 
   }
 </script>
 
