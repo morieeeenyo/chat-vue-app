@@ -1,5 +1,5 @@
 <template>
-  <div class="messages">
+  <div id="messages">
    <div v-for="message in currentGroup.messages" :key="message.id">
     <p class="message">{{ message.text }}</p>
    </div>
@@ -23,6 +23,9 @@ export default {
           return null; //メッセージが重複するのを防ぐ
         }
         this.currentGroup.messages.push(newMessage) //メッセージをリアクティブに反映
+        const chatLog = document.getElementById('messages');
+        console.log(chatLog)
+        chatLog.scrollTop = chatLog.scrollHeight
       }
     },
     'group': {
@@ -37,11 +40,10 @@ export default {
 
 <style>
   /* メッセージ全体 */
-  .messages {
+  #messages {
     width: 90%;
-    padding: 24px 0;
     height: calc(100% - 160px);
-    margin: 0 auto;
+    margin: 24px auto;
     overflow: scroll;
   }
   
