@@ -12,10 +12,18 @@ export default {
     return {
       currentGroup: {
         messages: [], //リアクティブに反映するための箱、必要？
-      }
+      },
     }
   },
   props: ['group', 'newMessage'],
+  methods: {
+    scrollToEnd: function () {
+      this.$nextTick(() => { //リロード時やグループ選択時にスクロールするにはnextTickが必要
+        const chatLog = document.getElementById('messages');
+        chatLog.scrollTop = chatLog.scrollHeight
+      })
+    }
+  },
   watch: {
     'newMessage': {
       handler: function (newMessage) {
@@ -23,14 +31,13 @@ export default {
           return null; //メッセージが重複するのを防ぐ
         }
         this.currentGroup.messages.push(newMessage) //メッセージをリアクティブに反映
-        const chatLog = document.getElementById('messages');
-        console.log(chatLog)
-        chatLog.scrollTop = chatLog.scrollHeight
+        this.scrollToEnd();
       }
     },
     'group': {
       handler: function (group) {
         this.currentGroup.messages = group.messages //リアクティブに反映するにはpropではなくdataに入れなおす必要がある？
+        this.scrollToEnd();
       },
       immediate: true
     }
