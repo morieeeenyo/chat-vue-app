@@ -39,13 +39,15 @@ export default {
   /* メッセージ全体 */
   .messages {
     width: 90%;
-    height: calc(100% - 120px);
+    padding: 24px 0;
+    height: calc(100% - 160px);
     margin: 0 auto;
+    overflow: scroll;
   }
   
   /* 一つ一つのメッセージ */
   .message {
-    margin-top: 24px;
+    margin-top: 0;
     font-size: 20px;
   }
 </style>
