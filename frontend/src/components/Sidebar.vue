@@ -33,7 +33,7 @@ import axios from 'axios'
         .then(response => (this.allGroupData = response.data.groups))
       },
       AddNewGroup: function (emittedGroup) {
-        this.allGroupData.push(emittedGroup) //子コンポーネントから受け取った新規グループを一覧表示のための配列に追加
+        this.allGroupData.unshift(emittedGroup) //子コンポーネントから受け取った新規グループを一覧表示のための配列に追加
       }
     },
     watch: {
