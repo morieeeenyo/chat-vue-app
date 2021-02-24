@@ -12,7 +12,7 @@
 import Vue from 'vue'
 
 // コンポーネントの読み込み
-import SideBar from './components/SideBar.vue'
+import SideBar from './components/Sidebar.vue'
 import ChatContainer from './components/ChatContainer.vue'
 import Groups from './components/side_bar/Groups.vue'
 import ModalWindow from './components//ModalWindow.vue' 
@@ -85,7 +85,8 @@ Vue.use(VueRouter)
           this.$router.push( { name: 'home' } ) //不正なidが送信された際にルートパスに戻す
         });
       }, 
-      changePathOnReload: function (e) { //リロード時の処理
+      changePathOnReload: function () { //リロード時の処理
+      setTimeout(() => {
       if ( this.$route.path === `/chat_groups/${this.groupData.id}/edit` || this.$route.path === `/chat_groups/${this.groupData.id}/destroy`) {
          this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //edit,destroyの場合はparams.idが存在するので詳細へ
       } else if (this.$route.path === `/chat_groups/new`) {
@@ -93,6 +94,7 @@ Vue.use(VueRouter)
       } else {
         return null
        }
+      }, 200)
     }, 
     passChangedGroupData: function (emiitedGroup, event) {
       this.changedData = emiitedGroup //子に渡すために一旦dataに代入
