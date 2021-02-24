@@ -1,7 +1,7 @@
 class Api::V1::ChatGroupsController < ApiController
   before_action :select_group, only: [:show, :update, :destroy]
   def index 
-    render json: { groups: ChatGroup.all }
+    render json: { groups: ChatGroup.all.order(created_at: 'DESC') }
   end
   
   def create
