@@ -52,7 +52,18 @@ export default {
       this.showContent = false
       this.errors = "" //モーダルを再度開いたときにエラーメッセージが消えているようにする
     }
-   }
+   },
+   watch: {
+    '$route': {
+       handler: function () {    
+        if (this.$route.path !== `/chat_groups/new`) {
+            this.showContent = false
+        } else {
+          this.showContent = true
+        }
+      }
+     }
+   },
   }
 </script>
 

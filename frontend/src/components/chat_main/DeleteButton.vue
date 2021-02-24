@@ -54,6 +54,17 @@ export default {
         });
     }
   },
+  watch: {
+    '$route': {
+        handler: function () {    
+        if (this.$route.path !== `/chat_groups/${this.group.id}/destroy`) {
+          this.showContent = false
+        } else {
+          this.showContent = true
+        }
+      }
+    }
+  },
   props: ['group']
 }
 </script>

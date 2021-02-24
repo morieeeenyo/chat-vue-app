@@ -61,6 +61,17 @@ export default {
       this.$emit('emit-group', group, event) //削除と更新両方で使えるようにしてる
     }
   },
+  watch: {
+    '$route': {
+       handler: function () {    
+        if (this.$route.path !== `/chat_groups/${this.group.id}/edit`) {
+          this.showContent = false
+        } else {
+          this.showContent = true
+        }
+      }
+    }
+  },
   props: ['group'] 
 }
 </script>
