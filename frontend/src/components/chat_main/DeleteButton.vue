@@ -57,9 +57,9 @@ export default {
   watch: {
     '$route': {
         handler: function () {    
-        if (this.$route.path !== `/chat_groups/${this.group.id}/destroy`) {
+        if (this.$route.path !== `/chat_groups/${this.group.id}/destroy`) { //ブラウザバックしたときにモーダルを閉じる
           this.showContent = false
-        } else {
+        } else {  //ブラウザを進んだときにモーダルを開く
           this.showContent = true
         }
       }
