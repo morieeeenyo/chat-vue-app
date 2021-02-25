@@ -10,41 +10,48 @@ Rails6(Rspec, ActionCable含む)・Vue.js・Webpack
 - グループ新規作成
 - グループ情報編集
 - グループ情報削除
-※上記はいずれもモーダルウィンドウ内よりフォーム送信し、axiosを用いて非同期通信で実装
+<br>※上記はいずれもモーダルウィンドウ内よりフォーム送信し、axiosを用いて非同期通信で実装
 - ライブチャット機能
-※ActionCableで実装
+<br>※ActionCableで実装
 
 ## こだわりポイント
 - リロードやブラウザバックした際の処理設計
-リロードしたときに表示されている内容に応じてURLが変わるようにすること、
-またブラウザバックした際にURLに応じたデータの表示ができていることの2つが非常に難しかったです。
+<br>①リロードしたときに表示されている内容に応じてURLが変わるようにすること
+<br>②ブラウザバックした際にURLに応じたデータの表示ができていること
+<br>の2つが非常に難しかったです。
 
 - ActioneCableを用いたライブチャット機能
-ActionCableは参考になる日本語の情報が公式レファレンスくらいしかなく、英語の文献がほとんどでした。
+<br>①グループごとにメッセージの配信先を分けること
+<br>②メッセージの配信が重複しないようにすること
+<br>の2つにこだわりました。
+<br>ActionCableは参考になる日本語の情報が公式レファレンスくらいしかなく、英語の文献がほとんどでした。
 そのため英語の文献も読み解きながら実装しました。
-特にグループごとにメッセージの配信先を分けることと、メッセージが重複しないようにすることにこだわりました。
-また、チャネルのテストコードも数少ない情報を頼りに実装しました。
+<br>特にチャネルのテストコードは全く参考になる記事等がなく数少ない情報を頼りに片っ端から記述を試してなんとか成功しました。
 
 # DB設計
 
 ## chat_groupsテーブル
-|column_name|type|options|
-|group_name|string|null: false, default: ""|
+  |column_name|type|options|
+  |-----------|----|-------|
+  |group_name|string|null: false, default: ""|
 
-# Associtations 
+### Associtations 
 - has_many :messages
 
-# messagesテーブル
-|column_name|type|options|
-|text|text|null: false|
-|chat_group|reference|null: false, foreing_key: true|
+## messagesテーブル
 
-# Associtations 
+  |column_name|type|options|
+  |-----------|----|-------|
+  |text|text|null: false|
+  |chat_group|reference|null: false, foreing_key: true|
+
+### Associtations 
 - belongs_to :chat_group
 
-### ユーザーを管理する機能は今回の研修では不要とあったためusersテーブルおよび
-各テーブルのuser_idカラムは作成しない。それに伴い、フロントで実装したチャットの参加人数
-はDBのデータを参照っせず固定された数字を扱うこととする。
+### 補足
+ユーザーを管理する機能は今回の研修では不要とあったためusersテーブルおよび
+<br>各テーブルのuser_idカラムは作成しない。
+<br>それに伴い、フロントで実装したチャットの参加人数はDBのデータを参照っせず固定された数字を扱うこととする。
 
 ## 今後の実装予定
 - ユーザー管理機能
