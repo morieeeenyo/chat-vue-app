@@ -15,6 +15,7 @@ Rails6(Rspec, ActionCable含む)・Vue.js・Webpack
 <br>![chat-vue-app-readme-3](https://user-images.githubusercontent.com/64336740/109234650-6e947e00-780f-11eb-92fb-c5c3ba080e92.gif)
 <br>※上記はいずれもモーダルウィンドウ内よりフォーム送信し、axiosを用いて非同期通信で実装
 - ライブチャット機能
+<br>![chat-vue-app-readme-4-2](https://user-images.githubusercontent.com/64336740/109234995-245fcc80-7810-11eb-8440-986df74e55d8.gif)
 <br>※ActionCableで実装
 
 ## こだわりポイント
