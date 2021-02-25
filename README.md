@@ -8,8 +8,11 @@ Rails6(Rspec, ActionCable含む)・Vue.js・Webpack
 
 ##  実装済みの機能
 - グループ新規作成
+<br>![chat-vue-app-readme-1](https://user-images.githubusercontent.com/64336740/109234622-61778f00-780f-11eb-929b-1a9abb4c1f48.gif)
 - グループ情報編集
+<br>![chat-vue-app-readme-2](https://user-images.githubusercontent.com/64336740/109234640-69cfca00-780f-11eb-9f03-d37bc9253891.gif)
 - グループ情報削除
+<br>![chat-vue-app-readme-3](https://user-images.githubusercontent.com/64336740/109234650-6e947e00-780f-11eb-92fb-c5c3ba080e92.gif)
 <br>※上記はいずれもモーダルウィンドウ内よりフォーム送信し、axiosを用いて非同期通信で実装
 - ライブチャット機能
 <br>※ActionCableで実装
