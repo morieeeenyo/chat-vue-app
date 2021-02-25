@@ -22,10 +22,10 @@ RSpec.describe "ChatGroups", type: :system do
         visit root_path
         # サイドバーにグループが新しい順に表示されることを検証
         expect(
-          all('.group-list-item p')[-1].text 
+          all('.group-list-item p')[0].text 
         ).to  eq another_group_2.group_name 
         expect(
-          all('.group-list-item p')[-2].text 
+          all('.group-list-item p')[1].text 
         ).to  eq another_group_1.group_name 
       end
       
