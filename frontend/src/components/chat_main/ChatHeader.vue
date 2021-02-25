@@ -48,7 +48,7 @@ export default {
           let group = response.data.group; //返却されたjsonからgroupの情報を取得
           this.$router.push({ name: 'ChatGroup', params: { id: group.id } }); //編集したグループのページに遷移
           this.group.group_name = "" //再度モーダルを開いても入力値が空になっているようにする
-          this.emitGroup(group, 'updated') //'updated'は更新か削除かをSidebarで判別するため
+          this.emitGroup(group, 'updated') //'updated'は更新か削除かをSideBarで判別するため
           this.closeModal() //モーダルを閉じる
         })
         .catch(error => {

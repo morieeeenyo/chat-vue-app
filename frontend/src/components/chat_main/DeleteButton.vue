@@ -43,7 +43,7 @@ export default {
           let group = response.data.group; 
           this.$router.push({ name: 'home' }); //トップページに戻る
           this.group.group_name = "" //再度モーダルを開いても入力値が空になっているようにする
-          this.$emit('emit-destroy-group', group, 'destroyed') //'destroyed'は更新か削除かをSidebarで判別するため
+          this.$emit('emit-destroy-group', group, 'destroyed') //'destroyed'は更新か削除かをSideBarで判別するため
           this.closeModal() 
         })
         .catch(error => {

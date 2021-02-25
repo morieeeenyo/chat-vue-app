@@ -12,7 +12,7 @@
 import Vue from 'vue'
 
 // コンポーネントの読み込み
-import SideBar from './components/Sidebar.vue'
+import SideBar from './components/SideBar.vue'
 import ChatContainer from './components/ChatContainer.vue'
 import Groups from './components/side_bar/Groups.vue'
 import ModalWindow from './components//ModalWindow.vue' 
