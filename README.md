@@ -17,7 +17,9 @@ Rails6(Rspec, ActionCable含む)・Vue.js・Webpack
 ## こだわりポイント
 - リロードやブラウザバックした際の処理設計
 <br> **①リロードしたときに表示されている内容に応じてURLが変わるようにすること**
+![chat-vue-app-10-5](https://user-images.githubusercontent.com/64336740/109231117-515cb100-7809-11eb-8fda-683604d67998.gif)
 <br> **②ブラウザバックした際にURLに応じたデータの表示ができていること**
+![chat-vue-app-10-2-2](https://user-images.githubusercontent.com/64336740/109230428-3b9abc00-7808-11eb-86e5-c8ef8d3db3f0.gif)
 <br>の2つが非常に難しかったです。
 
 - ActioneCableを用いたライブチャット機能
