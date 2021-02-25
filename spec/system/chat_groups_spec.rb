@@ -41,6 +41,7 @@ RSpec.describe "ChatGroups", type: :system do
         another_group_2 = create(:chat_group, group_name: 'another_test_2')
         visit root_path
         expect(page).to  have_link '+'
+        sleep 2 #モーダル開閉が速すぎて処理が追いつかない
         click_link '+'
         expect(page).to  have_content '新規グループ作成'
         fill_in "group_name_input",	with: @chat_group.group_name
@@ -51,7 +52,7 @@ RSpec.describe "ChatGroups", type: :system do
         expect(page).to  have_selector '#group-name', text: @chat_group.group_name 
         #同じ名前のグループが作成されたときにこの検証だとやや弱い気がしている。本当はidで検証すべきかも
         expect(
-          all('.group-list-item p')[-1].text 
+          all('.group-list-item p')[0].text 
         ).to  eq @chat_group.group_name # サイドバーの一番下にあるpタグのテキストが作成したグループ名と一致することを検証
       end
     end
@@ -61,6 +62,7 @@ RSpec.describe "ChatGroups", type: :system do
         visit root_path
         expect(page).to  have_selector '#group-name', text: ""
         expect(page).to  have_link '+'
+        sleep 2
         click_link '+'
         expect(page).to  have_content '新規グループ作成'
         fill_in "group_name_input",	with: ""
@@ -187,6 +189,7 @@ RSpec.describe "ChatGroups", type: :system do
       before do
         visit root_path
         expect(page).to  have_link '+'
+        sleep 2
         click_link '+'
       end
       
@@ -212,6 +215,7 @@ RSpec.describe "ChatGroups", type: :system do
         @chat_group.save
         select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         expect(page).to have_content '編集'
+        sleep 2
         click_link '編集'
       end
       
@@ -237,6 +241,7 @@ RSpec.describe "ChatGroups", type: :system do
         @chat_group.save
         select_group(@chat_group) # サイドバーからグループを選択し、非同期でグループ情報を取得
         expect(page).to have_content 'チャットグループを削除する'
+        sleep 2
         click_link 'チャットグループを削除する'
         expect(page).to have_no_field 'group_name_input', with: @chat_group.group_name #削除のときは入力欄がない
       end
