@@ -85,15 +85,16 @@ Vue.use(VueRouter)
           this.$router.push( { name: 'home' } ) //不正なidが送信された際にルートパスに戻す
         });
       }, 
-      changePathOnReload: function (e) { //リロード時の処理
-      e.preventDefault()
+      changePathOnReload: function () { //リロード時の処理
+      setTimeout(() => {
       if ( this.$route.path === `/chat_groups/${this.groupData.id}/edit` || this.$route.path === `/chat_groups/${this.groupData.id}/destroy`) {
          this.$router.push({name: 'ChatGroup', params: { id: this.groupData.id }}) //edit,destroyの場合はparams.idが存在するので詳細へ
       } else if (this.$route.path === `/chat_groups/new`) {
         this.$router.push({name: 'home'}) //新規登録ページにいる場合はルートに戻す
       } else {
         return null
-      }
+       }
+      }, 200)
     }, 
     passChangedGroupData: function (emiitedGroup, event) {
       this.changedData = emiitedGroup //子に渡すために一旦dataに代入

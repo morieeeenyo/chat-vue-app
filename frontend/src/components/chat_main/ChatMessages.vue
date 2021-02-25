@@ -1,5 +1,5 @@
 <template>
-  <div class="messages">
+  <div id="messages">
    <div v-for="message in currentGroup.messages" :key="message.id">
     <p class="message">{{ message.text }}</p>
    </div>
@@ -12,10 +12,18 @@ export default {
     return {
       currentGroup: {
         messages: [], //リアクティブに反映するための箱、必要？
-      }
+      },
     }
   },
   props: ['group', 'newMessage'],
+  methods: {
+    scrollToEnd: function () {
+      this.$nextTick(() => { //リロード時やグループ選択時にスクロールするにはnextTickが必要
+        const chatLog = document.getElementById('messages');
+        chatLog.scrollTop = chatLog.scrollHeight
+      })
+    }
+  },
   watch: {
     'newMessage': {
       handler: function (newMessage) {
@@ -23,11 +31,13 @@ export default {
           return null; //メッセージが重複するのを防ぐ
         }
         this.currentGroup.messages.push(newMessage) //メッセージをリアクティブに反映
+        this.scrollToEnd();
       }
     },
     'group': {
       handler: function (group) {
         this.currentGroup.messages = group.messages //リアクティブに反映するにはpropではなくdataに入れなおす必要がある？
+        this.scrollToEnd();
       },
       immediate: true
     }
@@ -37,15 +47,16 @@ export default {
 
 <style>
   /* メッセージ全体 */
-  .messages {
+  #messages {
     width: 90%;
-    height: calc(100% - 120px);
-    margin: 0 auto;
+    height: calc(100% - 160px);
+    margin: 24px auto;
+    overflow: scroll;
   }
   
   /* 一つ一つのメッセージ */
   .message {
-    margin-top: 24px;
+    margin-top: 0;
     font-size: 20px;
   }
 </style>
