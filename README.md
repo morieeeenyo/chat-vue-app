@@ -59,6 +59,9 @@ Rails6(Rspec, ActionCable含む)・Vue.js・Webpack
 <br>各テーブルのuser_idカラムは作成しない。
 <br>それに伴い、フロントで実装したチャットの参加人数はDBのデータを参照っせず固定された数字を扱うこととする。
 
+# 画面遷移図
+![chat-vue-app (1)](https://user-images.githubusercontent.com/64336740/109247166-c5598200-7826-11eb-9adb-9389dee6ec59.png)
+
 ## 今後の実装予定
 - ユーザー管理機能
 - メッセージに画像を添付する機能
